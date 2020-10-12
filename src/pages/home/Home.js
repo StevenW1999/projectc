@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './Home.css';
 import {Col, Container, Jumbotron, Row} from 'react-bootstrap';
 import styled from 'styled-components';
-import plantImg from '../../images/BG.jpg'
 import PlantItem from '../../components/PlantItem';
 import { render } from '@testing-library/react';
 
@@ -12,7 +11,7 @@ const Styles = styled.div`
     left:0;
     width: 100%;
     position: absolute;
-    background: url(${plantImg}) no-repeat fixed bottom;
+    background: url("./images/BG.jpg") no-repeat fixed bottom;
     background-size: cover;
     opacity: 0.7;
   }
