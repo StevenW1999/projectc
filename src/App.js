@@ -4,6 +4,7 @@ import Home from './pages/home/Home';
 import {Navigation} from './components/Navigation'
 import Footer from './components/Footer';
 import {Layout} from './components/Layout';
+import About from './pages/about/About';
 
 import {
   BrowserRouter as Router,
@@ -23,6 +24,7 @@ function App() {
         <Layout>
         <Switch>
           <Route exact path="/" component ={Home}/>
+          <Route exact path="/About" component ={About}/>
         </Switch>
         </Layout>
       </Router>

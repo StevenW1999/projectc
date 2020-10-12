@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Card, Button} from 'react-bootstrap';
 
-
 class PlantItem extends Component {
     constructor(props) {
         super(props);
@@ -13,7 +12,7 @@ class PlantItem extends Component {
             <Card.Body>
                 <Card.Title>{this.props.plant.name}</Card.Title>
                 <Card.Text>
-                {this.props.plant.description}
+                    {this.props.plant.description}
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
             </Card.Body>
