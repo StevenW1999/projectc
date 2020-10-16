@@ -19,16 +19,16 @@ function App() {
   return (
     <div className ="parent">
     <React.Fragment>
+      <Layout>
       <Router>
         <Navigation />
-        <Layout>
         <Switch>
           <Route exact path="/" component ={Home}/>
           <Route exact path="/About" component ={About}/>
         </Switch>
-        </Layout>
       </Router>
       <Footer/>
+      </Layout>
     </React.Fragment>
     </div>
   );
