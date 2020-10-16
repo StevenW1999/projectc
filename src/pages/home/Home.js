@@ -1,21 +1,9 @@
 import React, { Component } from 'react';
 import './Home.css';
 import {Col, Container, Jumbotron, Row} from 'react-bootstrap';
-import styled from 'styled-components';
 import PlantItem from '../../components/PlantItem';
 import { render } from '@testing-library/react';
 
-const Styles = styled.div`
-  .jumbo {
-    height:500px;
-    left:0;
-    width: 100%;
-    position: absolute;
-    background: url("./images/BG.jpg") no-repeat fixed bottom;
-    background-size: cover;
-    opacity: 0.7;
-  }
-`;
 
 
 class Home extends Component{
@@ -66,20 +54,17 @@ render () {
     )
   })
   return (
-    <div className="Home">    
-        <div className="BG">
-            <Styles>        
-            <Jumbotron className="jumbo"></Jumbotron>
-        <div className="Banner">
-            BIO DIVERSITY
-        </div>
-        </Styles>
-        </div>
-        <Container fluid>
+    <div className="Home">        
+            <Jumbotron fluid className="Jimbo">
+            <Container>
+              <h1>BIO DIVERSITY</h1>
+          </Container>
+            </Jumbotron>
+                    {/* <Container fluid>
           <Row>
             {plants}
           </Row>
-        </Container>
+        </Container> */}
     </div>
     );
 }

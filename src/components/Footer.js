@@ -5,7 +5,7 @@ class Footer extends Component {
     render(){
         return(        
                 <div className="Footer">
-                <p>This is some content in sticky footer</p>
+                This is some content in sticky footer
                 </div>
         );
     }
