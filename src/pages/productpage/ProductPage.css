@@ -38,11 +38,17 @@
     position: absolute;
 }
 
-.image{
+.image {
     position:relative;
     overflow:hidden;
     padding-bottom:100%;
 }
-.image img{
+.image img {
     position:absolute;
+}
+
+.normal-text {
+    padding: 0px;
+    color: black;
+    text-align: left;
 }
