@@ -5,6 +5,8 @@ import {Navigation} from './components/Navigation'
 import Footer from './components/Footer';
 import {Layout} from './components/Layout';
 import About from './pages/about/About';
+import AccountCreate from './pages/accountCreate/AccountCreate';
+import Account from './pages/account/Account';
 
 import {
   BrowserRouter as Router,
@@ -25,6 +27,8 @@ function App() {
         <Switch>
           <Route exact path="/" component ={Home}/>
           <Route exact path="/About" component ={About}/>
+          <Route exact path="/Login" component ={AccountCreate}/>
+          <Route exact path="/Account" component ={Account}/>
         </Switch>
         </Layout>
       </Router>
