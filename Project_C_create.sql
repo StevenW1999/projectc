@@ -51,7 +51,7 @@ CREATE TABLE "Project C"."User"
     "Postal_code" character varying COLLATE pg_catalog."default",
     "Profile_picture" bytea,
     "Active" boolean NOT NULL,
-    CONSTRAINT "id_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "user_id_pkey" PRIMARY KEY ("id")
 )
 WITH (
     OIDS = FALSE
@@ -75,14 +75,14 @@ CREATE TABLE "Project C"."Plant"
     "Name" character varying(255) COLLATE pg_catalog."default" NOT NULL,
     "Description" character varying(255) COLLATE pg_catalog."default",
     "Available" boolean NOT NULL,
-    CONSTRAINT "id_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT "Plant_id_pkey" PRIMARY KEY ("id"),
     CONSTRAINT "Category_id_fkey" FOREIGN KEY ("Category_id")
-        REFERENCES "Project C"."Category" ("Category_id") MATCH SIMPLE
+        REFERENCES "Project C"."Category" ("id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID,
     CONSTRAINT "User_id_fkey" FOREIGN KEY ("User_id")
-        REFERENCES "Project C"."User" ("User_id") MATCH SIMPLE
+        REFERENCES "Project C"."User" ("id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
@@ -106,14 +106,14 @@ CREATE TABLE "Project C"."Category_Plant"
     "id" integer NOT NULL,
     "Plant_id" integer NOT NULL,
     "Category_id" integer NOT NULL,
-    CONSTRAINT "id_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT "cat_plant_id_pkey" PRIMARY KEY ("id"),
     CONSTRAINT "Category_id_fkey" FOREIGN KEY ("Category_id")
-        REFERENCES "Project C"."Category" ("Category_id") MATCH SIMPLE
+        REFERENCES "Project C"."Category" ("id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID,
     CONSTRAINT "Plant_id_fkey" FOREIGN KEY ("Plant_id")
-        REFERENCES "Project C"."Plant" ("Plant_id") MATCH SIMPLE
+        REFERENCES "Project C"."Plant" ("id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
