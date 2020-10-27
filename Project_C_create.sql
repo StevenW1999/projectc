@@ -85,7 +85,8 @@ CREATE TABLE "Project C"."Plant"
         REFERENCES "Project C"."User" ("id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-        NOT VALID
+        NOT VALID,
+    "Timestamp" timestamp default current_timestamp
 )
 WITH (
     OIDS = FALSE
