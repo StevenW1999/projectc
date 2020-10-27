@@ -86,7 +86,8 @@ CREATE TABLE "Project C"."Plant"
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID,
-    "Timestamp" timestamp default current_timestamp
+    "Timestamp" timestamp default current_timestamp,
+    "PlantSize" varchar(10) default 'Unknown'
 )
 WITH (
     OIDS = FALSE
