@@ -62,7 +62,15 @@ CREATE TABLE "Project C"."Plant"
         ON DELETE NO ACTION
         NOT VALID,
     "Timestamp" timestamp default current_timestamp,
-    "PlantSize" varchar(10) default 'Unknown'
+    "PlantSize" varchar(10) default 'Unknown',
+    "Shadow" varchar(10) default 'Unknown',
+    "InsideOrOutside" varchar(10) default 'Unknown',
+    "Type" varchar(10) default 'Unknown',
+    "YoungOrOld" varchar(10) default 'Unknown',
+    "Season" varchar(10) default 'Unknown',
+    "Edible" boolean,
+    "AmountOfWater" varchar(10) default 'Unknown',
+    "Color" varchar(10) default 'Unknown'
 )
 WITH (
     OIDS = FALSE
