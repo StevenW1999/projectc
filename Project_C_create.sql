@@ -70,17 +70,11 @@ CREATE TABLE "Project C"."Plant"
 (
     "id" integer NOT NULL,
     "User_id" integer,
-    "Category_id" integer,
     "Image" bytea,
     "Name" character varying(255) COLLATE pg_catalog."default" NOT NULL,
     "Description" character varying(255) COLLATE pg_catalog."default",
     "Available" boolean NOT NULL,
     CONSTRAINT "Plant_id_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "Category_id_fkey" FOREIGN KEY ("Category_id")
-        REFERENCES "Project C"."Category" ("id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID,
     CONSTRAINT "User_id_fkey" FOREIGN KEY ("User_id")
         REFERENCES "Project C"."User" ("id") MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -96,35 +90,3 @@ TABLESPACE pg_default;
 
 ALTER TABLE "Project C"."Plant"
     OWNER to postgres;
-
-
--- Table: Project C.Category_Plant
-
--- DROP TABLE "Project C"."Category_Plant";
-
-
-CREATE TABLE "Project C"."Category_Plant"
-(
-    "id" integer NOT NULL,
-    "Plant_id" integer NOT NULL,
-    "Category_id" integer NOT NULL,
-    CONSTRAINT "cat_plant_id_pkey" PRIMARY KEY ("id"),
-    CONSTRAINT "Category_id_fkey" FOREIGN KEY ("Category_id")
-        REFERENCES "Project C"."Category" ("id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID,
-    CONSTRAINT "Plant_id_fkey" FOREIGN KEY ("Plant_id")
-        REFERENCES "Project C"."Plant" ("id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE "Project C"."Category_Plant"
-    OWNER to postgres;
-
