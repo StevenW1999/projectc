@@ -19,25 +19,6 @@ ALTER TABLE "Project C"."Admin"
 
 
 
--- Table: Project C.Category
-
--- DROP TABLE "Project C"."Category";
-
-CREATE TABLE "Project C"."Category"
-(
-    "Name" character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    "id" integer NOT NULL,
-    CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE "Project C"."Category"
-    OWNER to postgres;
-
-
 -- Table: Project C.User
 
 -- DROP TABLE "Project C"."User";
