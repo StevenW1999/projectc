@@ -1,21 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\arian\\source\\repos\\ProjectC\\ProjectC\\ProjectC.csproj": {}
+    "s:\\repo\\projectc\\Backend.API\\ProjectC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\arian\\source\\repos\\ProjectC\\ProjectC\\ProjectC.csproj": {
+    "s:\\repo\\projectc\\Backend.API\\ProjectC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\arian\\source\\repos\\ProjectC\\ProjectC\\ProjectC.csproj",
+        "projectUniqueName": "s:\\repo\\projectc\\Backend.API\\ProjectC.csproj",
         "projectName": "ProjectC",
-        "projectPath": "C:\\Users\\arian\\source\\repos\\ProjectC\\ProjectC\\ProjectC.csproj",
-        "packagesPath": "C:\\Users\\arian\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\arian\\source\\repos\\ProjectC\\ProjectC\\obj\\",
+        "projectPath": "s:\\repo\\projectc\\Backend.API\\ProjectC.csproj",
+        "packagesPath": "C:\\Users\\Steve\\.nuget\\packages\\",
+        "outputPath": "s:\\repo\\projectc\\Backend.API\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\arian\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Steve\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -37,6 +41,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[3.1.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
