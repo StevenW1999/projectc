@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "s:\\repo\\projectc\\Backend.API\\ProjectC.csproj": {}
+    "S:\\repo\\projectc\\Backend.API\\ProjectC.csproj": {}
   },
   "projects": {
-    "s:\\repo\\projectc\\Backend.API\\ProjectC.csproj": {
+    "S:\\repo\\projectc\\Backend.API\\ProjectC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "s:\\repo\\projectc\\Backend.API\\ProjectC.csproj",
+        "projectUniqueName": "S:\\repo\\projectc\\Backend.API\\ProjectC.csproj",
         "projectName": "ProjectC",
-        "projectPath": "s:\\repo\\projectc\\Backend.API\\ProjectC.csproj",
+        "projectPath": "S:\\repo\\projectc\\Backend.API\\ProjectC.csproj",
         "packagesPath": "C:\\Users\\Steve\\.nuget\\packages\\",
-        "outputPath": "s:\\repo\\projectc\\Backend.API\\obj\\",
+        "outputPath": "S:\\repo\\projectc\\Backend.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -42,9 +42,25 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[3.1.3, )"
+              "version": "[5.0.0, )"
             }
           },
           "imports": [
