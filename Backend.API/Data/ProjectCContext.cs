@@ -1,12 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using ProjectC.Models;
-
 
 #nullable disable
 
-namespace ProjectC.Data
+namespace ProjectC
 {
     public partial class ProjectCContext : DbContext
     {
@@ -20,49 +18,77 @@ namespace ProjectC.Data
         }
 
         public virtual DbSet<Admin> Admins { get; set; }
-        public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<CategoryPlant> CategoryPlants { get; set; }
         public virtual DbSet<Plant> Plants { get; set; }
         public virtual DbSet<User> Users { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Admin>(entity =>
             {
-                entity.Property(e => e.AdminId).ValueGeneratedNever();
-            });
+                entity.ToTable("Admin", "Project C");
 
-            modelBuilder.Entity<Category>(entity =>
-            {
-                entity.Property(e => e.CategoryId).ValueGeneratedNever();
-            });
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
-            modelBuilder.Entity<CategoryPlant>(entity =>
-            {
-                entity.Property(e => e.CategoryPlantId).ValueGeneratedNever();
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(30);
 
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.CategoryPlants)
-                    .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Category_id_fkey");
-
-                entity.HasOne(d => d.Plant)
-                    .WithMany(p => p.CategoryPlants)
-                    .HasForeignKey(d => d.PlantId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Plant_id_fkey");
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Plant>(entity =>
             {
-                entity.Property(e => e.PlantId).ValueGeneratedNever();
+                entity.ToTable("Plant", "Project C");
 
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.Plants)
-                    .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("Category_id_fkey");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.AmountOfWater)
+                    .HasMaxLength(10)
+                    .HasDefaultValueSql("'Unknown'::character varying");
+
+                entity.Property(e => e.Color)
+                    .HasMaxLength(10)
+                    .HasDefaultValueSql("'Unknown'::character varying");
+
+                entity.Property(e => e.Description).HasMaxLength(255);
+
+                entity.Property(e => e.InsideOrOutside)
+                    .HasMaxLength(10)
+                    .HasDefaultValueSql("'Unknown'::character varying");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.PlantSize)
+                    .HasMaxLength(10)
+                    .HasDefaultValueSql("'Unknown'::character varying");
+
+                entity.Property(e => e.Season)
+                    .HasMaxLength(10)
+                    .HasDefaultValueSql("'Unknown'::character varying");
+
+                entity.Property(e => e.Shadow)
+                    .HasMaxLength(10)
+                    .HasDefaultValueSql("'Unknown'::character varying");
+
+                entity.Property(e => e.Timestamp).HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .HasDefaultValueSql("'Unknown'::character varying");
+
+                entity.Property(e => e.UserId).HasColumnName("User_id");
+
+                entity.Property(e => e.YoungOrOld)
+                    .HasMaxLength(10)
+                    .HasDefaultValueSql("'Unknown'::character varying");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Plants)
@@ -72,7 +98,26 @@ namespace ProjectC.Data
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.UserId).ValueGeneratedNever();
+                entity.ToTable("User", "Project C");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Email).HasColumnType("character varying"); 
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.PostalCode)
+                    .HasColumnType("character varying")
+                    .HasColumnName("Postal_code");
+
+                entity.Property(e => e.ProfilePicture).HasColumnName("Profile_picture");
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

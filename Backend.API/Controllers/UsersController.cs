@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProjectC.Data;
-using ProjectC.Models;
 
 namespace ProjectC.Controllers
 {
@@ -48,7 +46,7 @@ namespace ProjectC.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != user.UserId)
+            if (id != user.Id)
             {
                 return BadRequest();
             }
@@ -75,29 +73,27 @@ namespace ProjectC.Controllers
         }
 
         // POST: api/Users
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<IActionResult> PostUser(User user)
         {
-            _context.Users.Add(user);
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (UserExists(user.UserId))
+                if (ModelState.IsValid)
                 {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    return CreatedAtAction("GetUser", new { id = user.Id }, user);
+                }
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.
+                ModelState.AddModelError("", "Unable to save changes. " +
+                    "Try again, and if the problem persists " +
+                    "see your system administrator.");
+            }
+            return BadRequest("Error while creating user!");
         }
 
         // DELETE: api/Users/5
@@ -116,9 +112,23 @@ namespace ProjectC.Controllers
             return user;
         }
 
+        [HttpGet("filter")]
+        public async Task<IActionResult> Index(string searchString)
+        {
+            var users = from u in _context.Users
+                         select u;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(s => s.Username.Contains(searchString));
+            }
+
+            return Ok(users);
+        }
+
         private bool UserExists(int id)
         {
-            return _context.Users.Any(e => e.UserId == id);
+            return _context.Users.Any(e => e.Id == id);
         }
     }
 }

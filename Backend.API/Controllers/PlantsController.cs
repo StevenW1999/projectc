@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProjectC.Data;
-using ProjectC.Models;
 
 namespace ProjectC.Controllers
 {
@@ -48,7 +46,7 @@ namespace ProjectC.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPlant(int id, Plant plant)
         {
-            if (id != plant.PlantId)
+            if (id != plant.Id)
             {
                 return BadRequest();
             }
@@ -87,7 +85,7 @@ namespace ProjectC.Controllers
             }
             catch (DbUpdateException)
             {
-                if (PlantExists(plant.PlantId))
+                if (PlantExists(plant.Id))
                 {
                     return Conflict();
                 }
@@ -97,7 +95,7 @@ namespace ProjectC.Controllers
                 }
             }
 
-            return CreatedAtAction("GetPlant", new { id = plant.PlantId }, plant);
+            return CreatedAtAction("GetPlant", new { id = plant.Id }, plant);
         }
 
         // DELETE: api/Plants/5
@@ -116,9 +114,24 @@ namespace ProjectC.Controllers
             return plant;
         }
 
+        //GET: api/users
+        [HttpGet("filter")]
+        public async Task<IActionResult> Index(string searchString)
+        {
+            var plants = from p in _context.Plants
+                         select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                plants = plants.Where(s => s.Name.Contains(searchString));
+            }
+
+            return Ok(plants);
+        }
+
         private bool PlantExists(int id)
         {
-            return _context.Plants.Any(e => e.PlantId == id);
+            return _context.Plants.Any(e => e.Id == id);
         }
     }
 }
