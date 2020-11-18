@@ -1,0 +1,26 @@
+insert into "Project C"."Admin"("id", "Username", "Password") values (0, 'Falco', 0000), (1, 'Joyce', 1111), (2, 'Kasper', 2222), (3, 'Steven', 3333), (4, 'Ariano', 4444);
+
+insert into "Project C"."User"("id", "Username", "Password", "Email", "Postal_code", "Profile_picture", "Active") 
+values (0, 'Wolf', 'hello', '091881@hr.nl', '1130XZ', null, true), (1, 'Jappie', 'Ghost', '0000000@hr.nl', '1131XZ', null, true), (2, 'Gilldart', 'Pumpkin', '0000001@hr.nl', '1132XZ', null, true), (3, 'Neverdead', 'Jack-o-lantern', '0000002@hr.nl', '1133XZ', null, true), (4, 'Gauntbrother', 'Cobweb', '0000003@hr.nl', '1134XZ', null, true), (5, 'TheFrozenBosss', 'Harvest', '0000004@hr.nl', '1135XZ', null, true), (6, 'Infamousz', 'Scythe', '0000005@hr.nl', '1136XZ', null, true), (7, 'Lowfielder', 'Witch', '0000006@hr.nl', '1137XZ', null, true), (8, 'H4D3S', 'Samhain', '0000007@hr.nl', '1138XZ', null, true), (9, 'Racow', 'Sidhe', '0000008@hr.nl', '1139XZ', null, true);
+
+insert into "Project C"."Plant" ("id", "User_id", "Image", "Name", "Description", "Available", "Timestamp", "PlantSize", "Shadow", "Type", "YoungOrOld",  "Season",  "Edible", "AmountOfWater", "Color")
+
+values (0, 0, null, 'Lavender', 'Lavandula (common name lavender) is a genus of 47 known species of flowering plants in the mint family, Lamiaceae.', true, default, 'Small', 'Small', 'Flower', 'Young', 'All-year', 'No', 'Small', 'Lavender'),
+
+(5, 1, null, 'Rose', 'A rose is a woody perennial flowering plant of the genus Rosa.', true, default, 'Small', 'Small', 'Flower', 'Young', 'All-year', 'No', 'Small', 'Red'),
+
+(1, 1, null, 'Pumpkin', 'A pumpkin is a cultivar of winter squash that is round with smooth, slightly ribbed skin, and is most often deep yellow to orange in coloration.', true, default, 'Medium', 'Medium', 'Earth', 'Old', 'Autumn', 'Yes', 'Medium', 'Orange'),
+
+(2, 1, null, 'Narcissus Paperwhite', 'The white flowers are borne in bunches and are strongly fragrant.', true, default, 'Medium', 'Medium', 'Flower', 'Old', 'Spring', 'Yes', 'Medium', 'White'),
+
+(3, 1, null, 'Oak', 'A large tree, signifying wisdom in ancient times.', true, default, 'Large', 'Little', 'Tree', 'Young', 'all-year', 'No', 'Large', 'Green'),
+
+(4, 1, null, 'Yew tree', 'A large tree, signifying immortality and the dead in ancient times.', false, default, 'Large', 'Large', 'Tree', 'Old', 'Winter', 'Yes', 'Large', 'Red'),
+
+(6, 1, null, 'Carrot', 'The carrot is a root vegetable, usually orange in color,', false, default, 'Medium', 'Large', 'Tree', 'Medium', 'Winter', 'Yes', 'Small', 'Orange'),
+
+(7, 1, null, 'Birch', 'The Silver Birch is one of the most sacred trees in Celtic Mythology, symbolising new beginnings and protection.', true, default, 'Small', 'Small', 'Flower', 'Young', 'All-year', 'No', 'Small', 'Blue'),
+
+(8, 1, null, 'Spruce', 'The Greeks suggested that the enduring Spruce tree represented constant, eternal life and was labelled The Tree of Birth', false, default, 'Large', 'Large', 'Tree', 'Old', 'Winter', 'Yes', 'Large', 'Pink'),
+
+(9, 1, null, 'Bluebell', 'The Bluebell is particularly associated with ancient woodland where it may dominate the understorey to produce carpets of violet–blue flowers in bluebell woods', false, default, 'Small', 'Medium', 'Flower', 'Young', 'Spring', 'Yes', 'Large', 'Blue');
