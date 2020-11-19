@@ -114,7 +114,7 @@ namespace ProjectC.Controllers
             return plant;
         }
 
-        //GET: api/users
+        //GET: api/plants/filter?searchString=
         [HttpGet("filter")]
         public async Task<IActionResult> Index(string searchString)
         {
