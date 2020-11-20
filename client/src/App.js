@@ -5,6 +5,7 @@ import {Navigation} from './components/Navigation'
 import Footer from './components/Footer';
 import {Layout} from './components/Layout';
 import About from './pages/about/About';
+import ProductPage from './pages/productpage/ProductPage';
 import AccountCreate from './pages/accountCreate/AccountCreate';
 import Account from './pages/account/Account';
 
@@ -21,18 +22,19 @@ function App() {
   return (
     <div className ="parent">
     <React.Fragment>
+      <Layout>
       <Router>
         <Navigation />
-        <Layout>
         <Switch>
           <Route exact path="/" component ={Home}/>
           <Route exact path="/About" component ={About}/>
+          <Route exact path="/ProductPage" component ={ProductPage}/>
           <Route exact path="/Login" component ={AccountCreate}/>
           <Route exact path="/Account" component ={Account}/>
         </Switch>
-        </Layout>
       </Router>
       <Footer/>
+      </Layout>
     </React.Fragment>
     </div>
   );
