@@ -17,7 +17,7 @@
 }
 
 .Jimbo{
-    background-image: url('/images/BG.jpg');
+    background-image: url('../../images/BG.jpg');
     background-repeat: no-repeat, repeat;
     background-size: cover;
     background-position: center;
