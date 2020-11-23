@@ -15,16 +15,8 @@ import { Layout } from './components/Layout';
 
 function App() {
   return (
-<<<<<<< Updated upstream:src/App.js
-    <div className ="parent">
-    <React.Fragment>
-<<<<<<< Updated upstream:client/src/App.js
-      <Layout>
-=======
-=======
     <Layout>
->>>>>>> Stashed changes:client/src/App.js
->>>>>>> Stashed changes:src/App.js
+
       <Router>
         <Navigation />
         <Switch>
@@ -34,16 +26,8 @@ function App() {
         </Switch>
       </Router>
       <Footer/>
-<<<<<<< Updated upstream:client/src/App.js
-      </Layout>
-=======
-<<<<<<< Updated upstream:src/App.js
->>>>>>> Stashed changes:src/App.js
-    </React.Fragment>
-    </div>
-=======
+
     </Layout>
->>>>>>> Stashed changes:client/src/App.js
   );
 }
 
