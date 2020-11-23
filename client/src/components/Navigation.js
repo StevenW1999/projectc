@@ -1,60 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import styled from 'styled-components';
-
-const Styles = styled.div`
-  .navbar {
-    top: 0; 
-    left: 0;
-    height: 70px;
-    max-height: 70px;
-    background-color:white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  }
-  a, .navbar-brand, .navbar-nav .nav-link {
-    color: #bbb;
-    &:hover {
-      color: grey;
-    }
-  }
-  
-`;
+import './Navigation.css';
 
 export const Navigation= () => (
-  <Styles>
-    <Navbar expand="lg">
-      <Navbar.Brand href="/">[LOGO]Plants</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
-          <Nav.Item>
-            <Nav.Link>
-              <Link to="/">Home</Link>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
-              <Link to="/about">About</Link>
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link>
-              <Link to="/allplants">All plants</Link>
-            </Nav.Link>
-          </Nav.Item>
-          <NavDropdown title="Categories" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Category 1</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Category 2</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Category 3</NavDropdown.Item>
-          </NavDropdown>
-          <Nav.Item>
-            <Nav.Link>
-              <Link to="/login">Login</Link>
-            </Nav.Link>
-          </Nav.Item>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
-    </Styles >
+<Navbar collapseOnSelect expand="lg" bg="light" variant="light" sticky="top" >
+  <Navbar.Brand href="/">HOME</Navbar.Brand>
+  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+  <Navbar.Collapse id="responsive-navbar-nav">
+    <Nav className="mr-auto">
+      <Nav.Link href="/about">About</Nav.Link>
+      <Nav.Link href="/all_plants">All Plants</Nav.Link>
+      <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+      </NavDropdown>
+    </Nav>
+    <Nav>
+      <Nav.Link href="/login">Login</Nav.Link>
+    </Nav>
+  </Navbar.Collapse>
+</Navbar>
 )

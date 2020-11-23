@@ -1,70 +1,60 @@
 import React, { Component } from 'react';
 import './Home.css';
-import {Col, Container, Jumbotron, Row} from 'react-bootstrap';
-import PlantItem from '../../components/PlantItem';
+import { Container, Jumbotron} from 'react-bootstrap';
+import Catalogue from '../../components/Catalogue';
 
-class Home extends Component{
-  constructor(){
+class Home extends Component {
+  constructor() {
     super();
     this.state = {
       plants: [{
-        id: 0,
-        name: 'plant1',
-        image: '../../images/BG2.jpg',
-        description: 'Lorem Ipsum Dolor etc blablabla'
-    },
-    {
-        id: 1,
-        name: 'plant2',
-        image: '../../images/BG2.jpg',
-        description: 'Lorem Ipsum Dolor etc blablabla'
-    },
-    {
-        id: 2,
-        name: 'plant3',
-        image: '../../images/BG2.jpg',
-        description: 'Lorem Ipsum Dolor etc blablabla'
-    },
-    {
-        id: 3,
-        name: 'plant4',
-        image: '../../images/BG2.jpg',
-        description: 'Lorem Ipsum Dolor etc blablabla'
-    }
-    ,
-    {
-        id: 3,
-        name: 'plant4',
-        image: '../../images/BG2.jpg',
-        description: 'Lorem Ipsum Dolor etc blablabla'
-    }
-    
-]
+        
+          id: 1,
+          name: 'plant2',
+          image: '../../images/BG2.jpg',
+          description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
+        },
+        {
+          id: 1,
+          name: 'plant2',
+          image: '../../images/BG2.jpg',
+          description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
+        },
+        {
+          id: 1,
+          name: 'plant2',
+          image: '../../images/BG2.jpg',
+          description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
+        },
+        {
+          id: 1,
+          name: 'plant2',
+          image: '../../images/BG2.jpg',
+          description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
+        },
+        {
+          id: 1,
+          name: 'plant2',
+          image: '../../images/BG2.jpg',
+          description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
+        },
+      ]
     }
   }
-render () {
-  let plants = this.state.plants.map(plant => {
+  render() {
     return (
-      <Col sm="3">
-      <PlantItem plant={plant}/>
-    </Col>
-    )
-  })
-  return (
-    <div className="Home">        
-            <Jumbotron fluid className="Jimbo">
-            <Container>
-              <h1>BIO DIVERSITY</h1>
+      <div className="Home">
+        <Jumbotron fluid className="Jimbo">
+          <Container>
+            <h1>BIO DIVERSITY</h1>
           </Container>
-            </Jumbotron>
-                    <Container fluid>
-          <Row>
-            {plants}
-          </Row>
+        </Jumbotron>
+        <Container fluid>
+          <Catalogue data = {this.state.plants}/>
         </Container>
-    </div>
+      </div>
     );
-}
+  }
 }
 
 export default Home;
