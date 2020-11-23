@@ -10,11 +10,11 @@
     background-color: #474747;
 }
 
-.fit-gallery {
+/*.fit-gallery {
     width: 100%;
     height: 500px;
     object-fit: contain;
-}
+}*/
 
 .fit-rec {
     height: 150px;

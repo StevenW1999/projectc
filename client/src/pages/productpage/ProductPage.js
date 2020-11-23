@@ -47,32 +47,32 @@ class ProductPage extends Component {
                 <br/>
 
                 <Row>
-                    <Col xs={6} md={2}>
+                    <Col md={2}>
                         <div className="padding-img">
                             <img className="image img img-responsive full-width"/>
                         </div>
                     </Col>
-                    <Col xs={6} md={2}>
+                    <Col md={2}>
                         <div className="padding-img">
                             <img className="image img img-responsive full-width" />
                         </div>
                     </Col>
-                    <Col xs={6} md={2}>
+                    <Col md={2}>
                         <div className="padding-img">
                             <img className="image img img-responsive full-width" />
                         </div>
                     </Col>
-                    <Col xs={6} md={2}>
+                    <Col md={2}>
                         <div className="padding-img">
                             <img className="image img img-responsive full-width" />
                         </div>
                     </Col>
-                    <Col xs={6} md={2}>
+                    <Col md={2}>
                         <div className="padding-img">
                             <img className="image img img-responsive full-width" />
                         </div>
                     </Col>
-                    <Col xs={6} md={2}>
+                    <Col md={2}>
                         <div className="padding-img">
                             <img className="image img img-responsive full-width" />
                         </div>
