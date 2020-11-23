@@ -42,6 +42,7 @@
     position:relative;
     overflow:hidden;
     padding-bottom:100%;
+    width: 100%;
 }
 .image img {
     position:absolute;
@@ -51,4 +52,8 @@
     padding: 0px;
     color: black;
     text-align: left;
+}
+
+.padding-img {
+    padding-bottom: 25px;
 }

@@ -14,20 +14,17 @@ class ProductPage extends Component {
                         <Carousel className="gbackground">
                             <Carousel.Item>
                                 <img
-                                    className="d-block fit-gallery"
-                                    src="./images/BG2.jpg"
+                                    className="image d-block fit-gallery"
                                 />
                             </Carousel.Item>
                             <Carousel.Item>
                                 <img
-                                    className="d-block fit-gallery"
-                                    src="./images/Plant1.jpg"
+                                    className="image d-block fit-gallery"
                                 />
                             </Carousel.Item>
                             <Carousel.Item>
                                 <img
-                                    className="d-block fit-gallery"
-                                    src="./images/BG.jpg"
+                                    className="image d-block fit-gallery"
                                 />
                             </Carousel.Item>
                         </Carousel>
@@ -51,36 +48,35 @@ class ProductPage extends Component {
 
                 <Row>
                     <Col xs={6} md={2}>
-                        <div className="image">
-                            <img src="./images/BG2.jpg" className="img img-responsive full-width"/>
+                        <div className="padding-img">
+                            <img className="image img img-responsive full-width"/>
                         </div>
                     </Col>
                     <Col xs={6} md={2}>
-                        <div className="image">
-                            <img src="./images/BG2.jpg" className="img img-responsive full-width"/>
+                        <div className="padding-img">
+                            <img className="image img img-responsive full-width" />
                         </div>
                     </Col>
                     <Col xs={6} md={2}>
-                        <div className="image">
-                            <img src="./images/BG2.jpg" className="img img-responsive full-width"/>
+                        <div className="padding-img">
+                            <img className="image img img-responsive full-width" />
                         </div>
                     </Col>
                     <Col xs={6} md={2}>
-                        <div className="image">
-                            <img src="./images/BG2.jpg" className="img img-responsive full-width"/>
+                        <div className="padding-img">
+                            <img className="image img img-responsive full-width" />
                         </div>
                     </Col>
                     <Col xs={6} md={2}>
-                        <div className="image">
-                            <img src="./images/BG2.jpg" className="img img-responsive full-width"/>
+                        <div className="padding-img">
+                            <img className="image img img-responsive full-width" />
                         </div>
                     </Col>
                     <Col xs={6} md={2}>
-                        <div className="image">
-                            <img src="./images/BG2.jpg" className="img img-responsive full-width"/>
+                        <div className="padding-img">
+                            <img className="image img img-responsive full-width" />
                         </div>
                     </Col>
-
                 </Row>
 
                 <br/>
