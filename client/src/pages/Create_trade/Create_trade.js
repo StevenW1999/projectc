@@ -56,7 +56,8 @@ class Create_trade extends Component{
             </div>
             <div className="Categorie">
               <p>Vaste plant</p>
-              Ja: <input type = "checkbox"/>Nee: <input type = "checkbox"/>
+              Ja: <input type = "radio"checked="checked" name="radio"/>
+              Nee: <input type = "radio"checked="checked" name="radio"/>
             </div>
             <div className="Categorie">
               <p>Soort</p>
