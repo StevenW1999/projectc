@@ -44,7 +44,7 @@ function Footer() {
           <div className='footer-logo'>
             <Link to='/' className='social-logo'>
               <RiPlantFill className='navbar-icon' />
-              Stadskwekerij
+              Stekoverflow
             </Link>
           </div>
           <small className='website-rights'>Stadskwekerij © 2020</small>
