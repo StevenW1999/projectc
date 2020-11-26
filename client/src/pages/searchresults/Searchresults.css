@@ -5,6 +5,14 @@
     background-color: #cccccc;
 }
 
+.TopBarBox {
+    margin: auto;
+    width:1210px;
+    height:100%;
+    padding-left:30px;
+    padding-right:30px;
+    padding:10px;
+}
 .Center{
     position:relative;
     margin: auto;
@@ -72,4 +80,13 @@
     width:250px;
     height:700px;
     float:left;
+}
+.TopBarBox input[type=text] {
+    float: left;
+    padding: 2px;
+    width:450px;
+    border: none;
+    margin-top: 17px;
+    margin-left: 16px;
+    font-size: 17px;
 }

@@ -41,7 +41,19 @@ class Searchresults extends Component{
 
 		return (
 			<div className="Center">
-                    <div className="TopBar">
+				<div className="TopBar">
+					<div className="TopBarBox">
+						<input type="text" placeholder="Zoek..." class="btn-sm" >
+						</input>
+						<select name="categories" style={{ width: '250px', margin: '17px', padding: '2px' }} className="categoriesList">
+								<option value="option 1">Option 1</option>
+								<option value="option 1">Option 2</option>
+								<option value="option 1">Option 3</option>
+							</select>
+						<input type="text" placeholder="Postcode..." style={{ width: '120px' }}></input>
+
+						<button type="button" class="btn btn-primary btn-sm">Zoek!</button>
+						</div>
                     </div>
 				<div className="BelowCenter">
                     <br/>
