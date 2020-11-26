@@ -87,6 +87,8 @@ class Searchresults extends Component{
 							</div>
 						</div>
 						</div>
+							<div className="bottomButtonsContainer">
+					</div>
 				</div>
 				</div>
         );
