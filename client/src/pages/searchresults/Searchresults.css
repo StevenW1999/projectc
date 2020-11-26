@@ -1,0 +1,75 @@
+.TopBar {
+    margin: auto;
+    width: 100%;
+    height: 90px;
+    background-color: #cccccc;
+}
+
+.Center{
+    position:relative;
+    margin: auto;
+    width: 100%;
+    height: 2000px;
+}
+
+.BelowCenter {
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    background-color: #e6e6e6;
+}
+
+.SearchCards{
+    margin:75px;
+    width: 18rem;
+    height:22rem;
+    border: solid black;
+}
+
+.ItemsContainer{
+    padding:50px;
+    margin:auto;
+    width:800px;
+    margin-top:10px;
+    background-color:white;
+    height:850px;
+    float:left;
+    margin-left: 20px;
+}
+
+.categoriesList{
+    width: 100%;
+    margin-top:10%;
+}
+
+.TickboxesPadding{
+    width:100%;
+    height:100%;
+    padding:5%;
+}
+
+.categoriesTickboxes{
+    margin:auto;
+    width:100%;
+    height:100%;
+    margin-top:20px;
+    background-color: #FFFFFF;
+    border:solid grey 1px;
+}
+
+.ParentDiv{
+    margin:auto;
+    width:1200px;
+    height:1000px;
+}
+
+
+
+.CategoriesParent{
+    margin:auto;
+    margin-top: 10px;
+    margin-right:10px;
+    width:250px;
+    height:700px;
+    float:left;
+}
