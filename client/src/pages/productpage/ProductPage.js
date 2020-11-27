@@ -73,33 +73,57 @@ class ProductPage extends Component {
 
                 <Row>
                     <Col md={2}>
-                        <div className="padding-img">
+                        <div>
                             <img className="image img img-responsive full-width"/>
                         </div>
-                    </Col>
-                    <Col md={2}>
-                        <div className="padding-img">
-                            <img className="image img img-responsive full-width" />
+                        <div className="title-related">
+                            <h5 className="normal-text text-related">Cactus plant</h5>
+                            <p className="normal-text text-related bottom-related"><BsGeoAlt/> Vlaardingen</p>
                         </div>
                     </Col>
                     <Col md={2}>
-                        <div className="padding-img">
-                            <img className="image img img-responsive full-width" />
+                        <div>
+                            <img className="image img img-responsive full-width"/>
+                        </div>
+                        <div className="title-related">
+                            <h5 className="normal-text text-related">Cactus plant</h5>
+                            <p className="normal-text text-related bottom-related"><BsGeoAlt/> Vlaardingen</p>
                         </div>
                     </Col>
                     <Col md={2}>
-                        <div className="padding-img">
-                            <img className="image img img-responsive full-width" />
+                        <div>
+                            <img className="image img img-responsive full-width"/>
+                        </div>
+                        <div className="title-related">
+                            <h5 className="normal-text text-related">Cactus plant</h5>
+                            <p className="normal-text text-related bottom-related"><BsGeoAlt/> Vlaardingen</p>
                         </div>
                     </Col>
                     <Col md={2}>
-                        <div className="padding-img">
-                            <img className="image img img-responsive full-width" />
+                        <div>
+                            <img className="image img img-responsive full-width"/>
+                        </div>
+                        <div className="title-related">
+                            <h5 className="normal-text text-related">Cactus plant</h5>
+                            <p className="normal-text text-related bottom-related"><BsGeoAlt/> Vlaardingen</p>
                         </div>
                     </Col>
                     <Col md={2}>
-                        <div className="padding-img">
-                            <img className="image img img-responsive full-width" />
+                        <div>
+                            <img className="image img img-responsive full-width"/>
+                        </div>
+                        <div className="title-related">
+                            <h5 className="normal-text text-related">Cactus plant</h5>
+                            <p className="normal-text text-related bottom-related"><BsGeoAlt/> Vlaardingen</p>
+                        </div>
+                    </Col>
+                    <Col md={2}>
+                        <div>
+                            <img className="image img img-responsive full-width"/>
+                        </div>
+                        <div className="title-related">
+                            <h5 className="normal-text text-related">Cactus plant</h5>
+                            <p className="normal-text text-related bottom-related"><BsGeoAlt/> Vlaardingen</p>
                         </div>
                     </Col>
                 </Row>

@@ -24,6 +24,21 @@
     height: 150px;
 }
 
+.bottom-related {
+    padding-bottom: 4px !important;
+    margin-bottom: 22px !important;
+}
+
+.title-related {
+    background-color: #ededed;
+    margin-top: 0px;
+    padding-bottom: 0px;
+}
+
+.text-related {
+    margin-left: 4px;
+}
+
 .img-cover {
     object-fit: cover;
 }
