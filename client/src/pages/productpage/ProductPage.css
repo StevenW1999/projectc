@@ -16,6 +16,10 @@
     object-fit: contain;
 }*/
 
+.container-padding {
+    padding-top: 25px;
+}
+
 .fit-rec {
     height: 150px;
 }

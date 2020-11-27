@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Backend.API"
+    "\\client",
+    "\\client\\src",
+    "\\client\\src\\images",
+    "\\client\\src\\pages",
+    "\\client\\src\\pages\\productpage"
   ],
-  "SelectedNode": "\\Backend.API\\Startup.cs",
+  "SelectedNode": "\\client",
   "PreviewInSolutionExplorer": false
 }
