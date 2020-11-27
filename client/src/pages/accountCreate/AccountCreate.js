@@ -2,22 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './AccountCreate.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-//For used documentation or code examples, please see the bottom of the page.
-
-
-//This is a basic check to see if the entered email adress is the correct format. 
-//However, it doesn't check if the email adress is a valid one.
-const validEmailRegex = 
-  RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
-
-const validateForm = (errors) => {
-    let valid = true;
-    Object.values(errors).forEach(
-        // if we have an error string set valid to false
-        (val) => val.length > 0 && (valid = false)
-    );
-    return valid;
-}
 
 class AccountCreate extends Component {
     constructor(props) {
@@ -31,15 +15,6 @@ class AccountCreate extends Component {
             password: "",
             passwordcheck: "",
             checkbox: false,
-            errors: {
-                fname: "",
-                lname: "",
-                email: "",
-                emailcheck: "",
-                password: "",
-                passwordcheck: "",
-                checkbox: false
-              } 
         }
         
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -50,72 +25,56 @@ class AccountCreate extends Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        let errors = this.state.errors;
-
-        switch (name) {
-            case 'fname': 
-                errors.fname = 
-                    value.length < 1 ? 'Voornaam mag niet leeg zijn!' : '';
-                break;
-            case 'lname':
-                errors.lname = 
-                    value.length < 1 ? 'Achternaam mag niet leeg zijn!' : '';
-                break;
-            case 'email': 
-                errors.email = 
-                    validEmailRegex.test(value) ? '' : 'Emailadres is ongeldig!';
-                break;
-            case 'emailcheck': 
-                errors.emailcheck = 
-                    this.state.email==value ? '' : 'Emailadressen komen niet overeen!';
-                break;
-            case 'password': 
-                errors.password = 
-                    value.length < 8 ? 'Wachtwoord moet minimaal 8 karakters lang zijn!' : '';
-                break;
-            case 'passwordcheck': 
-                errors.passwordcheck = 
-                    this.state.password==value ? 'Wachtwoorden komen niet overeen!' : '';
-                break;
-            case 'checkbox': 
-                errors.checkbox = 
-                    value ? 'U moet de algemene voorwaarden accepteren om door te gaan!' : '';
-                break;
-            default:
-                break;
-          }
         
         this.setState({
           [name]: value    
         });
     }
 
-    handleValidation(){
-        // if(this.state.fname.length<=0){
-        //     this.state.valError = "Het veld voornaam mag niet leeg zijn.";
-        //     return false;
-        // }
-        // return true;
-
-        if(validateForm(this.state.errors)) {
-            console.info('Valid Form')
+    emailValidation(){
+        let value = this.state.email;
+        if(value.lastIndexOf("@")<value.lastIndexOf(".")){
+            if(value.lastIndexOf("@")>0){
+                if(value.lastIndexOf(".")<value.length-1){
+                    return true;
+                }
+            }
         }
         else{
-            console.error('Invalid Form')
+            return false;
         }
     }
 
     onSubmitHandler = (e) => {
         e.preventDefault();
-        if(this.handleValidation()){
-            
-            alert("GG lad");
-            //this.props.history.push('/About');   //<--This works for changing pages  ("Hello there")
+
+        if(this.state.fname.length<1){
+            alert("Voornaam mag niet leeg zijn!")
+        }
+        else if (this.state.lname.length<=1) {
+            alert("Achternaam mag niet leeg zijn!")
+        }
+        else if (this.state.email<5) {
+            alert("Email mag niet leeg zijn!")
+        }
+        else if (!this.emailValidation()) {
+            alert("Emailadres is ongeldig!")
+        }
+        else if (this.state.email!==this.state.emailcheck) {
+            alert("Emailadressen komen niet overeen!")
+        }
+        else if (this.state.password.length<8) {
+            alert("Wachtwoord moet minimaal 8 karakters lang zijn!")
+        }
+        else if (this.state.password!==this.state.passwordcheck) {
+            alert("Wachtwoorden komen niet overeen!")
+        }
+        else if (!this.state.checkbox) {
+            alert("U dient de algemene voorwaarden te accepteren!")
         }
         else{
-            alert(this.state.valError);
+            this.props.history.push('/About');
         }
-        //alert(this.state.fname);
     }
 
     render() {
@@ -189,7 +148,3 @@ class AccountCreate extends Component {
 }
 
 export default AccountCreate;
-
-//Form validation:
-//  https://www.telerik.com/blogs/up-and-running-with-react-form-validation
-//  https://en.wikipedia.org/wiki/Regular_expression
