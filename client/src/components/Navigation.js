@@ -1,26 +1,84 @@
-import React from 'react';
-import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Button } from './Button';
+import { Link } from 'react-router-dom';
 import './Navigation.css';
+import { RiPlantFill } from 'react-icons/ri';
+import { FaBars, FaTimes } from 'react-icons/fa';
+import { IconContext } from 'react-icons/lib';
 
-export const Navigation= () => (
-<Navbar collapseOnSelect expand="lg" bg="light" variant="light" sticky="top" >
-  <Navbar.Brand href="/">HOME</Navbar.Brand>
-  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-  <Navbar.Collapse id="responsive-navbar-nav">
-    <Nav className="mr-auto">
-      <Nav.Link href="/about">About</Nav.Link>
-      <Nav.Link href="/all_plants">All Plants</Nav.Link>
-      <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-      </NavDropdown>
-    </Nav>
-    <Nav>
-      <Nav.Link href="/login">Login</Nav.Link>
-    </Nav>
-  </Navbar.Collapse>
-</Navbar>
-)
+function Navigation() {
+  const [click, setClick] = useState(false);
+  const [button, setButton] = useState(true);
+
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
+
+  const showButton = () => {
+    if (window.innerWidth <= 960) {
+      setButton(false);
+    } else {
+      setButton(true);
+    }
+  };
+
+  useEffect(() => {
+    showButton();
+    window.addEventListener('resize', showButton);
+  }, []);
+
+
+  return (
+    <>
+      <IconContext.Provider value={{ color: '#fff' }}>
+        <nav className='navbar'>
+          <div className='navbar-container container'>
+            <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+              <RiPlantFill className='navbar-icon' />
+              Stekoverflow
+            </Link>
+            <div className='menu-icon' onClick={handleClick}>
+              {click ? <FaTimes /> : <FaBars />}
+            </div>
+            <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+              <li className='nav-item'>
+                <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+                  Home
+                </Link>
+              </li>
+              <li className='nav-item'>
+                <Link
+                  to='/about'
+                  className='nav-links'
+                  onClick={closeMobileMenu}
+                >
+                  About us
+                </Link>
+              </li>
+              <li className='nav-item'>
+                <Link
+                  to='/allplants'
+                  className='nav-links'
+                  onClick={closeMobileMenu}
+                >
+                  All Plants
+                </Link>
+              </li>
+              <li className='nav-item'>
+                <Link
+                  to='/login'
+                  className='nav-links'
+                  onClick={closeMobileMenu}
+                >
+                  Login
+                </Link>
+              </li>
+
+            </ul>
+          </div>
+        </nav>
+      </IconContext.Provider>
+    </>
+  );
+}
+
+export default Navigation;
