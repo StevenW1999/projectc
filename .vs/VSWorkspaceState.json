@@ -1,8 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Backend.API"
+    "\\Backend.API",
+    "\\client",
+    "\\client\\src",
+    "\\client\\src\\components",
+    "\\client\\src\\pages",
+    "\\client\\src\\pages\\home",
+    "\\client\\src\\pages\\searchresults",
+    "\\client\\src\\pages\\searchresults\\Searchersults old"
   ],
-  "SelectedNode": "\\Backend.API\\Startup.cs",
+  "SelectedNode": "\\client\\src\\components\\Layout.js",
   "PreviewInSolutionExplorer": false
 }
