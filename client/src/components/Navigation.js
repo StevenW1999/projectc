@@ -5,6 +5,7 @@ import './Navigation.css';
 import { RiPlantFill } from 'react-icons/ri';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { IconContext } from 'react-icons/lib';
+import ukflag from '../images/UK.png'; 
 
 function Navigation() {
   const [click, setClick] = useState(false);
@@ -29,7 +30,7 @@ function Navigation() {
 
   return (
     <>
-      <IconContext.Provider value={{ color: '#fff' }}>
+          <IconContext.Provider value={{ color: '#fff' }}>
         <nav className='navbar'>
           <div className='navbar-container container'>
             <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
@@ -39,7 +40,8 @@ function Navigation() {
             <div className='menu-icon' onClick={handleClick}>
               {click ? <FaTimes /> : <FaBars />}
             </div>
-            <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+                      <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+
               <li className='nav-item'>
                 <Link to='/' className='nav-links' onClick={closeMobileMenu}>
                   Home
@@ -72,6 +74,15 @@ function Navigation() {
                   Login
                 </Link>
               </li>
+                          <li className='nav-item'>
+                              <Link
+                                  to='/about'
+                                  className='nav-links'
+                                  onClick={closeMobileMenu}
+                              > 
+                                  <img src={ukflag} style={{ width: "50px", height: "30px" }} />
+                                </Link>
+                              </li>
 
             </ul>
           </div>

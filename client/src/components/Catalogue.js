@@ -16,8 +16,7 @@ class Catalogue extends Component {
             )
         })
 
-   
-                                // TO-DO: VERANDER 'as="select"'
+                                         // TO-DO: VERANDER 'as="select"'
 
         return (
             <>
