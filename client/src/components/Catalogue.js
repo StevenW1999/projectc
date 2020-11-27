@@ -16,17 +16,21 @@ class Catalogue extends Component {
             )
         })
 
-                                         // TO-DO: VERANDER 'as="select"'
+                                        // TO-DO: VERANDER 'as="select"'
 
         return (
             <>
                 <div class="row">
                     <div class="side">
                         <div className="filters">
-                            <h2>Filters</h2>
                             <Form>
-                                <br />
-                                <Form.Control type="text" placeholder="SEARCH" />
+                                <div class="input-group mb-3">
+                                <Form.Control type="text" placeholder="SEARCH"/>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-success">Zoek!</button>
+                                    </div>
+                                </div>
+                                <Form.Control type="text" placeholder="Postcode..." style={{ width: "200px" }} />
                                 <br />
                                 <Form.Control as="select">
                                     <option>Type plant...</option>
