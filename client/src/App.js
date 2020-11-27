@@ -5,6 +5,7 @@ import Navigation from './components/Navigation'
 import Footer from './components/Footer';
 import About from './pages/about/About';
 import ProductPage from './pages/productpage/ProductPage';
+import Searchresults from './pages/searchresults/Searchresults';
 
 import {
   BrowserRouter as Router,
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/About" component={About} />
         <Route exact path="/ProductPage" component={ProductPage} />
+        <Route exact path="/Search" component={Searchresults} />
       </Switch>
       <Footer />
     </Router>
