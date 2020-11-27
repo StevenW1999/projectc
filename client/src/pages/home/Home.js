@@ -1,78 +1,60 @@
-import React, { Component, useState } from 'react';
-import Catalogue from '../../components/Catalogue';
+import React, { Component } from 'react';
 import './Home.css';
-
-import {
-  BannerContainer,
-  BannerContent,
-  BannerItems,
-  BannerH1,
-  BannerP,
-  BannerBtn
-} from '../../components/Banner';
-import { Link } from 'react-router-dom';
+import { Container, Jumbotron} from 'react-bootstrap';
+import Catalogue from '../../components/Catalogue';
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
       plants: [{
-
-        id: 0,
-        name: 'plant1',
-        image: '../../images/BG2.jpg',
-        description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
-      },
-      {
-        id: 1,
-        name: 'plant2',
-        image: '../../images/BG2.jpg',
-        description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
-      },
-      {
-        id: 2,
-        name: 'plant3',
-        image: '../../images/BG2.jpg',
-        description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
-      },
-      {
-        id: 3,
-        name: 'plant4',
-        image: '../../images/BG2.jpg',
-        description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
-      },
-      {
-        id: 4,
-        name: 'plant5',
-        image: '../../images/BG2.jpg',
-        description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
-      },
+        
+          id: 1,
+          name: 'plant2',
+          image: '../../images/BG2.jpg',
+          description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
+        },
+        {
+          id: 1,
+          name: 'plant2',
+          image: '../../images/BG2.jpg',
+          description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
+        },
+        {
+          id: 1,
+          name: 'plant2',
+          image: '../../images/BG2.jpg',
+          description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
+        },
+        {
+          id: 1,
+          name: 'plant2',
+          image: '../../images/BG2.jpg',
+          description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
+        },
+        {
+          id: 1,
+          name: 'plant2',
+          image: '../../images/BG2.jpg',
+          description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
+        },
       ]
     }
   }
-
   render() {
     return (
-      <>
-        <BannerContainer>
-          <BannerContent>
-            <BannerItems>
-              <BannerH1>BIO DIVERSITY</BannerH1>
-              <BannerP>Nature friendly trading bla bla bla</BannerP>
-              <BannerBtn>
-                <Link to="/signup">SIGN UP NOW</Link>
-              </BannerBtn>
-            </BannerItems>
-          </BannerContent>
-        </BannerContainer>
-        <div className ="searchBar">
-          <h1>Catalogue</h1>
-        </div>
-          <Catalogue data={this.state.plants}></Catalogue>
-      </>
+      <div className="Home">
+        <Jumbotron fluid className="Jimbo">
+          <Container>
+            <h1>BIO DIVERSITY</h1>
+          </Container>
+        </Jumbotron>
+        <Container fluid>
+          <Catalogue data = {this.state.plants}/>
+        </Container>
+      </div>
     );
   }
 }
-
 
 export default Home;

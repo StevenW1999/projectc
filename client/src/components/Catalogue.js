@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './Catalogue.css';
 import PlantItem from '../components/PlantItem';
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import { Row, Col } from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
 
 class Catalogue extends Component {
     constructor(props) {
@@ -16,38 +14,51 @@ class Catalogue extends Component {
             )
         })
         return (
-            <>
-                <div class="row">
-                    <div class="side">
-                        <div className="filters">
-                            <h2>Filters</h2>
-                            <Form>
-                                <br />
-                                <Form.Control type="text" placeholder="SEARCH" />
-                                <br />
-                                <Form.Control as="select">
-                                    <option>categories</option>
-                                </Form.Control>
-                                <br />
-                                <Form.Control as="select">
-                                    <option>types</option>
-                                </Form.Control>
-                                <br />
-                                <Form.Group controlId="formBasicRange">
-                                    <Form.Label>km range</Form.Label>
-                                    <Form.Control type="range" />
-                                </Form.Group>
-
-                            </Form>
-                        </div>
-                    </div>
-                    <div class="main">
-                        <section className="cards">
-                            {plants}
-                        </section>
-                    </div>
+            <div className="row">
+                <div className="side">
+                    <h2>Filter</h2>
+                    <form>
+                        <select name="Product" id="product">
+                            <option value="product">Product</option>
+                            <option value="seed">Seed</option>
+                            <option value="bud">Bud</option>
+                            <option value="cutting">Cutting</option>
+                        </select>
+                        <br></br>
+                        <br></br>
+                        <select name="Type" id="type">
+                            <option value="type">Type</option>
+                            <option value="tree">Tree</option>
+                            <option value="shrub">Shrub</option>
+                            <option value="herb">Herb</option>
+                            <option value="climber">Climber</option>
+                            <option value="creepers">Creepers</option>
+                        </select>
+                        <br></br>
+                        <br></br>
+                        <select name="Water" id="water">
+                            <option value="water">Water</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                        <br></br>
+                        <br></br>
+                        <select name="Light" id="light">
+                            <option value="light">Light</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                        <br></br>
+                        <br></br>
+                        <input type="submit" value="Submit"></input>
+                    </form>
                 </div>
-            </>
+                <div className="main">
+                        {plants}
+                </div>
+            </div>
         );
     }
 }

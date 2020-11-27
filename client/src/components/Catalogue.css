@@ -11,37 +11,21 @@
   .side {
     -ms-flex: 30%; /* IE10 */
     flex: 30%;
-    background-color: white;
-    padding-top: 50px;
-    border-style: groove;
-    text-align: center;
-    border-width: 1px;
+    background-color: #f1f1f1;
+    padding: 20px;
   }
-  .filters{
-    width: 300px;
-    padding: 50px;
-    margin-left: 20%;
-    border-bottom-style: groove;
-    border-width: 1px;
-  }
+  
   /* Main column */
   .main {   
     -ms-flex: 70%; /* IE10 */
     flex: 70%;
     background-color: white;
-    padding-top: 50px;
+    padding: 20px;
   }
 
-  /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 700px) {
+  @media screen and (max-width: 700px) {
     .row {   
       flex-direction: column;
     }
   }
   
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-    grid-column-gap: 25px;
-    grid-row-gap: 25px;
-  }
