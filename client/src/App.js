@@ -29,12 +29,11 @@ function App() {
         <Route exact path="/Search" component={Searchresults} />
         <Route exact path="/Login" component ={AccountCreate}/>
         <Route exact path="/Account" component ={Account}/>
-          <Route exact path="/Create_trade" component ={Create_trade}/>
-          <Route exact path="/Search" component={Searchresults} />
-        </Switch>
-      </Router>
-      <Footer/>
-    </Layout>
+        <Route exact path="/Create_trade" component ={Create_trade}/>
+        <Route exact path="/Search" component={Searchresults} />
+      </Switch>
+      <Footer />
+    </Router>
   );
 }
 
