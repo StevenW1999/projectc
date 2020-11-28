@@ -15,11 +15,7 @@ class Catalogue extends Component {
                 <PlantItem plant={plant} />
             )
         })
-
                                         // TO-DO: VERANDER 'as="select"'
-
-
-
         return (
             <>
                 <div class="row">
