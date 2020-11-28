@@ -1,15 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Backend.API",
     "\\client",
     "\\client\\src",
-    "\\client\\src\\components",
+    "\\client\\src\\images",
     "\\client\\src\\pages",
+    "\\client\\src\\pages\\about",
     "\\client\\src\\pages\\home",
+    "\\client\\src\\pages\\productpage",
     "\\client\\src\\pages\\searchresults",
     "\\client\\src\\pages\\searchresults\\Searchersults old"
   ],
-  "SelectedNode": "\\client\\src\\components\\Layout.js",
+  "SelectedNode": "\\client\\src\\components\\Catalogue.js",
   "PreviewInSolutionExplorer": false
 }

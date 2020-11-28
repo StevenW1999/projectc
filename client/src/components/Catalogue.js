@@ -18,6 +18,8 @@ class Catalogue extends Component {
 
                                         // TO-DO: VERANDER 'as="select"'
 
+
+
         return (
             <>
                 <div class="row">
@@ -25,13 +27,14 @@ class Catalogue extends Component {
                         <div className="filters">
                             <Form>
                                 <div class="input-group mb-3">
-                                <Form.Control type="text" placeholder="SEARCH"/>
+                                <Form.Control type="text" placeholder="Zoek..."/>
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-success">Zoek!</button>
                                     </div>
                                 </div>
                                 <Form.Control type="text" placeholder="Postcode..." style={{ width: "200px" }} />
                                 <br />
+
                                 <Form.Control as="select">
                                     <option>Type plant...</option>
                                     <option>Boom</option>
