@@ -8,6 +8,7 @@ import ProductPage from './pages/productpage/ProductPage';
 import Searchresults from './pages/searchresults/Searchresults';
 import AccountCreate from './pages/accountCreate/AccountCreate';
 import Account from './pages/account/Account';
+import AccountEdit from './pages/accountEdit/AccountEdit';
 import Login from './pages/login/Login';
 
 
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/Login" component ={Login}/>
         <Route exact path="/Account" component ={Account}/>
         <Route exact path="/AccountCreate" component ={AccountCreate}/>
+        <Route exact path="/AccountEdit" component ={AccountEdit}/>
       </Switch>
       <Footer />
     </Router>
