@@ -73,7 +73,7 @@ class AccountCreate extends Component {
             alert("U dient de algemene voorwaarden te accepteren!")
         }
         else{
-            this.props.history.push('/About');
+            this.props.history.push('/Account');
         }
     }
 
