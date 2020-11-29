@@ -7,11 +7,6 @@ class Create_trade extends Component{
         this.state = {file: '',imagePreviewUrl: ''};
       }
     
-      _handleSubmit(e) {
-        e.preventDefault();
-        console.log('handle uploading-', this.state.file);
-      }
-    
       _handleImageChange(e) {
         e.preventDefault();
     
@@ -27,10 +22,8 @@ class Create_trade extends Component{
     
         reader.readAsDataURL(file)
       }
-    
-      render() {
-    
-        let {imagePreviewUrl} = this.state;
+render () {
+    let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
           $imagePreview = (<img src={imagePreviewUrl} />);
@@ -38,104 +31,169 @@ class Create_trade extends Component{
         else {
           $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
         }
-    
-        return (   
-          <div className="previewComponent">       
-            <div className="Title">
-              <p>Title</p>
-              <input type="text"  />
+  return (
+    <div class="container">
+        <h1>Maak een plantenruil aan</h1>
+        <form>
+            <div class="form-group">
+                <label for="Title">Title</label>
+                <input type="title" class="form-control" id="Title" placeholder="Title"/>
             </div>
-            <div className="Plaats">
-              <p>Plaats</p>
-              <input type="text"  />
+            <div class="form-group">
+                <label for="Plaats">Plaats</label>
+                <input type="plaats" class="form-control" id="Plaats" placeholder="Plaats"/>
+            </div> 
+            <div class="form-group">
+                <label for="Omschrijving">Omschrijving</label>
+                <input type="omschrijving" class="form-control" id="Omschrijving" placeholder="Omschrijving"/>
+            </div> 
+            <div>Vaste plant</div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
+                <label class="form-check-label" for="inlineRadio1">Ja</label>
             </div>
-            <div className="Omschrijving">
-              <p>Omschrijving</p>
-              <textarea name="textArea" rows="4" >
-              </textarea>
+            <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
+                    <label class="form-check-label" for="inlineRadio2">Nee</label>
             </div>
-            <div className="Categorie">
-              <p>Vaste plant</p>
-              Ja: <input type = "radio"checked="checked" name="radio"/>
-              Nee: <input type = "radio"checked="checked" name="radio"/>
+            <div class="form-group">
+                <label for="inputsoort">Soort</label>
+                <select class="form-control" >
+                    <option selected value> -- Kies een categorie -- </option>
+                    <option>Bomen</option>
+                    <option>Struiken</option>
+                    <option>Kruidachtige</option>
+                    <option>Bodemdekkers</option>
+                    <option>Klimplanten</option>
+                    <option>Vijverplanten</option>
+                </select>
+            </div> 
+            <div class="form-group">
+                <label for="inputstand">Standplaats</label>
+                <select class="form-control" >
+                    <option selected value> -- Kies een categorie -- </option>
+                    <option >Zon</option>
+                    <option >Half schaduw</option>
+                    <option >Schaduw</option>
+                    <option >Stelt geen eisen</option>
+                </select>
             </div>
-            <div className="Categorie">
-              <p>Soort</p>
-              <select value={this.state.value} >
-                <option selected value> -- Kies een categorie -- </option>
-                <option value="bomen">Bomen</option>
-                <option value="bodem">Bodembedekkers</option>
-                <option value="conifeer">Coniferen</option>
-                <option value="haag">Haagplanten</option>
-                <option value="struik">Heesters of struiken</option>
-                <option value="klim">Klimplanten</option>
-                <option value="sier">Siergrassen</option>
-                <option value="terras">Terrasplanten</option>
-                <option value="vijver">Vijverplanten</option>
+            <div class="form-group">
+                <label for="inputwater">Water</label>
+                <select class="form-control" >
+                    <option selected value> -- Kies een categorie -- </option>
+                    <option >Nat</option>
+                    <option >Gemiddeld</option>
+                    <option >Droog</option>
+                    <option >Stelt geen eisen</option>
               </select>
             </div>
-            <div className="Categorie">
-              <p>Standplaats</p>
-              <select value={this.state.value} >
-                <option selected value> -- Kies een categorie -- </option>
-                <option value="schaduw">Volle schaduw</option>
-                <option value="halfschaduw">Half schaduw</option>
-                <option value="zon">Volle Zon</option>
+            <div>Grond stelt eisen:</div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
+                <label class="form-check-label" for="inlineRadio1">Ja:</label><input type="eisen" class="form-control" id="Eisen" placeholder="Eisen"/>
+            </div>
+            <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
+                    <label class="form-check-label" for="inlineRadio2">Nee </label> 
+            </div>
+            <div class="form-group">
+                <label for="inputgroei">Groeihoogte</label>
+                <select class="form-control" >
+                    <option selected value> -- Kies een categorie -- </option>
+                    <option >0 - 20 cm</option>
+                    <option >20 - 40 cm</option>
+                    <option >40 - 70 cm</option>
+                    <option >70 - 100 cm</option>
+                    <option >100 - 120 cm</option>
+                    <option >120 - 150 cm</option>
+                    <option >1.5 - 2 m</option>
+                    <option >hoger dan 2 m</option>
               </select>
             </div>
-            <div className="Categorie">
-              <p>Bloeimaand</p>
-              <select value={this.state.value} >
-                <option selected value> -- Kies een categorie -- </option>
-                <option value="jan_fbr">Januari -februari</option>
-                <option value="mrt_apr">Maart - April</option>
-                <option value="mei_jun">Mei - Juni</option>
-                <option value="jul_aug">Juli - Augustus</option>
-                <option value="sept_okt">September - Oktober</option>
-                <option value="nov_dec">November - December</option>
+            <div class="form-group">
+                <label for="inputkleur">Bloemkleur</label>
+                <select class="form-control" >
+                    <option selected value> -- Kies een categorie -- </option>
+                    <option >Blauw</option>
+                    <option >Geel</option>
+                    <option >Oranje</option>
+                    <option >Paars</option>
+                    <option >Rood</option>
+                    <option >Roze</option>
+                    <option >Violetblauw</option>
+                    <option >Wit</option>
+                    <option >Zwart</option>
+                    <option >anders</option>
+              </select>
+              </div>
+              <div class="form-group">
+                <label for="inputbloei">Bloeiperiode</label>
+                <select class="form-control" >
+                    <option selected value> -- Kies een categorie -- </option>
+                    <option >Januari</option>
+                    <option >Februari</option>
+                    <option >Maart</option>
+                    <option >April</option>
+                    <option >Mei</option>
+                    <option >Juni</option>
+                    <option >Juli</option>
+                    <option >Augustus</option>
+                    <option >September</option>
+                    <option >Oktober</option>
+                    <option >November</option>
+                    <option >December</option>
+              </select>
+              <br></br>
+              <select class="form-control" >
+                    <option selected value> -- Kies een categorie -- </option>
+                    <option >Januari</option>
+                    <option >Februari</option>
+                    <option >Maart</option>
+                    <option >April</option>
+                    <option >Mei</option>
+                    <option >Juni</option>
+                    <option >Juli</option>
+                    <option >Augustus</option>
+                    <option >September</option>
+                    <option >Oktober</option>
+                    <option >November</option>
+                    <option >December</option>
               </select>
             </div>
-            <div className="Categorie">
-              <p>Bloeikleur</p>
-              <select value={this.state.value} >
-                <option selected value> -- Kies een categorie -- </option>
-                <option value="blauw">Blauw</option>
-                <option value="bruin">Bruin</option>
-                <option value="geel">Geel</option>
-                <option value="groen">Groen</option>
-                <option value="oranje">Oranje</option>
-                <option value="paars">Paars</option>
-                <option value="rood">Rood</option>
-                <option value="roze">Roze</option>
-                <option value="wit">Wit</option>
-                <option value="zwart">Zwart</option>
-                <option value="meerkl">Meerkleurig</option>
-                <option value="anders">anders</option>
+            <div class="form-group">
+                <label for="inputkenmerk">Speciale kenmerken</label>
+                <select class="form-control" >
+                    <option selected value> -- Kies een categorie -- </option>
+                    <option >Geurend</option>
+                    <option >Eetbaar</option>
+                    <option >Giftig</option>
+                    <option >Trekt bijen aan</option>
+                    <option >Trekt hommels aan</option>
+                    <option >Trekt vlinders aan</option>
+                    <option >Trekt vogels aan</option>
               </select>
-            </div>
-            <div className="Categorie">
-              <p>Groeihoogte</p>
-              <select value={this.state.value} >
-                <option selected value> -- Kies een categorie -- </option>
-                <option value="20">0 - 20 cm</option>
-                <option value="40">20 - 40 cm</option>
-                <option value="70">40 - 70 cm</option>
-                <option value="100">70 - 100 cm</option>
-                <option value="120">100 - 120 cm</option>
-                <option value="150">120 - 150 cm</option>
-                <option value="2m">1.5 - 2 m</option>
-                <option value="hoger">hoger dan 2 m</option>
+              <br></br>
+              <select class="form-control" >
+                    <option selected value> -- Kies een categorie -- </option>
+                    <option >Geurend</option>
+                    <option >Eetbaar</option>
+                    <option >Giftig</option>
+                    <option >Trekt bijen aan</option>
+                    <option >Trekt hommels aan</option>
+                    <option >Trekt vlinders aan</option>
+                    <option >Trekt vogels aan</option>
               </select>
-            </div>
-            <div className="Categorie">
-              <p>Speciale kenmerken</p>
-              <select value={this.state.value} >
-                <option selected value> -- Kies een categorie -- </option>
-                <option value="aroma">Aromatisch</option>
-                <option value="bijen">Bijen aantrekken</option>
-                <option value="droogbl">Droogbloem</option>
-                <option value="fruit">Fruit</option>
-                <option value="geur">Geurende bloem</option>
+              <br></br>
+              <select class="form-control" >
+                    <option selected value> -- Kies een categorie -- </option>
+                    <option >Geurend</option>
+                    <option >Eetbaar</option>
+                    <option >Giftig</option>
+                    <option >Trekt bijen aan</option>
+                    <option >Trekt hommels aan</option>
+                    <option >Trekt vlinders aan</option>
+                    <option >Trekt vogels aan</option>
               </select>
             </div>
             <div className="fileInput">
@@ -153,10 +211,12 @@ class Create_trade extends Component{
             <div className="imgPreview">
               {$imagePreview}
             </div>
-          </div>
-        )
-      }
-    }
-    
+        </form>
+        <button class="btn btn-primary" type="submit">Voeg toe</button>
+        <br></br>
+    </div>
+    );
+}
+}
 
 export default Create_trade;
