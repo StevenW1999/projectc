@@ -13,7 +13,7 @@ class UserCatalogue extends Component {
     render() {
         let users = this.props.data.map(user => {
             return (
-                <User data={user} />
+                <User user={user} />
             )
         })
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import './User.css';
-import userPic from '../images/Default-User.jpg'; 
 
 
 class User extends Component {
@@ -16,10 +15,10 @@ class User extends Component {
             <>
                         <div class="card text-center">
                             <div class="el-wrapper">
-                                    <div class="card-body">
-                                        <h5>User Name</h5>
-                                        <img src={userPic} class="img-fluid" alt="" />
-                                            <p class="card-text">Have you ever been far even as decided to want to go look more like?</p>
+                        <div class="card-body">
+                            <h5>{this.props.user.name}</h5>
+                            <img src={this.props.user.image} class="img-fluid" alt="" />
+                            <p class="card-text">{this.props.user.description}</p>
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col">
