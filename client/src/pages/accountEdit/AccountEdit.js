@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import './AccountCreate.css';
+import './AccountEdit.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 
 class AccountCreate extends Component {
@@ -8,13 +8,12 @@ class AccountCreate extends Component {
         super(props);
         this.state = {
             redirect: false,
-            fname: "",
-            lname: "",
-            email: "",
-            emailcheck: "",
-            password: "",
-            passwordcheck: "",
-            checkbox: false,
+            fname: "Hello",                         // <-- Placeholder data
+            lname: "There",                         //
+            email: "ab@abc.com",                    //
+            emailcheck: "ab@abc.com",               //
+            password: "12345678",                   //
+            passwordcheck: "12345678"               //
         }
         
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -69,9 +68,6 @@ class AccountCreate extends Component {
         else if (this.state.password!==this.state.passwordcheck) {
             alert("Wachtwoorden komen niet overeen!")
         }
-        else if (!this.state.checkbox) {
-            alert("U dient de algemene voorwaarden te accepteren!")
-        }
         else{
             this.props.history.push('/Account');
         }
@@ -79,23 +75,24 @@ class AccountCreate extends Component {
 
     render() {
         return (
-            <div className="AccountCreate">
+            <div className="AccountEdit">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-                <header>Account aanmaken</header>
+                <header>Account aanpassen</header>
 
                 <Form onSubmit={this.onSubmitHandler}>
+
                     <Row>
                         <Col>
                             <Form.Group controlId="FNameInput">
                                 <Form.Label>Voornaam</Form.Label>
-                                <Form.Control name="fname" type="FName" placeholder="" onChange={this.handleInputChange} />
+                                <Form.Control name="fname" type="FName" value={this.state.fname} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="LNameInput">
                                 <Form.Label>Achternaam</Form.Label>
-                                <Form.Control name="lname" type="LName" placeholder="" onChange={this.handleInputChange} />
+                                <Form.Control name="lname" type="LName" value={this.state.lname} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -104,14 +101,14 @@ class AccountCreate extends Component {
                         <Col>
                             <Form.Group controlId="EmailInput">
                                 <Form.Label>Emailadres</Form.Label>
-                                <Form.Control name="email" type="Email" placeholder="" onChange={this.handleInputChange} />
+                                <Form.Control name="email" type="Email" value={this.state.email} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="ConfirmEmailInput">
                                 <Form.Label>Bevestig emailadres</Form.Label>
-                                <Form.Control name="emailcheck" type="Email" placeholder="" onChange={this.handleInputChange} />
+                                <Form.Control name="emailcheck" type="Email" value={this.state.emailcheck} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -120,25 +117,20 @@ class AccountCreate extends Component {
                         <Col>
                             <Form.Group controlId="PasswordInput">
                                 <Form.Label>Wachtwoord</Form.Label>
-                                <Form.Control name="password" type="Password" placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="password" type="Password" value={this.state.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="ConfirmPasswordInput">
                                 <Form.Label>Bevestig wachtwoord</Form.Label>
-                                <Form.Control name="passwordcheck" type="Password" placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="passwordcheck" type="Password" value={this.state.passwordcheck} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
-
-                    <Form.Group controlId="Checkbox">
-                        <Form.Check name="checkbox" type="checkbox" label="Ik heb de algemene voorwaarden gelezen en ga hiermee akkoord." onChange={this.handleInputChange} />
-                    </Form.Group>
-
                     
                     <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
-                        Account aanmaken
+                        Account aanpassen
                     </Button>                       
                 </Form>
             </div>
