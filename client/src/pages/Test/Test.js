@@ -18,10 +18,14 @@ render () {
                 <label for="Omschrijving">Omschrijving</label>
                 <input type="omschrijving" class="form-control" id="Omschrijving" placeholder="Omschrijving"/>
             </div> 
-            <div className="Vast">
-              <p>Vaste plant</p>
-              Ja: <input type = "radio"checked="checked" name="radio"/>
-              Nee: <input type = "radio"checked="checked" name="radio"/>
+            <div class="form-check form-check-inline">
+                Vaste plant
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
+                <label class="form-check-label" for="inlineRadio1">ja</label>
+            </div>
+            <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/>
+                    <label class="form-check-label" for="inlineRadio2">Nee</label>
             </div>
             <div class="form-group">
                 <label for="inputsoort">Soort</label>
