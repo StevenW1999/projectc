@@ -3,6 +3,7 @@ import { Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import User from './User';
 import userPic from '../images/Default-User.jpg'; 
+import Form from 'react-bootstrap/Form'
 import './UserCatalogue.css';
 
 
@@ -22,15 +23,15 @@ class UserCatalogue extends Component {
                 <br /> <br />
                 <div class="container">
                     <div class="row">
-                        <div class="col">
-                            <form>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="username" placeholder="Gebruikernaam..." />
+                        <div class="col-sm-">
+                            <Form>
+                                <div class="input-group mb-3">
+                                <Form.Control type="text" placeholder="Gebruikersnaam..."/>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-success">Zoek!</button>
+                                    </div>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary">Zoek</button>
+                            </Form>
                         </div>
                     </div>
                 </div>
