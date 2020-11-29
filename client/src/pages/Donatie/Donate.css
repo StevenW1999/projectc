@@ -1,0 +1,61 @@
+.image-upload>input {
+    display: none;
+  }
+  
+  p {
+      background: white;
+      margin: 3px;
+      color: green;
+      text-align: center;
+      font-size: 20px;
+   }
+  
+  
+  
+  .Bedrag,.Betaalwijze{
+    background-color: white;
+    text-align: center;
+    margin: 3px auto;
+   }
+  
+  select {
+          width: 300px;
+          margin: 3px;
+  }
+  
+   .fileInput{
+      background-color: white;
+      text-align: center;
+      border-bottom: 3px solid lightgreen;
+      border-right: 3px solid lightgreen;
+      border-top: 3px solid lightgreen;
+      border-left: 3px solid lightgreen;
+      padding: 10px;
+      width: 310px;
+      margin: 5px auto;
+      cursor: pointer;
+    }
+    
+    .imgPreview{
+      background-color: white;
+      text-align: center;
+      margin: 5px auto;
+      height: 330px;
+      width: 330px;
+      border-left: 3px solid lightgreen;
+      border-right: 3px solid lightgreen;
+      border-top: 3px solid lightgreen;
+      border-bottom: 3px solid lightgreen;
+    }
+      img{
+          background-color: white;
+          width: 100%;
+          height: 100%;
+     }
+      
+    .previewText{
+      background-color: white;
+      width: 100%;
+      margin-top: 20px;
+    }
+  
