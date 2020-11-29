@@ -24,3 +24,5 @@ yarn-error.log*
 Backend.API/appsettings.json
 *.cache
 Backend.API/Properties/launchSettings.json
+client/.eslintcache
+client/.eslintcache

@@ -1,18 +1,59 @@
 import React, { Component } from 'react';
 import "./Account.css";
+import { Link } from 'react-router-dom';
+import { Form, Button, Row, Col} from 'react-bootstrap';
 
 class Account extends Component{
-render () {
-  return (
-    <div>  
-        <header>Mijn account</header>
-        <h1>Falco Zandboer</h1>
-        <img src="" alt="Profile Picture"></img>
-        <h6>Email:</h6>
-        <p>f.zandboer@gmail.com</p>
-    </div>
+  constructor(props) {
+    super(props);
+    this.state = {
+        redirect: false,
+        email: "ab@abcd.com",     // <-- Alleen nog maar templates.
+        fname: "Hello",           //
+        lname: "there"            //
+    }
+  }
+  
+  onCreate(event) {
+    event.preventDefault();         //<-- Dit gaat de state aanpassen met de data van de backend.
+    const target = event.target;    //
+    const value = target.value;     //
+    const name = target.name;       //
+    
+    this.setState({
+      [name]: value    
+    });
+  }
+
+  render () {
+    return (
+      <div className="Account">  
+          
+          <Form>
+            <header>Mijn account</header>
+            <h1>Naam:</h1>      
+            <h4>{this.state.fname} {this.state.lname}</h4>
+            <br></br>
+
+            <br></br>
+            <h1>Email:</h1>
+            <h4>{this.state.email}</h4>
+
+            <Button variant="primary" type="submit">
+              <Link to="/" className="Lnk">
+                Uitloggen
+              </Link>
+            </Button>
+          
+            <Button className="float-right" variant="primary" type="submit">
+              <Link to="/AccountEdit" className="Lnk">
+                Account Aanpassen
+              </Link>
+            </Button>
+          </Form>
+      </div>
     );
-}
+  }
 }
 
 export default Account;
