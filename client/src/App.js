@@ -5,11 +5,14 @@ import Navigation from './components/Navigation'
 import Footer from './components/Footer';
 import About from './pages/about/About';
 import ProductPage from './pages/productpage/ProductPage';
+import Create_trade from './pages/Create_trade/Create_trade';
 import Searchresults from './pages/searchresults/Searchresults';
 import AccountCreate from './pages/accountCreate/AccountCreate';
 import Account from './pages/account/Account';
 import AccountEdit from './pages/accountEdit/AccountEdit';
 import Login from './pages/login/Login';
+import AdminPanel from './pages/adminpanel/AdminPanel';
+import Test from './pages/Test/Test';
 
 
 import {
@@ -31,6 +34,10 @@ function App() {
         <Route exact path="/Account" component ={Account}/>
         <Route exact path="/AccountCreate" component ={AccountCreate}/>
         <Route exact path="/AccountEdit" component ={AccountEdit}/>
+        <Route exact path="/Create_trade" component ={Create_trade}/>
+        <Route exact path="/Search" component={Searchresults} />
+        <Route exact path="/AdminPanel" component={AdminPanel} />
+        <Route exact path="/Test" component={Test}/>
       </Switch>
       <Footer />
     </Router>

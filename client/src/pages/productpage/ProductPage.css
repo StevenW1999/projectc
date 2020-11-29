@@ -10,14 +10,33 @@
     background-color: #474747;
 }
 
-.fit-gallery {
+/*.fit-gallery {
     width: 100%;
     height: 500px;
     object-fit: contain;
+}*/
+
+.container-padding {
+    padding-top: 25px;
 }
 
 .fit-rec {
     height: 150px;
+}
+
+.bottom-related {
+    padding-bottom: 4px !important;
+    margin-bottom: 22px !important;
+}
+
+.title-related {
+    background-color: #ededed;
+    margin-top: 0px;
+    padding-bottom: 0px;
+}
+
+.text-related {
+    margin-left: 4px;
 }
 
 .img-cover {
@@ -42,6 +61,7 @@
     position:relative;
     overflow:hidden;
     padding-bottom:100%;
+    width: 100%;
 }
 .image img {
     position:absolute;
@@ -51,4 +71,8 @@
     padding: 0px;
     color: black;
     text-align: left;
+}
+
+.padding-img {
+    padding-bottom: 25px;
 }
