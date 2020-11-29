@@ -9,6 +9,7 @@ import Create_trade from './pages/Create_trade/Create_trade';
 import Searchresults from './pages/searchresults/Searchresults';
 import AccountCreate from './pages/accountCreate/AccountCreate';
 import Account from './pages/account/Account';
+import Test from './pages/Test/Test';
 
 
 
@@ -31,6 +32,7 @@ function App() {
         <Route exact path="/Account" component ={Account}/>
         <Route exact path="/Create_trade" component ={Create_trade}/>
         <Route exact path="/Search" component={Searchresults} />
+        <Route exact path="/Test" component={Test}/>
       </Switch>
       <Footer />
     </Router>
