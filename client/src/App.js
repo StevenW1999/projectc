@@ -10,7 +10,7 @@ import Searchresults from './pages/searchresults/Searchresults';
 import AccountCreate from './pages/accountCreate/AccountCreate';
 import Account from './pages/account/Account';
 import AdminPanel from './pages/adminpanel/AdminPanel';
-
+import Test from './pages/Test/Test';
 
 import {
   BrowserRouter as Router,
@@ -30,8 +30,9 @@ function App() {
         <Route exact path="/Login" component ={AccountCreate}/>
         <Route exact path="/Account" component ={Account}/>
         <Route exact path="/Create_trade" component ={Create_trade}/>
-              <Route exact path="/Search" component={Searchresults} />
-              <Route exact path="/AdminPanel" component={AdminPanel} />
+        <Route exact path="/Search" component={Searchresults} />
+        <Route exact path="/AdminPanel" component={AdminPanel} />
+        <Route exact path="/Test" component={Test}/>
       </Switch>
       <Footer />
     </Router>
