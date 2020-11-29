@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "./Account.css";
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Form, Button, Row, Col} from 'react-bootstrap';
 
 class Account extends Component{
   constructor(props) {
@@ -24,10 +25,6 @@ class Account extends Component{
     });
   }
 
-  onEdit(event) {
-    this.props.history.push('/AccountEdit')
-  }
-
   render () {
     return (
       <div className="Account">  
@@ -42,9 +39,16 @@ class Account extends Component{
             <h1>Email:</h1>
             <h4>{this.state.email}</h4>
 
+            <Button variant="primary" type="submit">
+              <Link to="/" className="Lnk">
+                Uitloggen
+              </Link>
+            </Button>
           
-            <Button className="float-right" variant="primary" type="submit" onClick={this.onEdit()}> {/*onClick={this.props.history.push('/AccountEdit')} */}
-              Account aanpassen
+            <Button className="float-right" variant="primary" type="submit">
+              <Link to="/AccountEdit" className="Lnk">
+                Account Aanpassen
+              </Link>
             </Button>
           </Form>
       </div>
