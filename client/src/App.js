@@ -12,7 +12,7 @@ import Account from './pages/account/Account';
 import AccountEdit from './pages/accountEdit/AccountEdit';
 import Login from './pages/login/Login';
 import AdminPanel from './pages/adminpanel/AdminPanel';
-import Test from './pages/Test/Test';
+import Donatie from './pages/Donatie/Donate'
 
 
 import {
@@ -37,7 +37,7 @@ function App() {
         <Route exact path="/Create_trade" component ={Create_trade}/>
         <Route exact path="/Search" component={Searchresults} />
         <Route exact path="/AdminPanel" component={AdminPanel} />
-        <Route exact path="/Test" component={Test}/>
+        <Route exact path="/Donatie" component={Donatie} />
       </Switch>
       <Footer />
     </Router>

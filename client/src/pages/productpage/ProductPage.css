@@ -76,3 +76,9 @@
 .padding-img {
     padding-bottom: 25px;
 }
+
+.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}

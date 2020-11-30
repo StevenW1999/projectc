@@ -54,6 +54,8 @@ class ProductPage extends Component {
                             <p className="normal-text font-weight-bold"><BsDroplet/> Om de 2 weken water geven</p>
                             <p className="normal-text font-weight-bold"><BsBrightnessHigh/> Heeft weinig zon nodig</p>
                             <Container className="text-center">
+                                <a href="/Create_trade" class="btn btn-info" role="button">Edit plant</a>
+                                <div class="divider"/>
                                 <Button>Neem contact op</Button> <BsStar/>
                             </Container>
                             <br/>
