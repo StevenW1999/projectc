@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,6 +23,8 @@ namespace ProjectC
         public byte[] ProfilePicture { get; set; }
         public bool Active { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Plant> Plants { get; set; }
+
     }
 }

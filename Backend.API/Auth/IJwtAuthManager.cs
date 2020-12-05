@@ -15,6 +15,7 @@ namespace ProjectC.Auth
 {
     public interface IJwtAuthManager
     {
+        //all methods from the authmanager
         IImmutableDictionary<string, RefreshToken> UsersRefreshTokensReadOnlyDictionary { get; }
         JwtAuthResult GenerateTokens(string username, Claim[] claims, DateTime now);
         JwtAuthResult Refresh(string refreshToken, string accessToken, DateTime now);
@@ -25,8 +26,9 @@ namespace ProjectC.Auth
 
     public class JwtAuthManager : IJwtAuthManager
     {
+        //import references
         public IImmutableDictionary<string, RefreshToken> UsersRefreshTokensReadOnlyDictionary => _usersRefreshTokens.ToImmutableDictionary();
-        private readonly ConcurrentDictionary<string, RefreshToken> _usersRefreshTokens;  // can store in a database or a distributed cache
+        private readonly ConcurrentDictionary<string, RefreshToken> _usersRefreshTokens;
         private readonly JwTokenConfig _jwtTokenConfig;
         private readonly byte[] _secret;
 
@@ -36,38 +38,36 @@ namespace ProjectC.Auth
             _usersRefreshTokens = new ConcurrentDictionary<string, RefreshToken>();
             _secret = Encoding.ASCII.GetBytes(jwtTokenConfig.Secret);
         }
-
-        // optional: clean up expired refresh tokens
+        //remove expired refresh tokens method (based on time)
         public void RemoveExpiredRefreshTokens(DateTime now)
         {
-            var expiredTokens = _usersRefreshTokens.Where(x => x.Value.ExpireAt < now).ToList();
+            var expiredTokens = _usersRefreshTokens.Where(x => x.Value.ExpireAt < now).ToList(); //find all tokens that expired
             foreach (var expiredToken in expiredTokens)
             {
-                _usersRefreshTokens.TryRemove(expiredToken.Key, out _);
+                _usersRefreshTokens.TryRemove(expiredToken.Key, out _); //remove each
             }
         }
-
-        // can be more specific to ip, user agent, device name, etc.
+        //remove expired tokens by username
         public void RemoveRefreshTokenByUserName(string userName)
         {
-            var refreshTokens = _usersRefreshTokens.Where(x => x.Value.UserName == userName).ToList();
+            var refreshTokens = _usersRefreshTokens.Where(x => x.Value.UserName == userName).ToList(); //get all tokens from username
             foreach (var refreshToken in refreshTokens)
             {
-                _usersRefreshTokens.TryRemove(refreshToken.Key, out _);
+                _usersRefreshTokens.TryRemove(refreshToken.Key, out _); //remove them
             }
         }
-
+        //function to generate tokens
         public JwtAuthResult GenerateTokens(string username, Claim[] claims, DateTime now)
         {
-            var shouldAddAudienceClaim = string.IsNullOrWhiteSpace(claims?.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Aud)?.Value);
-            var jwtToken = new JwtSecurityToken(
+            var shouldAddAudienceClaim = string.IsNullOrWhiteSpace(claims?.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Aud)?.Value); //prevent token from being too long
+            var jwtToken = new JwtSecurityToken( // new token and prevent it from being lengthy
                 _jwtTokenConfig.Issuer,
                 shouldAddAudienceClaim ? _jwtTokenConfig.Audience : string.Empty,
                 claims,
                 expires: now.AddMinutes(_jwtTokenConfig.AccessTokenExpiration),
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(_secret), SecurityAlgorithms.HmacSha256Signature));
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
-
+            //new refresh token
             var refreshToken = new RefreshToken
             {
                 UserName = username,
@@ -75,42 +75,42 @@ namespace ProjectC.Auth
                 ExpireAt = now.AddMinutes(_jwtTokenConfig.RefreshTokenExpiration)
             };
             _usersRefreshTokens.AddOrUpdate(refreshToken.TokenString, refreshToken, (s, t) => refreshToken);
-
+            //the tokens that we created returned
             return new JwtAuthResult
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken
             };
         }
-
+        //function to refresh the token
         public JwtAuthResult Refresh(string refreshToken, string accessToken, DateTime now)
         {
-            var (principal, jwtToken) = DecodeJwtToken(accessToken);
-            if (jwtToken == null || !jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256Signature))
+            var (principal, jwtToken) = DecodeJwtToken(accessToken); //decode token
+            if (jwtToken == null || !jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256Signature)) //check the token if it exists
             {
                 throw new SecurityTokenException("Invalid token");
             }
 
             var userName = principal.Identity.Name;
-            if (!_usersRefreshTokens.TryGetValue(refreshToken, out var existingRefreshToken))
+            if (!_usersRefreshTokens.TryGetValue(refreshToken, out var existingRefreshToken)) //check the refresh token if it exists
             {
                 throw new SecurityTokenException("Invalid token");
             }
-            if (existingRefreshToken.UserName != userName || existingRefreshToken.ExpireAt < now)
+            if (existingRefreshToken.UserName != userName || existingRefreshToken.ExpireAt < now) //check if token is correct or if it has expired
             {
                 throw new SecurityTokenException("Invalid token");
             }
 
-            return GenerateTokens(userName, principal.Claims.ToArray(), now); // need to recover the original claims
+            return GenerateTokens(userName, principal.Claims.ToArray(), now); // need to recover the original claims and generate a refresh token
         }
-
+        //function to decode token
         public (ClaimsPrincipal, JwtSecurityToken) DecodeJwtToken(string token)
         {
             if (string.IsNullOrWhiteSpace(token))
             {
                 throw new SecurityTokenException("Invalid token");
             }
-            var principal = new JwtSecurityTokenHandler()
+            var principal = new JwtSecurityTokenHandler() 
                 .ValidateToken(token,
                     new TokenValidationParameters
                     {
@@ -148,8 +148,7 @@ namespace ProjectC.Auth
     public class RefreshToken
     {
         [JsonPropertyName("username")]
-        public string UserName { get; set; }    // can be used for usage tracking
-        // can optionally include other metadata, such as user agent, ip address, device name, and so on
+        public string UserName { get; set; }   
 
         [JsonPropertyName("tokenString")]
         public string TokenString { get; set; }

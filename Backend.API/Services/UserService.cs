@@ -13,12 +13,11 @@ namespace ProjectC.Services
         bool IsValidAdminCredentials(string userName, string password);
         bool IsAnExistingAdmin(string userName);
     }
-
+    //basic userservice
     public class UserService : IUserService
     {
         private readonly ILogger<UserService> _logger;
         private readonly ProjectCContext _context;
-        // inject your database here for user validation
         public UserService(ILogger<UserService> logger, ProjectCContext context)
         {
             _logger = logger;
@@ -44,7 +43,7 @@ namespace ProjectC.Services
         {
             return _context.Users.Any(u => u.Username == userName);
         }
-
+       
         public string GetUserRole(string userName)
         {
             if (IsAnExistingUser(userName))

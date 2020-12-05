@@ -19,12 +19,14 @@ namespace ProjectC.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        //import services and context
         private readonly ProjectCContext _context;
         private readonly IJwtAuthManager _jwtAuthManager;
         private readonly IUserService _userService;
 
-        public UsersController(ProjectCContext context, IUserService userService, IJwtAuthManager jwtAuthManager)
+        public UsersController(ProjectCContext context, IUserService userService, IJwtAuthManager jwtAuthManager) //controller constructor
         {
+            //to use them in the controller
             _context = context;
             _jwtAuthManager = jwtAuthManager;
             _userService = userService;
@@ -32,12 +34,14 @@ namespace ProjectC.Controllers
 
         // GET: api/Users
         [HttpGet]
+        [Authorize] //use authorize tags to determine which actions need authorization
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.ToListAsync(); //return all users in a list
         }
 
         // GET: api/Users/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
@@ -52,16 +56,21 @@ namespace ProjectC.Controllers
         }
 
         // PUT: api/Users/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
+            //check if given id is equal to the id of the user to be edited
             if (id != user.Id)
             {
                 return BadRequest();
             }
-
+            //check if the updated username exists or not
+            if (_userService.IsAnExistingUser(user.Username))
+            {
+                return BadRequest();
+            }
+            //update user
             _context.Entry(user).State = EntityState.Modified;
 
             try
@@ -84,17 +93,22 @@ namespace ProjectC.Controllers
         }
 
         // POST: api/Users
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> PostUser(User user)
         {
             try
             {
+                //check if model is valid
                 if (ModelState.IsValid)
                 {
-
-                    _context.Add(user);
-                    await _context.SaveChangesAsync();
-                    return CreatedAtAction("GetUser", new { id = user.Id }, user);
+                    //check if there is an user with the given username, if not then:
+                    if (!_userService.IsAnExistingUser(user.Username))
+                    {
+                        _context.Add(user);
+                        await _context.SaveChangesAsync();
+                        return CreatedAtAction("GetUser", new { id = user.Id }, user);
+                    }
                 }
             }
             catch (DbUpdateException /* ex */)
@@ -108,6 +122,7 @@ namespace ProjectC.Controllers
         }
 
         // DELETE: api/Users/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
@@ -123,15 +138,18 @@ namespace ProjectC.Controllers
             return user;
         }
 
-        [HttpGet("filter")]
+        //search for specific user
+        [AllowAnonymous]
+        [HttpGet("search")]
         public async Task<IActionResult> Index(string searchString)
         {
+            //query to get all users
             var users = from u in _context.Users
                          select u;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                users = users.Where(s => s.Username.Contains(searchString));
+                users = users.Where(s => s.Username.Contains(searchString)); //query to search for user
             }
 
             return Ok(users);
@@ -141,24 +159,30 @@ namespace ProjectC.Controllers
         [HttpPost("login")]
         public ActionResult Login([FromBody] LoginRequest request)
         {
+            //check if login request is valid
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-
+            //error if login credentials are invalid
             if (!_userService.IsValidUserCredentials(request.UserName, request.Password))
             {
                 return Unauthorized();
             }
 
             var role = _userService.GetUserRole(request.UserName);
+
+            //create new claim
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name,request.UserName),
                 new Claim(ClaimTypes.Role, role)
             };
 
+            //create token
             var jwtResult = _jwtAuthManager.GenerateTokens(request.UserName, claims, DateTime.Now);
+
+            //return bearer token 
             return Ok(new LoginResult
             {
                 UserName = request.UserName,
@@ -167,6 +191,7 @@ namespace ProjectC.Controllers
                 RefreshToken = jwtResult.RefreshToken.TokenString
             });
         }
+
         [HttpGet("user")]
         [Authorize]
         public ActionResult GetCurrentUser()
@@ -183,9 +208,7 @@ namespace ProjectC.Controllers
         [Authorize]
         public ActionResult Logout()
         {
-            // optionally "revoke" JWT token on the server side --> add the current token to a block-list
-            // https://github.com/auth0/node-jsonwebtoken/issues/375
-
+            //remove token with username of the current logged in user
             var userName = User.Identity.Name;
             _jwtAuthManager.RemoveRefreshTokenByUserName(userName);
             return Ok();
@@ -204,8 +227,13 @@ namespace ProjectC.Controllers
                     return Unauthorized();
                 }
 
+                //get new token
                 var accessToken = await HttpContext.GetTokenAsync("Bearer", "access_token");
+
+                //make new current user token with the now token added
                 var jwtResult = _jwtAuthManager.Refresh(request.RToken, accessToken, DateTime.Now);
+
+                //return new token
                 return Ok(new LoginResult
                 {
                     UserName = userName,

@@ -195,6 +195,22 @@ namespace ProjectC.Controllers
                 return Unauthorized(e.Message); // return 401 so that the client side can redirect the user to login page
             }
         }
+
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<User>> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
         private bool AdminExists(int id)
         {
             return _context.Admins.Any(e => e.Id == id);

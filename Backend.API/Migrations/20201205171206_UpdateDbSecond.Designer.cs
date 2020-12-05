@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProjectC;
@@ -9,9 +10,10 @@ using ProjectC;
 namespace ProjectC.Migrations
 {
     [DbContext(typeof(ProjectCContext))]
-    partial class ProjectCContextModelSnapshot : ModelSnapshot
+    [Migration("20201205171206_UpdateDbSecond")]
+    partial class UpdateDbSecond
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,8 +58,8 @@ namespace ProjectC.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("GrowthHeigth")
-                        .HasColumnType("text");
+                    b.Property<int>("GrowthHeigth")
+                        .HasColumnType("integer");
 
                     b.Property<byte[]>("Image")
                         .HasColumnType("bytea");
@@ -65,8 +67,8 @@ namespace ProjectC.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<string>("Perennial")
-                        .HasColumnType("text");
+                    b.Property<bool>("Perennial")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("SeasonFrom")
                         .HasColumnType("timestamp without time zone");
@@ -89,7 +91,7 @@ namespace ProjectC.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("text");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -134,7 +136,8 @@ namespace ProjectC.Migrations
                     b.HasOne("ProjectC.User", "User")
                         .WithMany("Plants")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
