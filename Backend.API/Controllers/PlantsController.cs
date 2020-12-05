@@ -22,6 +22,7 @@ namespace ProjectC.Controllers
         }
 
         // GET: api/Plants
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Plant>>> getPLants()
         {
@@ -46,6 +47,7 @@ namespace ProjectC.Controllers
         }
 
         // GET: api/Plants/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Plant>> GetPlant(int id)
         {
@@ -159,6 +161,7 @@ namespace ProjectC.Controllers
         }
 
         //GET: api/plants/search?searchString=
+        [AllowAnonymous]
         [HttpGet("search")]
         public async Task<IActionResult> Index(string searchString, string sortString, string typeString, bool Available)
         {
