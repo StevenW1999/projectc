@@ -14,6 +14,7 @@ class User extends Component {
     render() {
         return (
             <>
+                    <div class="col-sm-8">
                         <div class="card text-center">
                     <div class="el-wrapper">
                         <div class="col-md-">
@@ -34,6 +35,7 @@ class User extends Component {
                                         </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                     </div>
                     </div>
