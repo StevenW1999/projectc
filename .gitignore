@@ -35,3 +35,15 @@ client/.eslintcache
 client/.eslintcache
 .vs/slnx.sqlite
 client/.eslintcache
+
+node_modules/
+node/
+.vs/Project/v16/.suo
+.vs/Project/config/applicationhost.config
+.vs/projectc/config/applicationhost.config
+.vs/ProjectSettings.json
+.vs/projectc/config/applicationhost.config
+.vs/ProjectSettings.json
+.vs/projectc/config/applicationhost.config
+.vs/ProjectSettings.json
+.vs/projectc/config/applicationhost.config
