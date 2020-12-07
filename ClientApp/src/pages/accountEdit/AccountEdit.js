@@ -1,22 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AccountEdit.css';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, Modal } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
+import ConfirmRemAcc from '../../components/ConfirmRemAcc';
 
-class AccountCreate extends Component {
+class AccountEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
             redirect: false,
+            isOpen: false,
             fname: "Hello",                         // <-- Placeholder data
             lname: "There",                         //
             email: "ab@abc.com",                    //
             emailcheck: "ab@abc.com",               //
             password: "12345678",                   //
-            passwordcheck: "12345678"               //
+            passwordcheck: "12345678",              //
+            file: null                              //
         }
-        
+
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.removeHandler = this.removeHandler.bind(this);
     }
 
     handleInputChange(event) {
@@ -24,22 +29,29 @@ class AccountCreate extends Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        
-        this.setState({
-          [name]: value    
-        });
+
+        if (target.type === "file") {
+            this.setState({
+                file: URL.createObjectURL(event.target.files[0])
+            })
+        }
+        else {
+            this.setState({
+                [name]: value
+            });
+        }
     }
 
-    emailValidation(){
+    emailValidation() {
         let value = this.state.email;
-        if(value.lastIndexOf("@")<value.lastIndexOf(".")){
-            if(value.lastIndexOf("@")>0){
-                if(value.lastIndexOf(".")<value.length-1){
+        if (value.lastIndexOf("@") < value.lastIndexOf(".")) {
+            if (value.lastIndexOf("@") > 0) {
+                if (value.lastIndexOf(".") < value.length - 1) {
                     return true;
                 }
             }
         }
-        else{
+        else {
             return false;
         }
     }
@@ -47,40 +59,52 @@ class AccountCreate extends Component {
     onSubmitHandler = (e) => {
         e.preventDefault();
 
-        if(this.state.fname.length<1){
+        if (this.state.fname.length < 1) {
             alert("Voornaam mag niet leeg zijn!")
         }
-        else if (this.state.lname.length<=1) {
+        else if (this.state.lname.length <= 1) {
             alert("Achternaam mag niet leeg zijn!")
         }
-        else if (this.state.email<5) {
+        else if (this.state.email < 5) {
             alert("Email mag niet leeg zijn!")
         }
         else if (!this.emailValidation()) {
             alert("Emailadres is ongeldig!")
         }
-        else if (this.state.email!==this.state.emailcheck) {
+        else if (this.state.email !== this.state.emailcheck) {
             alert("Emailadressen komen niet overeen!")
         }
-        else if (this.state.password.length<8) {
+        else if (this.state.password.length < 8) {
             alert("Wachtwoord moet minimaal 8 karakters lang zijn!")
         }
-        else if (this.state.password!==this.state.passwordcheck) {
+        else if (this.state.password !== this.state.passwordcheck) {
             alert("Wachtwoorden komen niet overeen!")
         }
-        else{
+        else {
             this.props.history.push('/Account');
         }
     }
 
+    removeHandler = (e) => {
+        this.setState({ isOpen: true })
+    }
+
     render() {
+
+
         return (
             <div className="AccountEdit">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
                 <header>Account aanpassen</header>
 
-                <Form onSubmit={this.onSubmitHandler}>
+                <Form>
 
+                    <Image src={this.state.file} roundedCircle />
+
+                    <Form.Group controlId="ProfPicInput">
+                        <Form.Label>Profielfoto</Form.Label>
+                        <Form.File name="file" type="file" id="custom-file-translate-html" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
+                    </Form.Group>
                     <Row>
                         <Col>
                             <Form.Group controlId="FNameInput">
@@ -128,15 +152,22 @@ class AccountCreate extends Component {
                             </Form.Group>
                         </Col>
                     </Row>
-                    
+
                     <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
                         Account aanpassen
-                    </Button>                       
+                    </Button>
+
+
+
                 </Form>
+                <Button variant="primary" type="remove" onClick={this.removeHandler}>
+                    Account verwijderen
+                    </Button>
+                <ConfirmRemAcc show={this.state.isOpen}></ConfirmRemAcc>
             </div>
 
         );
     }
 }
 
-export default AccountCreate;
+export default AccountEdit;
