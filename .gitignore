@@ -230,3 +230,9 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+
+node_modules/
+node/
+Backend.API/Properties/launchSettings.json
+client/.eslintcache
