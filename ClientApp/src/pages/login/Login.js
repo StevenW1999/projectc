@@ -10,7 +10,6 @@ class Login extends Component{
             password: "",
             token: "",
             isAuthenticated: false,
-            passwordincorrect: false
         }
         
         this.handleInputChange = this.handleInputChange.bind(this);
