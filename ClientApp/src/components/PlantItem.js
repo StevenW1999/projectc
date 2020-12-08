@@ -27,7 +27,7 @@ class PlantItem extends Component {
                         <div class="h-bg">
                             <div class="h-bg-inner"></div>
                         </div>
-                        <a class="bar" href="#">
+                        <a class="bar" href="./ProductPage">
                             <span class="detail"><AiFillRightCircle /></span>
                             <span class="view-detail">
                                 <span class="txt">VIEW DETAILS</span>
