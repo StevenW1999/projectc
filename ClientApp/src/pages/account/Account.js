@@ -8,9 +8,9 @@ class Account extends Component{
     super(props);
     this.state = {
         redirect: false,
-        email: "ab@abcd.com",     // <-- Alleen nog maar templates.
-        fname: "Hello",           //
-        lname: "there"            //
+        email: "ab@abcd.com",           // <-- Alleen nog maar templates.
+        username: "HelloThere",         //
+        pcode: "1234AB"
     }
   }
   
@@ -32,12 +32,16 @@ class Account extends Component{
           <Form>
             <header>Mijn account</header>
             <h1>Naam:</h1>      
-            <h4>{this.state.fname} {this.state.lname}</h4>
+            <h4>{this.state.username}</h4>
             <br></br>
 
             <br></br>
             <h1>Email:</h1>
             <h4>{this.state.email}</h4>
+
+            <br></br>
+            <h1>Postcode:</h1>
+            <h4>{this.state.pcode}</h4>
 
             <Button variant="primary" type="submit">
               <Link to="/" className="Lnk">

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './AccountEdit.css';
 import { Form, Button, Row, Col, Modal } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
-import ConfirmRemAcc from '../../components/ConfirmRemAcc';
 
 class AccountEdit extends Component {
     constructor(props) {
@@ -11,8 +10,8 @@ class AccountEdit extends Component {
         this.state = {
             redirect: false,
             isOpen: false,
-            fname: "Hello",                         // <-- Placeholder data
-            lname: "There",                         //
+            username: "HelloThere",                         // <-- Placeholder data
+            pcode: "1234AB",                        //
             email: "ab@abc.com",                    //
             emailcheck: "ab@abc.com",               //
             password: "12345678",                   //
@@ -21,7 +20,6 @@ class AccountEdit extends Component {
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.removeHandler = this.removeHandler.bind(this);
     }
 
     handleInputChange(event) {
@@ -59,11 +57,11 @@ class AccountEdit extends Component {
     onSubmitHandler = (e) => {
         e.preventDefault();
 
-        if (this.state.fname.length < 1) {
-            alert("Voornaam mag niet leeg zijn!")
+        if (this.state.username.length < 9) {
+            alert("Gebruikernaam moet minimaal 8 karakters lang zijn!")
         }
-        else if (this.state.lname.length <= 1) {
-            alert("Achternaam mag niet leeg zijn!")
+        else if (this.state.pcode.length != 6 || !parseInt(this.state.pcode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.pcode.slice(5, 6))) {
+            alert("Postcode is ongeldig")
         }
         else if (this.state.email < 5) {
             alert("Email mag niet leeg zijn!")
@@ -85,9 +83,8 @@ class AccountEdit extends Component {
         }
     }
 
-    removeHandler = (e) => {
-        this.setState({ isOpen: true })
-    }
+    openModal = () => this.setState({ isOpen: true });
+    closeModal = () => this.setState({ isOpen: false });
 
     render() {
 
@@ -99,27 +96,32 @@ class AccountEdit extends Component {
 
                 <Form>
 
-                    <Image src={this.state.file} roundedCircle />
-
-                    <Form.Group controlId="ProfPicInput">
-                        <Form.Label>Profielfoto</Form.Label>
-                        <Form.File name="file" type="file" id="custom-file-translate-html" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
-                    </Form.Group>
                     <Row>
                         <Col>
-                            <Form.Group controlId="FNameInput">
-                                <Form.Label>Voornaam</Form.Label>
-                                <Form.Control name="fname" type="FName" value={this.state.fname} onChange={this.handleInputChange} />
+                            <Image className="ProfPic" src={this.state.file} roundedCircle />
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col>
+                            <Form.Group controlId="ProfPicInput">
+                                <Form.Label>Profielfoto</Form.Label>
+                                <Form.File name="file" type="file" id="custom-file-translate-html" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
-                            <Form.Group controlId="LNameInput">
-                                <Form.Label>Achternaam</Form.Label>
-                                <Form.Control name="lname" type="LName" value={this.state.lname} onChange={this.handleInputChange} />
+                            <Form.Group controlId="PostalCode">
+                                <Form.Label>Postcode</Form.Label>
+                                <Form.Control name="pcode" type="PCode" placeholder="" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
+
+                    <Form.Group controlId="UserName">
+                        <Form.Label>Gebruikersnaam</Form.Label>
+                        <Form.Control name="username" type="Username" placeholder="" onChange={this.handleInputChange} />
+                    </Form.Group>
 
                     <Row>
                         <Col>
@@ -160,10 +162,28 @@ class AccountEdit extends Component {
 
 
                 </Form>
-                <Button variant="primary" type="remove" onClick={this.removeHandler}>
+
+                <Button variant="primary" type="remove" onClick={this.openModal}>
                     Account verwijderen
                     </Button>
-                <ConfirmRemAcc show={this.state.isOpen}></ConfirmRemAcc>
+
+                <Modal show={this.state.isOpen} backdrop="static" keyboard={false}>
+                    <Modal.Header>
+                        <Modal.Title>Account verwijderen</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        Weet u zeker dat u dit account wilt verwijderen? Dit kan niet ongedaan gemaakt worden!
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.closeModal}>
+                            Sluiten
+                        </Button>
+
+                        <Button variant="primary">Verwijder mijn account</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
 
         );
