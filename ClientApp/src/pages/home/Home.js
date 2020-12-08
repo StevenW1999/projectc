@@ -18,25 +18,25 @@ class Home extends Component {
     this.state = {
       plants: [{
 
-        id: 0,
+        id: 10,
         name: 'plant1',
         image: '../../images/BG2.jpg',
         description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
       },
       {
-        id: 1,
+        id: 11,
         name: 'plant2',
         image: '../../images/BG2.jpg',
         description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
       },
       {
-        id: 2,
+        id: 12,
         name: 'plant3',
         image: '../../images/BG2.jpg',
         description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
       },
       {
-        id: 3,
+        id: 13,
         name: 'plant4',
         image: '../../images/BG2.jpg',
         description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
