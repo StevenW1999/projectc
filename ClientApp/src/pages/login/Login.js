@@ -8,8 +8,9 @@ class Login extends Component{
         this.state = {
             username: "",
             password: "",
-            token: "",
+            auth: [],
             isAuthenticated: false,
+            token : ""
         }
         
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -36,22 +37,34 @@ class Login extends Component{
                 "Username": this.state.username,
                 "Password": this.state.password
             })
-        })
-            .then(response => {
-                const data = response.json();
-                if (!response.ok) {
-                    const error = (data && data.message) || response.status;
-                    if (response.status === 401) {
-                        alert('gegevens onjuist, probeer het opnieuw!')
-                    }
-                    return Promise.reject(error);
-                }
-                this.setState({
-                    token: data.AccessToken,
-                    isAuthenticated: true
-                })
-                console.log('logged in!')
+        }).then(response => { return response.json(); })
+            .then(data => {
+                this.setState({ "auth": data });
             })
+            .then(console.log(" state is ", this.state.auth))
+            .then(
+                this.setState({
+                    token: this.state.auth.accessToken
+                }))
+            .then(console.log(" token is ", this.state.auth.map(item => item.accessToken)))
+            .catch(err => {
+                console.log("fetch error" + err);
+            });
+            //.then(response => {
+            //    const data = response.json();
+            //    if (!response.ok) {
+            //        const error = (data && data.message) || response.status;
+            //        if (response.status === 401) {
+            //            alert('gegevens onjuist, probeer het opnieuw!')
+            //        }
+            //        return Promise.reject(error);
+            //    }
+            //    this.setState({
+            //        token: data.AccessToken,
+            //        isAuthenticated: true
+            //    })
+            //    console.log('logged in!')
+            //})
             //.catch(error => { console.error('error: ', error) })
     }
 
