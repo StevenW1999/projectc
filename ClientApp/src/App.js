@@ -13,6 +13,7 @@ import AccountEdit from './pages/accountEdit/AccountEdit';
 import Login from './pages/login/Login';
 import AdminPanel from './pages/adminpanel/AdminPanel';
 import Donatie from './pages/Donatie/Donate'
+import Contact from './pages/contact/Contact'
 
 
 import {
@@ -38,6 +39,7 @@ function App() {
         <Route exact path="/Search" component={Searchresults} />
         <Route exact path="/AdminPanel" component={AdminPanel} />
         <Route exact path="/Donatie" component={Donatie} />
+        <Route exact path="/Contact" component={Contact} />
       </Switch>
       <Footer />
     </Router>

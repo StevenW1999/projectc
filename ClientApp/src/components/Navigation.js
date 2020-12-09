@@ -49,15 +49,6 @@ function Navigation() {
               </li>
               <li className='nav-item'>
                 <Link
-                  to='/about'
-                  className='nav-links'
-                  onClick={closeMobileMenu}
-                >
-                  About us
-                </Link>
-              </li>
-              <li className='nav-item'>
-                <Link
                   to='/allplants'
                   className='nav-links'
                   onClick={closeMobileMenu}
@@ -73,7 +64,25 @@ function Navigation() {
                 >
                   Voeg een plant toe
                 </Link>
-              </li>
+                </li>
+                <li className='nav-item'>
+                    <Link
+                        to='/about'
+                        className='nav-links'
+                        onClick={closeMobileMenu}
+                    >
+                        About us
+                    </Link>
+                </li>
+                <li className='nav-item'>
+                    <Link
+                        to='/contact'
+                        className='nav-links'
+                        onClick={closeMobileMenu}
+                    >
+                        Contact
+                    </Link>
+                </li>
               <li className='nav-item'>
                 <Link
                   to='/login'
@@ -82,16 +91,16 @@ function Navigation() {
                 >
                   Login
                 </Link>
-              </li>
-                          <li className='nav-item'>
-                              <Link
-                                  to='/about'
-                                  className='nav-links'
-                                  onClick={closeMobileMenu}
-                              > 
-                                  <img src={ukflag} style={{ width: "50px", height: "30px" }} />
-                                </Link>
-                              </li>
+                    </li>
+                <li className='nav-item'>
+                    <Link
+                        to='/about'
+                        className='nav-links'
+                        onClick={closeMobileMenu}
+                    > 
+                        <img src={ukflag} style={{ width: "50px", height: "30px" }} />
+                    </Link>
+                    </li>
 
             </ul>
           </div>
