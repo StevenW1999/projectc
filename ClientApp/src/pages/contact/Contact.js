@@ -5,10 +5,23 @@ import {BsGeoAlt, BsDroplet, BsBrightnessHigh, BsStar} from 'react-icons/bs';
 import styled from 'styled-components';
 // import PlantItem from '../../components/PlantItem';
 import { render } from '@testing-library/react';
-import GoogleMapReact from 'google-map-react';
+//import GoogleMapReact from 'google-map-react';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
+                //van regel 37
+                //<div style={{ height: '500px', width: '100%' }}>
+                //    <GoogleMapReact
+                //        //bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
+                //        defaultCenter={this.props.center}
+                //        defaultZoom={this.props.zoom}
+                //    >
+                //        <AnyReactComponent
+                //            lat={59.955413}
+                //            lng={30.337844}
+                //            text="My Marker"
+                //        />
+                //    </GoogleMapReact>
+                //</div>
 class Contact extends Component {
     static defaultProps = {
         center: {
@@ -21,19 +34,6 @@ class Contact extends Component {
     render() {
         return (
             <div>
-                <div style={{ height: '500px', width: '100%' }}>
-                    <GoogleMapReact
-                        //bootstrapURLKeys={{ key: /* YOUR KEY HERE */ }}
-                        defaultCenter={this.props.center}
-                        defaultZoom={this.props.zoom}
-                    >
-                        <AnyReactComponent
-                            lat={59.955413}
-                            lng={30.337844}
-                            text="My Marker"
-                        />
-                    </GoogleMapReact>
-                </div>
                 <Container>
                     <div style={{ textAlign: 'center', marginTop: '20px', marginBottom: '20px'}}><h1>Contact</h1></div>
                     <Row style={{ marginBottom: '20px' }}>
