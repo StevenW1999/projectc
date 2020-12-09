@@ -38,7 +38,7 @@ function App() {
         <Route exact path="/Create_trade" component ={Create_trade}/>
         <Route exact path="/Search" component={Searchresults} />
         <Route exact path="/AdminPanel" component={AdminPanel} />
-        <Route exact path="/Donatie" component={Donatie} />
+        <Route exact path="/Donate" component={Donatie} />
         <Route exact path="/Contact" component={Contact} />
       </Switch>
       <Footer />

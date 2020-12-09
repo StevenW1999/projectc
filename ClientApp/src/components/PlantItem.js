@@ -18,9 +18,9 @@ class PlantItem extends Component {
                         <div class="img-info">
                             <div class="info-inner">
                                 <span class="p-name">[NAAM]</span>
-                                <span class="p-user">[user]</span>
+                                <span class="p-user">[GEBRUIKER]</span>
                             </div>
-                            <div class="a-categories">Categories: <span class="categories">[CATEGORIES]</span></div>
+                            <div class="a-categories">Categorie: <span class="categories">[CATEGORIE]</span></div>
                         </div>
                     </div>
                     <div class="box-down">
@@ -30,7 +30,7 @@ class PlantItem extends Component {
                         <a class="bar" href="#">
                             <span class="detail"><AiFillRightCircle /></span>
                             <span class="view-detail">
-                                <span class="txt">VIEW DETAILS</span>
+                                <span class="txt">BEKIJK PLANT</span>
                             </span>
                         </a>
                     </div>

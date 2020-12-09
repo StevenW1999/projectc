@@ -6,6 +6,7 @@ import { RiPlantFill } from 'react-icons/ri';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { IconContext } from 'react-icons/lib';
 import ukflag from '../images/UK.png'; 
+import nlflag from '../images/NL.jpg'; 
 
 function Navigation() {
   const [click, setClick] = useState(false);
@@ -72,7 +73,7 @@ function Navigation() {
                         className='nav-links'
                         onClick={closeMobileMenu}
                     >
-                        About us
+                        Over ons
                     </Link>
                 </li>
                 <li className='nav-item'>
@@ -86,7 +87,7 @@ function Navigation() {
                           </li>
                           <li className='nav-item'>
                               <Link
-                                  to='/'
+                                  to='/donate'
                                   className='nav-links'
                                   onClick={closeMobileMenu}
                               >

@@ -36,8 +36,8 @@ render () {
         <h1>Maak een plantenruil aan</h1>
         <form>
             <div class="form-group">
-                <label for="Title">Title</label>
-                <input type="title" class="form-control" id="Title" placeholder="Title"/>
+                <label for="Title">Titel</label>
+                <input type="title" class="form-control" id="Title" placeholder="Titel"/>
             </div>
             <div class="form-group">
                 <label for="Plaats">Plaats</label>
