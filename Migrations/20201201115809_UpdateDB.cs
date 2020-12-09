@@ -56,7 +56,7 @@ namespace ProjectC.Migrations
                     Shadow = table.Column<string>(type: "text", nullable: true),
                     AmountOfWater = table.Column<string>(type: "text", nullable: true),
                     Soil = table.Column<string>(type: "text", nullable: true),
-                    GrowthHeigth = table.Column<int>(type: "integer", nullable: false),
+                    GrowthHeigth = table.Column<string>(type: "text", nullable: false),
                     Color = table.Column<string>(type: "text", nullable: true),
                     SeasonFrom = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     SeasonTo = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),

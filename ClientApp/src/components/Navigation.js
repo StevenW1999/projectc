@@ -67,6 +67,15 @@ function Navigation() {
               </li>
               <li className='nav-item'>
                 <Link
+                  to='/Create_trade'
+                  className='nav-links'
+                  onClick={closeMobileMenu}
+                >
+                  Voeg een plant toe
+                </Link>
+              </li>
+              <li className='nav-item'>
+                <Link
                   to='/login'
                   className='nav-links'
                   onClick={closeMobileMenu}
