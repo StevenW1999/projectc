@@ -8,9 +8,14 @@ class Login extends Component{
         this.state = {
             username: "",
             password: "",
-            auth: [],
+            auth: {
+                userName: "",
+                role: "",
+                originalUserName: "",
+                accessToken: "",
+                refreshToken: ""
+            },
             isAuthenticated: false,
-            token : ""
         }
         
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -39,33 +44,11 @@ class Login extends Component{
             })
         }).then(response => { return response.json(); })
             .then(data => {
-                this.setState({ "auth": data });
+                this.setState({ "auth": data, "isAuthenticated": true }, () => localStorage.setItem("bearer", this.state.auth.accessToken));
             })
-            .then(console.log(" state is ", this.state.auth))
-            .then(
-                this.setState({
-                    token: this.state.auth.accessToken
-                }))
-            .then(console.log(" token is ", this.state.auth.map(item => item.accessToken)))
             .catch(err => {
                 console.log("fetch error" + err);
             });
-            //.then(response => {
-            //    const data = response.json();
-            //    if (!response.ok) {
-            //        const error = (data && data.message) || response.status;
-            //        if (response.status === 401) {
-            //            alert('gegevens onjuist, probeer het opnieuw!')
-            //        }
-            //        return Promise.reject(error);
-            //    }
-            //    this.setState({
-            //        token: data.AccessToken,
-            //        isAuthenticated: true
-            //    })
-            //    console.log('logged in!')
-            //})
-            //.catch(error => { console.error('error: ', error) })
     }
 
     onAlternativeHandler = (e) => {
@@ -76,7 +59,8 @@ class Login extends Component{
 
 
     
-    render () {
+    render() {
+
         return (
             <div className="Login">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
