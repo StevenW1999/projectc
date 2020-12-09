@@ -53,9 +53,10 @@ function Navigation() {
                   className='nav-links'
                   onClick={closeMobileMenu}
                 >
-                  All Plants
+                  Catalogus
                 </Link>
               </li>
+
               <li className='nav-item'>
                 <Link
                   to='/Create_trade'
@@ -82,7 +83,16 @@ function Navigation() {
                     >
                         Contact
                     </Link>
-                </li>
+                          </li>
+                          <li className='nav-item'>
+                              <Link
+                                  to='/'
+                                  className='nav-links'
+                                  onClick={closeMobileMenu}
+                              >
+                                  Donatie   
+                    </Link>
+                          </li>
               <li className='nav-item'>
                 <Link
                   to='/login'

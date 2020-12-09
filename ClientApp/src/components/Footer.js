@@ -48,14 +48,15 @@ function Footer() {
           </div>
           <small className='website-rights'>Stadskwekerij © 2020</small>
           <div className='social-icons'>
-            <Link
+            <a
               className='social-icon-link'
-              to='/'
+                          href='
+https://www.facebook.com/stadskwekerijdekas/'
               target='_blank'
               aria-label='Facebook'
             >
               <FaFacebook />
-            </Link>
+            </a>
             <Link
               className='social-icon-link'
               to='/'
