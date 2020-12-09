@@ -24,7 +24,6 @@ class Catalogue extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    // TODO: VOEG FILTERS TOE, FIX DAT, IMPLEMENTEER HET DAN BINNEN DE componentDidMount() functie
 
     // Functie om de default filters op  leeg te zetten
     preventDefaultFilters() {
@@ -111,11 +110,6 @@ class Catalogue extends Component {
         return true;
     }
 
-    //CALL REMOVED, BUT THIS WORKS
-    changePlantsTest() {
-        this.state.plantList.push(this.state.plantList[0]);
-    }
-
     //Looks if actual plantlist is empty, otherwise gets first plantlist
     getPlantList() {
         if (this.state.actualPlantList === null) {
@@ -136,17 +130,6 @@ class Catalogue extends Component {
                 }
                 )
             })).then(this.state.actualPlantList = this.state.plantList)
-    }
-
-    createPlants(data) {
-        var i;
-        for (i = 0; i < data.length; i++) {
-            this.state.plantList[i]["id"] = data.id;
-            this.state.plantList[i]["name"] = data.name;
-            this.state.plantList[i]["image"] = '../../images/BG2.bg';
-            this.state.plantList[i]["description"] = data.description;
-        }
-        return data;
     }
 
 
