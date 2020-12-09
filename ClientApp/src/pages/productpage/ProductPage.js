@@ -63,7 +63,7 @@ class ProductPage extends Component {
                                 <div class="divider" />
                                 <a href="/" class="btn btn-info" role="button">Plant verwijderen</a>
                                 <div class="divider"/>
-                                <Button>Neem contact op</Button> <BsStar/>
+                                <Button>Neem contact op</Button>
                             </Container>
                             <br/>
                         </Container>
