@@ -2,19 +2,22 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './AccountCreate.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
+import { post } from 'jquery';
 
 class AccountCreate extends Component {
     constructor(props) {
         super(props);
         this.state = {
             redirect: false,
-            fname: "",
-            lname: "",
+            username: "",
+            pcode: "",
             email: "",
             emailcheck: "",
             password: "",
             passwordcheck: "",
             checkbox: false,
+            file: null
         }
         
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -26,9 +29,16 @@ class AccountCreate extends Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
         
-        this.setState({
-          [name]: value    
-        });
+        if (target.type === "file") {
+            this.setState({
+                file: URL.createObjectURL(event.target.files[0])
+            })
+        }
+        else {
+            this.setState({
+                [name]: value
+            });
+        }
     }
 
     emailValidation(){
@@ -48,13 +58,13 @@ class AccountCreate extends Component {
     onSubmitHandler = (e) => {
         e.preventDefault();
 
-        if(this.state.fname.length<1){
-            alert("Voornaam mag niet leeg zijn!")
+        if(this.state.username.length < 6){
+            alert("Gebruikersnaam moet minimaal 5 karakters lang zijn!")
         }
-        else if (this.state.lname.length<=1) {
-            alert("Achternaam mag niet leeg zijn!")
+        else if (this.state.pcode.length != 6 || !parseInt(this.state.pcode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.pcode.slice(5, 6))) {
+            alert("Postcode is ongeldig")
         }
-        else if (this.state.email<5) {
+        else if (this.state.email.length<5) {
             alert("Email mag niet leeg zijn!")
         }
         else if (!this.emailValidation()) {
@@ -73,8 +83,28 @@ class AccountCreate extends Component {
             alert("U dient de algemene voorwaarden te accepteren!")
         }
         else{
-            this.props.history.push('/Account');
-        }
+            fetch('/api/users', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    'username': this.state.username,
+                    'password': this.state.password,
+                    'email': this.state.email,
+                    'postalcode': this.state.pcode,
+                    'profilepicture': null,
+                    'active': true
+                })
+            })
+                .then(response => {
+                    const data = response.json();
+                    if (!response.ok) {
+                        const error = (data && data.message) || response.status;
+                        console.log('error: ', error)
+                        return Promise.reject(error);
+                    }
+                        console.log('User aangemaakt!');
+                })
+            }
     }
 
     render() {
@@ -86,19 +116,31 @@ class AccountCreate extends Component {
                 <Form onSubmit={this.onSubmitHandler}>
                     <Row>
                         <Col>
-                            <Form.Group controlId="FNameInput">
-                                <Form.Label>Voornaam</Form.Label>
-                                <Form.Control name="fname" type="FName" placeholder="" onChange={this.handleInputChange} />
+                            <Image className="ProfPic" src={this.state.file} roundedCircle />
+                        </Col>  
+                    </Row>
+                    
+                    <Row>
+                        <Col>
+                            <Form.Group controlId="ProfPicInput">
+                                <Form.Label>Profielfoto</Form.Label>
+                                <Form.File name="file" type="file" id="custom-file-translate-html" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
-                            <Form.Group controlId="LNameInput">
-                                <Form.Label>Achternaam</Form.Label>
-                                <Form.Control name="lname" type="LName" placeholder="" onChange={this.handleInputChange} />
+                            <Form.Group controlId="PostalCode">
+                                <Form.Label>Postcode</Form.Label>
+                                <Form.Control name="pcode" type="PCode" placeholder="" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
+                    
+
+                    <Form.Group controlId="UsernameInput">
+                        <Form.Label>Gebruikersnaam</Form.Label>
+                        <Form.Control name="username" type="Username" placeholder="" onChange={this.handleInputChange} />
+                    </Form.Group>
 
                     <Row>
                         <Col>
