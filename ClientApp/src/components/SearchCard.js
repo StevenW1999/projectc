@@ -12,7 +12,7 @@ class SearchCard extends Component {
 				<Card style={{ width: '18rem' }}>
 					<Card.Img variant="top" src="holder.js/100px180"/>
 					<Card.Body>
-						<Card.Title>Card Title</Card.Title>
+						<Card.Title>Kaart titel</Card.Title>
 						<Card.Text>
 					    </Card.Text>
 						<Button variant="primary">Plant bekijken</Button>

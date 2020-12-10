@@ -12,31 +12,49 @@ import {
 } from '../../components/Banner';
 import { Link } from 'react-router-dom';
 
+//const translations = {
+//    'en': {
+//        'title': 'BIO DIVERSITY',
+//        'description': 'Nature friendly trading',
+//        'signup': 'SIGN UP NOW',
+//        'addplant': 'Add plant',
+//    },
+//    'nl': {
+//        'title': 'BIO DIVERSITEIT',
+//        'description': 'Natuur vriendelijk ruilen',
+//        'signup': 'NU REGISTREREN',
+//    },
+//}
+
+//const getTranslation = (lang, text) => {
+//    return translations[lang][text];
+//}
+
 class Home extends Component {
   constructor() {
     super();
     this.state = {
       plants: [{
 
-        id: 0,
+        id: 10,
         name: 'plant1',
         image: '../../images/BG2.jpg',
         description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
       },
       {
-        id: 1,
+        id: 11,
         name: 'plant2',
         image: '../../images/BG2.jpg',
         description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
       },
       {
-        id: 2,
+        id: 12,
         name: 'plant3',
         image: '../../images/BG2.jpg',
         description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
       },
       {
-        id: 3,
+        id: 13,
         name: 'plant4',
         image: '../../images/BG2.jpg',
         description: 'Lorem Ipsum Dolor etc blablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablablabla'
@@ -49,7 +67,15 @@ class Home extends Component {
       },
       ]
     }
-  }
+    } 
+
+    //state = {
+    //    lang: 'en'
+    //};
+
+    //changeLanguageHandler = (lang) => {
+    //    this.setState({ lang: lang });
+    //}
 
   render() {
     return (
@@ -57,16 +83,16 @@ class Home extends Component {
         <BannerContainer>
           <BannerContent>
             <BannerItems>
-              <BannerH1>BIO DIVERSITY</BannerH1>
-              <BannerP>Nature friendly trading bla bla bla</BannerP>
+                        <BannerH1>BIO DIVERSITEIT</BannerH1>
+                        <BannerP>Natuur vriendelijk ruilen</BannerP>
               <BannerBtn>
-                <Link to="/signup">SIGN UP NOW</Link>
+                <Link to="/signup">NU REGISTREREN</Link>
               </BannerBtn>
             </BannerItems>
           </BannerContent>
         </BannerContainer>
         <div className ="searchBar">
-          <h1>Catalogue</h1>
+          <h1>Catalogus</h1>
         </div>
           <Catalogue data={this.state.plants}></Catalogue>
       </>

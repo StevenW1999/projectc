@@ -41,6 +41,15 @@ namespace ProjectC.Controllers
             return await _context.Users.ToListAsync(); //return all users in a list
         }
 
+        // GET: api/Users
+        [HttpGet("current")]
+        [Authorize] //use authorize tags to determine which actions need authorization
+        public ActionResult<User> GetCurrentUser()
+        {
+            User user =  _context.Users.FirstOrDefault(u => u.Username == User.Identity.Name); //query to find user with username found in the token
+            return  user;
+        }
+
         // GET: api/Users/5
         [AllowAnonymous]
         [HttpGet("{id}")]
@@ -193,17 +202,17 @@ namespace ProjectC.Controllers
             });
         }
 
-        [HttpGet("user")]
-        [Authorize]
-        public ActionResult GetCurrentUser()
-        {
-            return Ok(new LoginResult
-            {
-                UserName = User.Identity.Name,
-                Role = User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty,
-                OriginalUserName = User.FindFirst("OriginalUserName")?.Value
-            });
-        }
+        //[HttpGet("user")]
+        //[Authorize]
+        //public ActionResult GetCurrentUser()
+        //{
+        //    return Ok(new LoginResult
+        //    {
+        //        UserName = User.Identity.Name,
+        //        Role = User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty,
+        //        OriginalUserName = User.FindFirst("OriginalUserName")?.Value
+        //    });
+        //}
 
         [HttpPost("logout")]
         [Authorize]

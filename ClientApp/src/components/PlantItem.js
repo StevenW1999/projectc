@@ -14,10 +14,10 @@ class PlantItem extends Component {
             <>
                 <div class="el-wrapper">
                     <div class="box-up">
-                        <img class="img" src="images/plant1.png" alt="" />
+                        <img class="img" src={this.props.plant.image} alt="" />
                         <div class="img-info">
                             <div class="info-inner">
-                                <span class="p-name">[NAAM]</span>
+                                <span class="p-name">{this.props.plant.name}</span>
                                 <span class="p-user">[user]</span>
                             </div>
                             <div class="a-categories">Categories: <span class="categories">[CATEGORIES]</span></div>
@@ -27,7 +27,7 @@ class PlantItem extends Component {
                         <div class="h-bg">
                             <div class="h-bg-inner"></div>
                         </div>
-                        <a class="bar" href="#">
+                        <a class="bar" href="./ProductPage">
                             <span class="detail"><AiFillRightCircle /></span>
                             <span class="view-detail">
                                 <span class="txt">VIEW DETAILS</span>

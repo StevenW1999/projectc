@@ -17,20 +17,20 @@ function Footer() {
       <div className='footer-links'>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
-            <h2>General</h2>
-            <Link to='/sign-up'>How it works</Link>
-            <Link to='/About'>About us</Link>
-            <Link to='/Donatie'>Donations</Link>
+            <h2>Algemeen</h2>
+            <Link to='/sign-up'>Hoe het werkt</Link>
+            <Link to='/About'>Over ons</Link>
+            <Link to='/Donatie'>Donatie</Link>
           </div>
-          <div className='footer-link-items'>
-            <h2>Contact Us</h2>
+          <div className='footer-link-items footerfix'>
+            <h2>Neem contact op</h2>
             <Link to='/'>Contact</Link>
-            <Link to='/'>Support</Link>
+            <Link to='/'>Ondersteuning</Link>
           </div>
         </div>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
-            <h2>Follow Us</h2>
+            <h2>Volg ons</h2>
             <Link to='/'>Instagram</Link>
             <Link to='/'>Facebook</Link>
             <Link to='/'>Youtube</Link>
@@ -48,14 +48,15 @@ function Footer() {
           </div>
           <small className='website-rights'>Stadskwekerij © 2020</small>
           <div className='social-icons'>
-            <Link
+            <a
               className='social-icon-link'
-              to='/'
+                          href='
+https://www.facebook.com/stadskwekerijdekas/'
               target='_blank'
               aria-label='Facebook'
             >
               <FaFacebook />
-            </Link>
+            </a>
             <Link
               className='social-icon-link'
               to='/'

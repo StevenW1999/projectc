@@ -6,13 +6,23 @@ class Login extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            redirect: false,
-            email: "",
+            username: "",
             password: "",
+            auth: {
+                userName: "",
+                role: "",
+                originalUserName: "",
+                accessToken: "",
+                refreshToken: ""
+            },
+            isAuthenticated: false,
         }
         
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.onSubmitHandler = this.onSubmitHandler.bind(this);
+
     }
+
 
     handleInputChange(event) {
         event.preventDefault();
@@ -27,17 +37,20 @@ class Login extends Component{
 
     onSubmitHandler = (e) => {
         e.preventDefault();
-
-        // if(this.state.fname.email){                                  //  Hier moet react controleren of het correct
-        //     alert("Email is incorrect!")                             //      is en anders een foutmelding geven!
-        // }                                                            //      Voor nu zit er geen controle op!
-        // else if(this.state.password){                                //
-        //     alert("Emailadres en wachtwoord komen niet overeen!")    //
-        // }                                                            //
-        // else{                                                        //
-        //     this.props.history.push('/Account');                     //
-        // }                                                            //
-        this.props.history.push('/Account');
+        fetch('/api/users/login', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                "Username": this.state.username,
+                "Password": this.state.password
+            })
+        }).then(response => { return response.json(); })
+            .then(data => {
+                this.setState({ "auth": data, "isAuthenticated": true }, () => localStorage.setItem("bearer", this.state.auth.accessToken));
+            })
+            .catch(err => {
+                console.log("fetch error" + err);
+            });
     }
 
     onAlternativeHandler = (e) => {
@@ -48,15 +61,16 @@ class Login extends Component{
 
 
     
-    render () {
+    render() {
+
         return (
             <div className="Login">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
                 <header>Inloggen</header>  
                 <Form onSubmit={this.onSubmitHandler}>
-                    <Form.Group controlId="EmailInput">
-                        <Form.Label>Emailadres</Form.Label>
-                        <Form.Control name="email" type="Email" placeholder="" onChange={this.handleInputChange} />
+                    <Form.Group controlId="UsernameInput">
+                        <Form.Label>Gebruikersnaam</Form.Label>
+                        <Form.Control name="username" type="Username" placeholder="" onChange={this.handleInputChange} />
                     </Form.Group>
 
                     <Form.Group controlId="PasswordInput">
