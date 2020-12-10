@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './AccountCreate.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
+import { post } from 'jquery';
 
 class AccountCreate extends Component {
     constructor(props) {
@@ -57,8 +58,8 @@ class AccountCreate extends Component {
     onSubmitHandler = (e) => {
         e.preventDefault();
 
-        if(this.state.username.length < 9){
-            alert("Gebruikersnaam moet minimaal 8 karakters lang zijn!")
+        if(this.state.username.length < 6){
+            alert("Gebruikersnaam moet minimaal 5 karakters lang zijn!")
         }
         else if (this.state.pcode.length != 6 || !parseInt(this.state.pcode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.pcode.slice(5, 6))) {
             alert("Postcode is ongeldig")
@@ -82,8 +83,28 @@ class AccountCreate extends Component {
             alert("U dient de algemene voorwaarden te accepteren!")
         }
         else{
-            this.props.history.push('/Account');
-        }
+            fetch('/api/users', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    'username': this.state.username,
+                    'password': this.state.password,
+                    'email': this.state.email,
+                    'postalcode': this.state.pcode,
+                    'profilepicture': null,
+                    'active': true
+                })
+            })
+                .then(response => {
+                    const data = response.json();
+                    if (!response.ok) {
+                        const error = (data && data.message) || response.status;
+                        console.log('error: ', error)
+                        return Promise.reject(error);
+                    }
+                        console.log('User aangemaakt!');
+                })
+            }
     }
 
     render() {

@@ -16,7 +16,9 @@ class AccountEdit extends Component {
             emailcheck: "ab@abc.com",               //
             password: "12345678",                   //
             passwordcheck: "12345678",              //
-            file: null                              //
+            file: null,                             //
+            token: null,
+            isAuthenticated: null
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -79,8 +81,71 @@ class AccountEdit extends Component {
             alert("Wachtwoorden komen niet overeen!")
         }
         else {
-            this.props.history.push('/Account');
+            fetch('/api/users/{id}', {
+                method: 'put',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'bearer' + ''
+                },
+                body: JSON.stringify({
+                    "Username": this.state.username,
+                    "Password": this.state.password,
+                    "email": this.state.email,
+                    "postalcode": this.state.pcode,
+                    "profilepicture": null,
+                    "active": true
+                })
+            })
+                .then(response => {
+                    const data = response.json();
+                    if (!response.ok) {
+                        const error = (data && data.message) || response.status;
+                        console.log('Error: ', error)
+                        return Promise.reject(error);
+                    }
+                    this.setState({
+                        token: data.accessToken,
+                        isAuthenticated: true
+                    })
+                    console.log('Succes!');
+                    < Link to="/Account" className="Lnk" ></Link >
+                })
+            //.catch(error => { console.error('error: ', error) })
         }
+    }
+
+    onDeleteHandler = (e) => {
+        e.preventDefault();
+
+        fetch('/api/users/{id}', {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer' + ''
+            },
+            body: JSON.stringify({                      // <-- is dit nodig?
+                "Username": this.state.username,        //
+                "Password": this.state.password,        //
+                "email": this.state.email,              //
+                "postalcode": this.state.pcode,         //
+                "profilepicture": null,                 //
+                "active": true                          //
+            })
+        })
+            .then(response => {
+                const data = response.json();
+                if (!response.ok) {
+                    const error = (data && data.message) || response.status;
+                    console.log('Error: ', error)
+                    return Promise.reject(error);
+                }
+                this.setState({
+                    token: data.accessToken,
+                    isAuthenticated: true
+                })
+                console.log('Succes!')
+            })
+            //.catch(error => { console.error('error: ', error) })
     }
 
     openModal = () => this.setState({ isOpen: true });
@@ -113,14 +178,14 @@ class AccountEdit extends Component {
                         <Col>
                             <Form.Group controlId="PostalCode">
                                 <Form.Label>Postcode</Form.Label>
-                                <Form.Control name="pcode" type="PCode" placeholder="" onChange={this.handleInputChange} />
+                                <Form.Control name="pcode" type="PCode" value={this.state.pcode} placeholder="" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
 
                     <Form.Group controlId="UserName">
                         <Form.Label>Gebruikersnaam</Form.Label>
-                        <Form.Control name="username" type="Username" placeholder="" onChange={this.handleInputChange} />
+                        <Form.Control name="username" type="Username" value={this.state.username} placeholder="" onChange={this.handleInputChange} />
                     </Form.Group>
 
                     <Row>
@@ -181,7 +246,9 @@ class AccountEdit extends Component {
                             Sluiten
                         </Button>
 
-                        <Button variant="primary">Verwijder mijn account</Button>
+                        <Button variant="primary" onClick={this.onDeleteHandler}>
+                            Verwijder mijn account
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </div>
