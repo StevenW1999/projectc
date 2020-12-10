@@ -10,38 +10,45 @@ class AccountEdit extends Component {
         this.state = {
             redirect: false,
             isOpen: false,
-            username: "HelloThere",                         // <-- Placeholder data
-            pcode: "1234AB",                        //
-            email: "ab@abc.com",                    //
-            emailcheck: "ab@abc.com",               //
-            password: "12345678",                   //
-            passwordcheck: "12345678",              //
-            file: null,                             //
-            token: null,
-            isAuthenticated: null
+            passwordCheck: '',
+            emailCheck: '',
+            username: '',
+            password: '',
+            email: '',
+            postalCode: '',
+            profilePicture: null
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    handleInputChange(event) {
-        event.preventDefault();
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
+    componentDidMount() {
+        this.setState({
+            passwordCheck: this.props.location.state.password,
+            emailCheck: this.props.location.state.email,
+            username: this.props.location.state.username,
+            password: this.props.location.state.password,
+            email: this.props.location.state.email,
+            postalCode: this.props.location.state.postalCode,
+            profilePicture: null
+        })
+    }
 
-        if (target.type === "file") {
+    handleInputChange = (e) => {
+        e.preventDefault();
+        let name = e.target.name;
+        let val = e.target.value;
+        if (name === "profilePicture") {
             this.setState({
-                file: URL.createObjectURL(event.target.files[0])
-            })
+                    "profilePicture": URL.createObjectURL(e.target.files[0])
+              })
         }
         else {
             this.setState({
-                [name]: value
-            });
+                [name]: val
+            })
         }
     }
-
     emailValidation() {
         let value = this.state.email;
         if (value.lastIndexOf("@") < value.lastIndexOf(".")) {
@@ -59,10 +66,10 @@ class AccountEdit extends Component {
     onSubmitHandler = (e) => {
         e.preventDefault();
 
-        if (this.state.username.length < 9) {
-            alert("Gebruikernaam moet minimaal 8 karakters lang zijn!")
+        if (this.state.username.length < 6) {
+            alert("Gebruikernaam moet minimaal 5 karakters lang zijn!")
         }
-        else if (this.state.pcode.length != 6 || !parseInt(this.state.pcode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.pcode.slice(5, 6))) {
+        else if (this.state.postalCode.length != 6 || !parseInt(this.state.postalCode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.postalCode.slice(5, 6))) {
             alert("Postcode is ongeldig")
         }
         else if (this.state.email < 5) {
@@ -71,66 +78,55 @@ class AccountEdit extends Component {
         else if (!this.emailValidation()) {
             alert("Emailadres is ongeldig!")
         }
-        else if (this.state.email !== this.state.emailcheck) {
+        else if (this.state.email !== this.state.emailCheck) {
             alert("Emailadressen komen niet overeen!")
         }
         else if (this.state.password.length < 8) {
             alert("Wachtwoord moet minimaal 8 karakters lang zijn!")
         }
-        else if (this.state.password !== this.state.passwordcheck) {
+        else if (this.state.password !== this.state.passwordCheck) {
             alert("Wachtwoorden komen niet overeen!")
         }
         else {
-            fetch('/api/users/{id}', {
+            let fetchString = '/api/users/' + this.props.location.state.id.toString();
+            fetch('/api/users/' + this.props.location.state.id.toString(), {
                 method: 'put',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'bearer' + ''
+                    'Authorization': 'bearer ' + localStorage.getItem('bearer')
                 },
                 body: JSON.stringify({
-                    "Username": this.state.username,
-                    "Password": this.state.password,
-                    "email": this.state.email,
-                    "postalcode": this.state.pcode,
-                    "profilepicture": null,
-                    "active": true
+                    'id': this.props.location.state.id,
+                    'username': this.state.username,
+                    'password': this.state.password,
+                    'email': this.state.email,
+                    'postalcode': this.state.postalCode,
+                    'profilepicture': this.state.profilePicture,
+                    'active': true
                 })
             })
-                .then(response => {
-                    const data = response.json();
-                    if (!response.ok) {
-                        const error = (data && data.message) || response.status;
-                        console.log('Error: ', error)
-                        return Promise.reject(error);
-                    }
-                    this.setState({
-                        token: data.accessToken,
-                        isAuthenticated: true
-                    })
-                    console.log('Succes!');
-                    < Link to="/Account" className="Lnk" ></Link >
-                })
-            //.catch(error => { console.error('error: ', error) })
+            //    .then(response => {
+            //        const data = response.json();
+            //        if (!response.ok) {
+            //            const error = (data && data.message) || response.status;
+            //            console.log('Error: ', error)
+            //            return Promise.reject(error);
+            //        }
+            //        console.log('Succes!');
+            //    })
+            this.props.history.push('/');
         }
     }
 
     onDeleteHandler = (e) => {
         e.preventDefault();
 
-        fetch('/api/users/{id}', {
+        fetch('/api/users/' + this.props.location.state.id.toString(), {
             method: 'delete',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'bearer' + ''
-            },
-            body: JSON.stringify({                      // <-- is dit nodig?
-                "Username": this.state.username,        //
-                "Password": this.state.password,        //
-                "email": this.state.email,              //
-                "postalcode": this.state.pcode,         //
-                "profilepicture": null,                 //
-                "active": true                          //
-            })
+                'Authorization': 'bearer ' + localStorage.getItem('bearer')
+            }
         })
             .then(response => {
                 const data = response.json();
@@ -139,31 +135,28 @@ class AccountEdit extends Component {
                     console.log('Error: ', error)
                     return Promise.reject(error);
                 }
-                this.setState({
-                    token: data.accessToken,
-                    isAuthenticated: true
-                })
                 console.log('Succes!')
+                this.props.history.push('/');
             })
-            //.catch(error => { console.error('error: ', error) })
     }
 
     openModal = () => this.setState({ isOpen: true });
     closeModal = () => this.setState({ isOpen: false });
 
     render() {
-
-
+        console.log(this.state.username);
+        console.log(this.state.isOpen);
+        console.log(this.state.emailCheck);
+        console.log(this.state.postalCode);
         return (
             <div className="AccountEdit">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
                 <header>Account aanpassen</header>
 
                 <Form>
-
                     <Row>
                         <Col>
-                            <Image className="ProfPic" src={this.state.file} roundedCircle />
+                            <Image className="ProfPic" src={this.state.profilePicture} roundedCircle />
                         </Col>
                     </Row>
 
@@ -171,35 +164,35 @@ class AccountEdit extends Component {
                         <Col>
                             <Form.Group controlId="ProfPicInput">
                                 <Form.Label>Profielfoto</Form.Label>
-                                <Form.File name="file" type="file" id="custom-file-translate-html" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
+                                <Form.File name="profilePicture" type="profilePicture" id="custom-file-translate-html" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="PostalCode">
                                 <Form.Label>Postcode</Form.Label>
-                                <Form.Control name="pcode" type="PCode" value={this.state.pcode} placeholder="" onChange={this.handleInputChange} />
+                                <Form.Control name="postalCode" type="PostalCode" defaultValue={this.state.postalCode} placeholder="" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
 
                     <Form.Group controlId="UserName">
                         <Form.Label>Gebruikersnaam</Form.Label>
-                        <Form.Control name="username" type="Username" value={this.state.username} placeholder="" onChange={this.handleInputChange} />
+                        <Form.Control name="username" type="username" defaultValue={this.state.username} placeholder="" onChange={this.handleInputChange} />
                     </Form.Group>
 
                     <Row>
                         <Col>
                             <Form.Group controlId="EmailInput">
                                 <Form.Label>Emailadres</Form.Label>
-                                <Form.Control name="email" type="Email" value={this.state.email} onChange={this.handleInputChange} />
+                                <Form.Control name="email" type="Email" defaultValue={this.state.email} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="ConfirmEmailInput">
                                 <Form.Label>Bevestig emailadres</Form.Label>
-                                <Form.Control name="emailcheck" type="Email" value={this.state.emailcheck} onChange={this.handleInputChange} />
+                                <Form.Control name="emailCheck" type="emailCheck" defaultValue={this.state.emailCheck} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -208,14 +201,14 @@ class AccountEdit extends Component {
                         <Col>
                             <Form.Group controlId="PasswordInput">
                                 <Form.Label>Wachtwoord</Form.Label>
-                                <Form.Control name="password" type="Password" value={this.state.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="password" type="password" defaultValue={this.state.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="ConfirmPasswordInput">
                                 <Form.Label>Bevestig wachtwoord</Form.Label>
-                                <Form.Control name="passwordcheck" type="Password" value={this.state.passwordcheck} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="passwordCheck" type="password" defaultValue={this.state.passwordCheck} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -223,9 +216,6 @@ class AccountEdit extends Component {
                     <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
                         Account aanpassen
                     </Button>
-
-
-
                 </Form>
 
                 <Button variant="primary" type="remove" onClick={this.openModal}>
