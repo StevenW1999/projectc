@@ -20,7 +20,7 @@ class User extends Component {
                         <div class="col-md-">
                             <div class="box-up">
                             <div class="card-body">
-                            <h5><b>{this.props.user.name}</b></h5>
+                            <h5><b>{this.props.user.username}</b></h5>
                                     <img src={this.props.user.image} class="img-fluid" alt="" style={{ width: '100px', height: '100px' }}/>
                                             <p class="card-text">{this.props.user.description}</p>
                                             <div class="container">
