@@ -254,8 +254,6 @@ render () {
                   Plant aanmaken
               </Button>   
           </Form> 
-          
-
 
     </div>
     );

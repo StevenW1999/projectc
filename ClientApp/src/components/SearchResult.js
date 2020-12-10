@@ -29,7 +29,7 @@ class SearchResult extends Component {
 		<div style={{"border":"solid"}, {"width":"75%"}}>
 		    <p>{this.props.result.description}</p>
 		</div>
-		    <Button variant="primary"> Learn more </Button>
+		    <Button variant="primary">Meer leren</Button>
 		</div>
 
 		<p>

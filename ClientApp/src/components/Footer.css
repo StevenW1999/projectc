@@ -7,6 +7,10 @@
   align-items: center;
 }
 
+.footerfix {
+width: 100% !important;    
+}
+
 .footer-subscription {
   display: flex;
   flex-direction: column;

@@ -1,21 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AccountEdit.css';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, Modal } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
 
-class AccountCreate extends Component {
+class AccountEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
             redirect: false,
-            fname: "Hello",                         // <-- Placeholder data
-            lname: "There",                         //
+            isOpen: false,
+            username: "HelloThere",                         // <-- Placeholder data
+            pcode: "1234AB",                        //
             email: "ab@abc.com",                    //
             emailcheck: "ab@abc.com",               //
             password: "12345678",                   //
-            passwordcheck: "12345678"               //
+            passwordcheck: "12345678",              //
+            file: null,                             //
+            token: null,
+            isAuthenticated: null
         }
-        
+
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
@@ -24,22 +29,29 @@ class AccountCreate extends Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        
-        this.setState({
-          [name]: value    
-        });
+
+        if (target.type === "file") {
+            this.setState({
+                file: URL.createObjectURL(event.target.files[0])
+            })
+        }
+        else {
+            this.setState({
+                [name]: value
+            });
+        }
     }
 
-    emailValidation(){
+    emailValidation() {
         let value = this.state.email;
-        if(value.lastIndexOf("@")<value.lastIndexOf(".")){
-            if(value.lastIndexOf("@")>0){
-                if(value.lastIndexOf(".")<value.length-1){
+        if (value.lastIndexOf("@") < value.lastIndexOf(".")) {
+            if (value.lastIndexOf("@") > 0) {
+                if (value.lastIndexOf(".") < value.length - 1) {
                     return true;
                 }
             }
         }
-        else{
+        else {
             return false;
         }
     }
@@ -47,55 +59,134 @@ class AccountCreate extends Component {
     onSubmitHandler = (e) => {
         e.preventDefault();
 
-        if(this.state.fname.length<1){
-            alert("Voornaam mag niet leeg zijn!")
+        if (this.state.username.length < 9) {
+            alert("Gebruikernaam moet minimaal 8 karakters lang zijn!")
         }
-        else if (this.state.lname.length<=1) {
-            alert("Achternaam mag niet leeg zijn!")
+        else if (this.state.pcode.length != 6 || !parseInt(this.state.pcode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.pcode.slice(5, 6))) {
+            alert("Postcode is ongeldig")
         }
-        else if (this.state.email<5) {
+        else if (this.state.email < 5) {
             alert("Email mag niet leeg zijn!")
         }
         else if (!this.emailValidation()) {
             alert("Emailadres is ongeldig!")
         }
-        else if (this.state.email!==this.state.emailcheck) {
+        else if (this.state.email !== this.state.emailcheck) {
             alert("Emailadressen komen niet overeen!")
         }
-        else if (this.state.password.length<8) {
+        else if (this.state.password.length < 8) {
             alert("Wachtwoord moet minimaal 8 karakters lang zijn!")
         }
-        else if (this.state.password!==this.state.passwordcheck) {
+        else if (this.state.password !== this.state.passwordcheck) {
             alert("Wachtwoorden komen niet overeen!")
         }
-        else{
-            this.props.history.push('/Account');
+        else {
+            fetch('/api/users/{id}', {
+                method: 'put',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'bearer' + ''
+                },
+                body: JSON.stringify({
+                    "Username": this.state.username,
+                    "Password": this.state.password,
+                    "email": this.state.email,
+                    "postalcode": this.state.pcode,
+                    "profilepicture": null,
+                    "active": true
+                })
+            })
+                .then(response => {
+                    const data = response.json();
+                    if (!response.ok) {
+                        const error = (data && data.message) || response.status;
+                        console.log('Error: ', error)
+                        return Promise.reject(error);
+                    }
+                    this.setState({
+                        token: data.accessToken,
+                        isAuthenticated: true
+                    })
+                    console.log('Succes!');
+                    < Link to="/Account" className="Lnk" ></Link >
+                })
+            //.catch(error => { console.error('error: ', error) })
         }
     }
 
+    onDeleteHandler = (e) => {
+        e.preventDefault();
+
+        fetch('/api/users/{id}', {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer' + ''
+            },
+            body: JSON.stringify({                      // <-- is dit nodig?
+                "Username": this.state.username,        //
+                "Password": this.state.password,        //
+                "email": this.state.email,              //
+                "postalcode": this.state.pcode,         //
+                "profilepicture": null,                 //
+                "active": true                          //
+            })
+        })
+            .then(response => {
+                const data = response.json();
+                if (!response.ok) {
+                    const error = (data && data.message) || response.status;
+                    console.log('Error: ', error)
+                    return Promise.reject(error);
+                }
+                this.setState({
+                    token: data.accessToken,
+                    isAuthenticated: true
+                })
+                console.log('Succes!')
+            })
+            //.catch(error => { console.error('error: ', error) })
+    }
+
+    openModal = () => this.setState({ isOpen: true });
+    closeModal = () => this.setState({ isOpen: false });
+
     render() {
+
+
         return (
             <div className="AccountEdit">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
                 <header>Account aanpassen</header>
 
-                <Form onSubmit={this.onSubmitHandler}>
+                <Form>
 
                     <Row>
                         <Col>
-                            <Form.Group controlId="FNameInput">
-                                <Form.Label>Voornaam</Form.Label>
-                                <Form.Control name="fname" type="FName" value={this.state.fname} onChange={this.handleInputChange} />
+                            <Image className="ProfPic" src={this.state.file} roundedCircle />
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col>
+                            <Form.Group controlId="ProfPicInput">
+                                <Form.Label>Profielfoto</Form.Label>
+                                <Form.File name="file" type="file" id="custom-file-translate-html" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
-                            <Form.Group controlId="LNameInput">
-                                <Form.Label>Achternaam</Form.Label>
-                                <Form.Control name="lname" type="LName" value={this.state.lname} onChange={this.handleInputChange} />
+                            <Form.Group controlId="PostalCode">
+                                <Form.Label>Postcode</Form.Label>
+                                <Form.Control name="pcode" type="PCode" value={this.state.pcode} placeholder="" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
+
+                    <Form.Group controlId="UserName">
+                        <Form.Label>Gebruikersnaam</Form.Label>
+                        <Form.Control name="username" type="Username" value={this.state.username} placeholder="" onChange={this.handleInputChange} />
+                    </Form.Group>
 
                     <Row>
                         <Col>
@@ -128,15 +219,42 @@ class AccountCreate extends Component {
                             </Form.Group>
                         </Col>
                     </Row>
-                    
+
                     <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
                         Account aanpassen
-                    </Button>                       
+                    </Button>
+
+
+
                 </Form>
+
+                <Button variant="primary" type="remove" onClick={this.openModal}>
+                    Account verwijderen
+                    </Button>
+
+                <Modal show={this.state.isOpen} backdrop="static" keyboard={false}>
+                    <Modal.Header>
+                        <Modal.Title>Account verwijderen</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        Weet u zeker dat u dit account wilt verwijderen? Dit kan niet ongedaan gemaakt worden!
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.closeModal}>
+                            Sluiten
+                        </Button>
+
+                        <Button variant="primary" onClick={this.onDeleteHandler}>
+                            Verwijder mijn account
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
 
         );
     }
 }
 
-export default AccountCreate;
+export default AccountEdit;

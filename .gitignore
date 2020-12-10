@@ -258,3 +258,4 @@ node/
 .vs/projectc/config/applicationhost.config
 .vs/ProjectSettings.json
 .vs/projectc/config/applicationhost.config
+ClientApp/.eslintcache
