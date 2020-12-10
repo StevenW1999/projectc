@@ -105,15 +105,15 @@ class AccountEdit extends Component {
                     'active': true
                 })
             })
-                .then(response => {
-                    const data = response.json();
-                    if (!response.ok) {
-                        const error = (data && data.message) || response.status;
-                        console.log('Error: ', error)
-                        return Promise.reject(error);
-                    }
-                    console.log('Succes!');
-                })
+            //    .then(response => {
+            //        const data = response.json();
+            //        if (!response.ok) {
+            //            const error = (data && data.message) || response.status;
+            //            console.log('Error: ', error)
+            //            return Promise.reject(error);
+            //        }
+            //        console.log('Succes!');
+            //    })
             this.props.history.push('/');
         }
     }

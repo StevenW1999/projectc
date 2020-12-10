@@ -52,7 +52,6 @@ class Login extends Component{
                 console.log("fetch error" + err);
             });
         alert('U bent ingelogd!');
-        this.props.history.push('/Account');
     }
 
     onAlternativeHandler = (e) => {
