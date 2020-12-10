@@ -38,7 +38,6 @@ class Account extends Component{
     }
 
     render() {
-        const pageswitch = this.state.user;
         return (
             <div className="Account">  
           

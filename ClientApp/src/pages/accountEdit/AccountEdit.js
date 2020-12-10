@@ -10,52 +10,57 @@ class AccountEdit extends Component {
         this.state = {
             redirect: false,
             isOpen: false,
-            passwordCheck: this.props.location.data.password,
-            emailCheck: this.props.location.data.email,
+            passwordCheck: '',
+            emailCheck: '',
             newUser: {
-                username: this.props.location.data.username,
-                password: this.props.location.data.password,
-                email: this.props.location.data.email,
-                postalCode: this.props.location.data.postalCode,
-                profilePicture: this.props.location.data.profilePicture
+                username: '',
+                password: '',
+                email: '',
+                postalCode: '',
+                profilePicture: null
             }
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    //handleInputChange(event) {
-    //    event.preventDefault();
-    //    const target = event.target;
-    //    const value = target.type === 'checkbox' ? target.checked : target.value;
-    //    const name = target.name;
-
-    //    if (target.type === "profilePicture2") {
-    //        this.setState({
-    //            file: URL.createObjectURL(event.target.files[0])
-    //        })
-    //    }
-    //    else if (target.type === "emailCheck" || target.type === "passwordCheck") {
-    //        this.setState({
-    //            [name]: value
-    //        });
-    //    }
-    //    else {
-    //        this.user.setState({
-    //            [name]: value
-    //        });
-    //    }
-    //}
+    componentDidMount() {
+        this.setState({
+            passwordCheck: this.props.location.state.password,
+            emailCheck: this.props.location.state.email,
+            newUser: {
+                username: this.props.location.state.username,
+                password: this.props.location.state.password,
+                email: this.props.location.state.email,
+                postalCode: this.props.location.state.postalCode,
+                profilePicture: null
+            }
+        })
+    }
 
     handleInputChange(e) {
         e.preventDefault();
         let name = e.target.name;
         let val = e.target.value;
-        this.setState({
-            newUser: {
-                [name]: val
-            }
-        })
+        if (name === "profilePicture") {
+            this.setState({
+                newUser: {
+                    [name]: URL.createObjectURL(e.target.files[0])
+                }
+              })
+        }
+        else if (name === "emailCheck" || name === "passwordCheck") {
+            this.setState({
+                  [name]: val
+            });
+        }
+        else {
+            this.setState({
+                newUser: {
+                    [name]: val
+                }
+            })
+        }
     }
     emailValidation() {
         let value = this.state.newUser.email;
@@ -96,7 +101,7 @@ class AccountEdit extends Component {
             alert("Wachtwoorden komen niet overeen!")
         }
         else {
-            fetch('/api/users/' + toString(this.props.user.id), {
+            fetch('/api/users/' + toString(this.props.location.state.id), {
                 method: 'put',
                 headers: {
                     'Content-Type': 'application/json',
@@ -119,14 +124,13 @@ class AccountEdit extends Component {
                     }
                     console.log('Succes!');
                 })
-            //.catch(error => { console.error('error: ', error) })
         }
     }
 
     onDeleteHandler = (e) => {
         e.preventDefault();
 
-        fetch('/api/users/' + toString(this.props.user.id), {
+        fetch('/api/users/' + toString(this.props.location.state.id), {
             method: 'delete',
             headers: {
                 'Content-Type': 'application/json',
@@ -142,17 +146,14 @@ class AccountEdit extends Component {
                 }
                 console.log('Succes!')
             })
-            //.catch(error => { console.error('error: ', error) })
     }
 
     openModal = () => this.setState({ isOpen: true });
     closeModal = () => this.setState({ isOpen: false });
-    //componentDidMount() {
-    //    let data = this.props.location.state.username;
-    //    console.log(data);
-    //}
+
     render() {
-        console.log(this.state.newUser.username)
+        console.log(this.state.newUser.username);
+        console.log(this.state.isOpen);
         return (
             <div className="AccountEdit">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
@@ -176,28 +177,28 @@ class AccountEdit extends Component {
                         <Col>
                             <Form.Group controlId="PostalCode">
                                 <Form.Label>Postcode</Form.Label>
-                                <Form.Control name="postalCode" type="PostalCode" defaultValue={this.props.location.state.postalCode} placeholder="" onChange={this.handleInputChange} />
+                                <Form.Control name="postalCode" type="PostalCode" defaultValue={this.state.newUser.postalCode} placeholder="" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
 
                     <Form.Group controlId="UserName">
                         <Form.Label>Gebruikersnaam</Form.Label>
-                        <Form.Control name="username" type="Username" defaultValue={this.props.location.state.username} placeholder="" onChange={this.handleInputChange} />
+                        <Form.Control name="username" type="username" defaultValue={this.state.newUser.username} placeholder="" onChange={this.handleInputChange} />
                     </Form.Group>
 
                     <Row>
                         <Col>
                             <Form.Group controlId="EmailInput">
                                 <Form.Label>Emailadres</Form.Label>
-                                <Form.Control name="email" type="Email" defaultValue={this.props.location.state.email} onChange={this.handleInputChange} />
+                                <Form.Control name="email" type="Email" defaultValue={this.state.newUser.email} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="ConfirmEmailInput">
                                 <Form.Label>Bevestig emailadres</Form.Label>
-                                <Form.Control name="emailcheck" type="emailCheck" defaultValue={this.props.location.state.email} onChange={this.handleInputChange} />
+                                <Form.Control name="emailCheck" type="emailCheck" defaultValue={this.state.newUser.email} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -206,14 +207,14 @@ class AccountEdit extends Component {
                         <Col>
                             <Form.Group controlId="PasswordInput">
                                 <Form.Label>Wachtwoord</Form.Label>
-                                <Form.Control name="password" type="Password" defaultValue={this.props.location.state.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="password" type="password" defaultValue={this.state.newUser.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="ConfirmPasswordInput">
                                 <Form.Label>Bevestig wachtwoord</Form.Label>
-                                <Form.Control name="passwordcheck" type="passwordCheck" defaultValue={this.props.location.state.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="passwordCheck" type="password" defaultValue={this.state.newUser.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
