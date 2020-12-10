@@ -9,19 +9,19 @@ class Editplant extends Component{
             file: '',
             imagePreviewUrl: '',
             Image: "",
-            Name: "Viool",
-            Description: "Mooie plant, doet het goed",
+            Name: this.props.location.state.title,
+            Description: this.props.location.state.description,
             Available: true,
             Type: "Kruidachtige",
             Perennial: "on",
-            Shadow: "Zon",
-            AmountOfWater: "Gemiddeld",
-            Soil: "off",
-            GrowthHeigth: "0 - 20 cm",
-            Color: "Blauw",
-            SeasonFrom: "2020-12-11",
-            SeasonTo: "2020-12-11",
-            SpecialFeatures: "Eetbaar",
+            Shadow: this.props.location.state.shadow,
+            AmountOfWater: this.props.location.state.water,
+            Soil: this.props.location.state.soil,
+            GrowthHeigth: this.props.location.state.height,
+            Color: this.props.location.state.color,
+            SeasonFrom: this.props.location.state.SeasonFrom,
+            SeasonTo: this.props.location.state.SeasonTo,
+            SpecialFeatures: this.props.location.state.special,
             token: "",
             isAuthenticated: false
         }
@@ -106,11 +106,11 @@ class Editplant extends Component{
           <Form>
               <Form.Group controlId="TitleInput">
                   <Form.Label>Titel</Form.Label>
-                  <Form.Control type="Title" name="Name" placeholder="Titel" onChange={this.handleInputChange} value={this.state.Name} />
+                  <Form.Control type="Title" name="Name" placeholder="Titel" onChange={this.handleInputChange} value={this.props.location.state.title} />
               </Form.Group>
               <Form.Group controlId="omschInput">
                   <Form.Label>Omschrijving</Form.Label>
-                  <Form.Control as="textarea" rows={3} name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} value={this.state.Description} />
+                  <Form.Control as="textarea" rows={3} name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} value={this.props.location.state.description} />
               </Form.Group>
               <fieldset>
                   <Form.Group as={Row}>
