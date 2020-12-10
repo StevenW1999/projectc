@@ -102,7 +102,8 @@ class AccountCreate extends Component {
                         console.log('error: ', error)
                         return Promise.reject(error);
                     }
-                        console.log('User aangemaakt!');
+                    console.log('User aangemaakt!');
+                    this.props.history.push('/Login');
                 })
             }
     }
