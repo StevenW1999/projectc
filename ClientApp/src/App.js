@@ -14,6 +14,7 @@ import Login from './pages/login/Login';
 import AdminPanel from './pages/adminpanel/AdminPanel';
 import Donatie from './pages/Donatie/Donate'
 import Contact from './pages/contact/Contact'
+import Editplant from './pages/EditPlant/Editplant';
 
 
 import {
@@ -21,7 +22,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import Editplant from './pages/EditPlant/Editplant';
+
 
 function App() {
   return (

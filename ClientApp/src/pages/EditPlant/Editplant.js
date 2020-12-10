@@ -16,11 +16,11 @@ class Editplant extends Component{
             Perennial: "on",
             Shadow: "Zon",
             AmountOfWater: "Gemiddeld",
-            Soil: "on",
+            Soil: "off",
             GrowthHeigth: "0 - 20 cm",
             Color: "Blauw",
-            SeasonFrom: Date,
-            SeasonTo: Date,
+            SeasonFrom: "2020-12-11",
+            SeasonTo: "2020-12-11",
             SpecialFeatures: "Eetbaar",
             token: "",
             isAuthenticated: false
@@ -39,7 +39,6 @@ class Editplant extends Component{
         this.setState({
             [name]: value
         });
-        console.log("state",this.state.Name)
     }
 
     onSubmitHandler = (e) => {
@@ -48,8 +47,7 @@ class Editplant extends Component{
             method: 'post', 
             headers: {
                 'Content-Type': 'application/json', 'Authorization': 'Bearer ' +
-                    ''
-            },
+                    ''     },
             body: JSON.stringify({
                 "Name": this.state.Name,
                 "Description": this.state.Description,
@@ -82,13 +80,25 @@ class Editplant extends Component{
     }
 
 
-render () {
+    render() {
+        var isvast = false;
+        var isnietvast = false;
     if (this.state.Perennial == "on") {
         isvast = true;
     }
     else {
-        isvast = false;
+        isnietvast = true;
     }
+        var grondja = false;
+        var grondnee = false;
+        if (this.state.Soil == "on") {
+            grondja = true;
+        }
+        else {
+            grondnee = true;
+        }
+
+
 
   return (
       <div className="Create">
@@ -112,14 +122,14 @@ render () {
                         type="radio"
                         label="Ja"
                         name="Perennial"
-                        value={this.state.Perennial}
+                        checked = {isvast}
                         onChange={this.handleInputChange}
                     />
                     <Form.Check
                         type="radio"
                         label="Nee"
                         name="Perennial"
-                        //isvast ? checked = {false} : checked = {true}
+                        checked = {isnietvast}
                         onChange={this.handleInputChange}
                     />
                     </Col>
@@ -127,7 +137,7 @@ render () {
               </fieldset>
               <Form.Group controlId="TypeInput">
                   <Form.Label>Soort</Form.Label>
-                  <Form.Control as="select" name="Type" select value={this.state.Type} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="Type" value={this.state.Type} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option>Bomen</option>
                       <option>Struiken</option>
@@ -167,6 +177,7 @@ render () {
                               type="radio"
                               label="Ja"
                               name="Soil"
+                              checked={grondja}
                               value={this.state.Soil}
                               onChange={this.handleInputChange}
                           />
@@ -174,6 +185,7 @@ render () {
                               type="radio"
                               label="Nee"
                               name="Soil"
+                              checked={grondnee}
                               value={this.state.Soil}
                               onChange={this.handleInputChange}
                           />
@@ -212,39 +224,11 @@ render () {
               </Form.Group>
               <Form.Group controlId="SeasonFromInput">
                   <Form.Label>Bloeimaand van:</Form.Label>
-                  <Form.Control as="select" name="SeasonFrom" value={this.state.SeasonFrom} onChange={this.handleInputChange}>
-                      <option> -- Kies een categorie -- </option>
-                      <option >Januari</option>
-                      <option >Februari</option>
-                      <option >Maart</option>
-                      <option >April</option>
-                      <option >Mei</option>
-                      <option >Juni</option>
-                      <option >Juli</option>
-                      <option >Augustus</option>
-                      <option >September</option>
-                      <option >Oktober</option>
-                      <option >November</option>
-                      <option >December</option>
-                  </Form.Control>
+                  <Form.Control type="date" name="SeasonFrom" placeholder="mm/dd/jj" onChange={this.handleInputChange} value={this.state.SeasonFrom} />
               </Form.Group>
               <Form.Group controlId="SeasonToInput">
                   <Form.Label>Bloeimaand tot:</Form.Label>
-                  <Form.Control as="select" name="SeasonTo" value={this.state.SeasonTo} onChange={this.handleInputChange}>
-                      <option> -- Kies een categorie -- </option>
-                      <option >Januari</option>
-                      <option >Februari</option>
-                      <option >Maart</option>
-                      <option >April</option>
-                      <option >Mei</option>
-                      <option >Juni</option>
-                      <option >Juli</option>
-                      <option >Augustus</option>
-                      <option >September</option>
-                      <option >Oktober</option>
-                      <option >November</option>
-                      <option >December</option>
-                  </Form.Control>
+                  <Form.Control type="date" name="SeasonTo" placeholder="mm/dd/jj" onChange={this.handleInputChange} value={this.state.SeasonTo} />
               </Form.Group>
               <Form.Group controlId="SpecialFeaturesInput">
                   <Form.Label>Extra eigenschappen</Form.Label>
@@ -263,7 +247,7 @@ render () {
                     <Form.File id="exampleFormControlFile1" label="Example file input" />
                 </Form.Group>
               <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
-                  Plant aanmaken
+                  Pas aan
               </Button>   
           </Form> 
           
