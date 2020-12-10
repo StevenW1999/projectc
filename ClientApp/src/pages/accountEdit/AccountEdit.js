@@ -24,29 +24,39 @@ class AccountEdit extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    handleInputChange(event) {
-        event.preventDefault();
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
+    //handleInputChange(event) {
+    //    event.preventDefault();
+    //    const target = event.target;
+    //    const value = target.type === 'checkbox' ? target.checked : target.value;
+    //    const name = target.name;
 
-        if (target.type === "profilePicture2") {
-            this.setState({
-                file: URL.createObjectURL(event.target.files[0])
-            })
-        }
-        else if (target.type === "emailCheck" || target.name === "passwordCheck") {
-            this.setState({
-                [name]: value
-            });
-        }
-        else {
-            this.newUser.setState({
-                [name]: value
-            });
-        }
+    //    if (target.type === "profilePicture2") {
+    //        this.setState({
+    //            file: URL.createObjectURL(event.target.files[0])
+    //        })
+    //    }
+    //    else if (target.type === "emailCheck" || target.type === "passwordCheck") {
+    //        this.setState({
+    //            [name]: value
+    //        });
+    //    }
+    //    else {
+    //        this.user.setState({
+    //            [name]: value
+    //        });
+    //    }
+    //}
+
+    handleInputChange(e) {
+        e.preventDefault();
+        let name = e.target.name;
+        let val = e.target.value;
+        this.setState({
+            newUser: {
+                [name]: val
+            }
+        })
     }
-
     emailValidation() {
         let value = this.state.newUser.email;
         if (value.lastIndexOf("@") < value.lastIndexOf(".")) {
@@ -137,9 +147,10 @@ class AccountEdit extends Component {
 
     openModal = () => this.setState({ isOpen: true });
     closeModal = () => this.setState({ isOpen: false });
-
-    
-
+    //componentDidMount() {
+    //    let data = this.props.location.state.username;
+    //    console.log(data);
+    //}
     render() {
         console.log(this.state.newUser.username)
         return (
@@ -165,28 +176,28 @@ class AccountEdit extends Component {
                         <Col>
                             <Form.Group controlId="PostalCode">
                                 <Form.Label>Postcode</Form.Label>
-                                <Form.Control name="postalCode" type="PostalCode" value={this.state.newUser.postalCode} placeholder="" onChange={this.handleInputChange} />
+                                <Form.Control name="postalCode" type="PostalCode" defaultValue={this.props.location.state.postalCode} placeholder="" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
 
                     <Form.Group controlId="UserName">
                         <Form.Label>Gebruikersnaam</Form.Label>
-                        <Form.Control name="username" type="Username" value={this.state.newUser.username} placeholder="" onChange={this.handleInputChange} />
+                        <Form.Control name="username" type="Username" defaultValue={this.props.location.state.username} placeholder="" onChange={this.handleInputChange} />
                     </Form.Group>
 
                     <Row>
                         <Col>
                             <Form.Group controlId="EmailInput">
                                 <Form.Label>Emailadres</Form.Label>
-                                <Form.Control name="email" type="Email" value={this.state.newUser.email} onChange={this.handleInputChange} />
+                                <Form.Control name="email" type="Email" defaultValue={this.props.location.state.email} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="ConfirmEmailInput">
                                 <Form.Label>Bevestig emailadres</Form.Label>
-                                <Form.Control name="emailcheck" type="emailCheck" value={this.state.newUser.email} onChange={this.handleInputChange} />
+                                <Form.Control name="emailcheck" type="emailCheck" defaultValue={this.props.location.state.email} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -195,14 +206,14 @@ class AccountEdit extends Component {
                         <Col>
                             <Form.Group controlId="PasswordInput">
                                 <Form.Label>Wachtwoord</Form.Label>
-                                <Form.Control name="password" type="Password" value={this.state.newUser.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="password" type="Password" defaultValue={this.props.location.state.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="ConfirmPasswordInput">
                                 <Form.Label>Bevestig wachtwoord</Form.Label>
-                                <Form.Control name="passwordcheck" type="password" value={this.state.newUser.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="passwordcheck" type="passwordCheck" defaultValue={this.props.location.state.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>

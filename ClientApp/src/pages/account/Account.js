@@ -64,7 +64,18 @@ class Account extends Component{
                     </Button>
           
                     <Button className="float-right" variant="primary" type="submit">
-                        <Link to={{pathname: '/AccountEdit', data: pageswitch}} className="Lnk">
+                        <Link to={{
+                            pathname: '/AccountEdit',
+                            state: {
+                                id: this.state.user.id,
+                                username: this.state.user.username,
+                                password: this.state.user.password,
+                                email: this.state.user.email,
+                                postalCode: this.state.user.email,
+                                profilePicture: null,
+                                active: false
+                            }
+                        }} className="Lnk">
                             Account Aanpassen
                         </Link>
                     </Button>
