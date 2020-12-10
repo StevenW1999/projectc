@@ -23,9 +23,36 @@ class AdminPanel extends Component {
                 }
             ],
             userList: null,
-            zoek: ""
+            zoek: "",
         }
         this.handleInputChange = this.handleInputChange.bind(this);
+    }
+
+    userFilter(u) {
+        console.log(u);
+        if (this.state.zoek != "") {
+            if (!(u.username.toLowerCase().includes(this.state.zoek.toLowerCase()))) {
+                return false;
+            } 
+        }
+        return true;
+    }
+
+    applyFilters() {
+        if (this.state.userList === null) {
+            return [];
+        }
+        var filtered = [];
+        var i;
+        console.log('starting loop');
+        for (i = 0; i < this.state.userList.length; i++) {
+            if (this.userFilter(this.state.userList[i])) {
+                console.log('userfilter passed');
+                filtered.push(this.state.userList[i]);
+                console.log(this.state.userList[i]);
+            }
+        }
+        return filtered;
     }
 
     handleInputChange(event) {
@@ -38,6 +65,7 @@ class AdminPanel extends Component {
             [name]: value
         });
         this.preventDefaultFilters();
+        this.applyFilters();
     }
 
     preventDefaultFilters() {
@@ -66,7 +94,7 @@ class AdminPanel extends Component {
                 description: 'waiting'
             }]
         }
-        return this.state.userList;
+        return this.applyFilters();
     }
 
 
@@ -79,14 +107,14 @@ class AdminPanel extends Component {
                         <div class="col-sm-">
                             <Form>
                                 <div class="input-group mb-3">
-                                <Form.Control type="text" placeholder="Gebruikersnaam..."/>
-                                    <div class="input-group-append">
+                                    <Form.Control type="text" name="zoek" onChange={this.handleInputChange} placeholder="Gebruikersnaam..."/>
+                                        <div class="input-group-append">
                                         <button type="button" class="btn btn-success">Zoek!</button>
+                                        </div>
                                     </div>
-                                </div>
-                    </Form>
-                    </div>
-                    </div>
+                                </Form>
+                            </div>
+                        </div>
                     </div>
                 <UserCatalogue data={this.getData()} />
                 </>
