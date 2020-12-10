@@ -4,7 +4,7 @@ import {Carousel, Container, Col, Row, Button, Card} from 'react-bootstrap';
 import { BsGeoAlt, BsDroplet, BsBrightnessHigh, BsStar } from 'react-icons/bs';
 import styled from 'styled-components';
 import PlantItem from '../../components/PlantItem';
-
+import { Link } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
 //const contextTypes = {
@@ -13,6 +13,16 @@ import { render } from '@testing-library/react';
 
 
 class ProductPage extends Component {
+    onSubmitHandler = (e) => {
+        fetch('/api/Plants', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            //body: JSON.stringify(YOUR_ADDITIONAL_DATA)  //if you do not want to send any addional data,  replace the complete JSON.stringify(YOUR_ADDITIONAL_DATA) with null
+        })
+    }
+
     render() {
         return (
             <Container className="container-padding">
@@ -65,9 +75,9 @@ class ProductPage extends Component {
                             <p className="normal-text font-weight-bold"><BsDroplet /> Small</p>
                             <Container className="text-center">
 
-                                <a href="/Editplant" class="btn btn-info" role="button">Plant wijzigen</a>
+                                <Link class="btn btn-info" to={{ pathname: '/editplant', state: { id: this.props.location.state.id, title: this.props.location.state.title, description: this.props.location.state.description } }}>Plant wijzigen</Link>
                                 <div class="divider" />
-                                <a href="/" class="btn btn-info" role="button">Plant verwijderen</a>
+                                <a href="/" class="btn btn-info" role="button" onClick={this.onSubmitHandler}>Plant verwijderen</a>
 
                                 <div class="divider"/>
                                 <Button>Neem contact op</Button>

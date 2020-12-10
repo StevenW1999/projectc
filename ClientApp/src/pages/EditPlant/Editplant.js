@@ -83,12 +83,12 @@ class Editplant extends Component{
 
 
 render () {
-    if (this.state.Perennial == "on") {
-        isvast = true;
-    }
-    else {
-        isvast = false;
-    }
+    //if (this.state.Perennial == "on") {
+    //    isvast = true;
+    //}
+    //else {
+    //    isvast = false;
+    //}
 
   return (
       <div className="Create">
@@ -96,11 +96,11 @@ render () {
           <Form>
               <Form.Group controlId="TitleInput">
                   <Form.Label>Titel</Form.Label>
-                  <Form.Control type="Title" name="Name" placeholder="Titel" onChange={this.handleInputChange} value={this.state.Name} />
+                  <Form.Control type="Title" name="Name" placeholder="Titel" onChange={this.handleInputChange} value={this.props.location.state.title} />
               </Form.Group>
               <Form.Group controlId="omschInput">
                   <Form.Label>Omschrijving</Form.Label>
-                  <Form.Control as="textarea" rows={3} name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} value={this.state.Description} />
+                  <Form.Control as="textarea" rows={3} name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} value={this.props.location.state.description} />
               </Form.Group>
               <fieldset>
                   <Form.Group as={Row}>

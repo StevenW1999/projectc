@@ -35,7 +35,7 @@ class PlantItem extends Component {
                             <span class="detail"><AiFillRightCircle /></span>
                             <span class="view-detail">
                                 
-                                <Link class="txt"to={{ pathname: '/productpage', state: { water: this.props.plant.water, title: this.props.plant.name, description: this.props.plant.description } }}>BEKIJK PLANT</Link>
+                                <Link class="txt"to={{ pathname: '/productpage', state: { id: this.props.plant.id, water: this.props.plant.amountofwater, title: this.props.plant.name, description: this.props.plant.description } }}>BEKIJK PLANT</Link>
                             </span>
                         </a>
                     </div>
