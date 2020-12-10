@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navigation.css';
@@ -9,6 +9,7 @@ import ukflag from '../images/UK.png';
 import nlflag from '../images/NL.jpg'; 
 
 function Navigation() {
+
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
 
@@ -28,6 +29,17 @@ function Navigation() {
         window.addEventListener('resize', showButton);
     }, []);
 
+    const handleLogout = () => {
+        fetch('/api/users/logout', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'bearer ' + localStorage.getItem('bearer') }
+        }).then(response => { return response.json(); })
+            .then(localStorage.removeItem('bearer'))
+            .catch(err => {
+                console.log("fetch error" + err);
+            });
+        window.alert('Uitgelogd!')
+    }
 
     return (
         <>
@@ -87,14 +99,14 @@ function Navigation() {
                             <li className='nav-item'>
                                 <Link
                                     className='nav-links'
-                                    onClick={closeMobileMenu}
+                                    onClick={closeMobileMenu, handleLogout}
                                 >
                                     Uitloggen
                 </Link>
                             </li>
                             <li className='nav-item'>
                                 <Link
-                                    to='/login'
+                                    to='/account'
                                     className='nav-links'
                                     onClick={closeMobileMenu}
                                 >

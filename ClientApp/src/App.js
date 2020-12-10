@@ -14,13 +14,14 @@ import Login from './pages/login/Login';
 import AdminPanel from './pages/adminpanel/AdminPanel';
 import Donatie from './pages/Donatie/Donate'
 import Contact from './pages/contact/Contact'
-
+import Editplant from './pages/EditPlant/Editplant';
 
 import {
   BrowserRouter as Router,
   Route,
   Switch,
 } from "react-router-dom";
+
 
 function App() {
   return (
@@ -35,7 +36,8 @@ function App() {
         <Route exact path="/Account" component ={Account}/>
         <Route exact path="/AccountCreate" component ={AccountCreate}/>
         <Route exact path="/AccountEdit" component ={AccountEdit}/>
-        <Route exact path="/Create_trade" component ={Create_trade}/>
+        <Route exact path="/Create_trade" component={Create_trade} />
+        <Route exact path="/Editplant" component={Editplant} />
         <Route exact path="/Search" component={Searchresults} />
         <Route exact path="/AdminPanel" component={AdminPanel} />
         <Route exact path="/Donate" component={Donatie} />
