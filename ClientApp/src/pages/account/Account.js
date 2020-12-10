@@ -37,7 +37,8 @@ class Account extends Component{
         });
     }
 
-    render () {
+    render() {
+        const pageswitch = this.state.user;
         return (
             <div className="Account">  
           
@@ -63,7 +64,7 @@ class Account extends Component{
                     </Button>
           
                     <Button className="float-right" variant="primary" type="submit">
-                        <Link to={{pathname: '/AccountEdit', data: this.state.user}} className="Lnk">
+                        <Link to={{pathname: '/AccountEdit', data: pageswitch}} className="Lnk">
                             Account Aanpassen
                         </Link>
                     </Button>

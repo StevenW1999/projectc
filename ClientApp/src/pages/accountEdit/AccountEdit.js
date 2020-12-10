@@ -10,14 +10,14 @@ class AccountEdit extends Component {
         this.state = {
             redirect: false,
             isOpen: false,
-            passwordCheck: '',
-            emailCheck: '',
+            passwordCheck: this.props.location.data.password,
+            emailCheck: this.props.location.data.email,
             newUser: {
-                username: '',
-                password: '',
-                email: '',
-                postalCode: '',
-                profilePicture: ''
+                username: this.props.location.data.username,
+                password: this.props.location.data.password,
+                email: this.props.location.data.email,
+                postalCode: this.props.location.data.postalCode,
+                profilePicture: this.props.location.data.profilePicture
             }
         }
 
@@ -35,13 +35,13 @@ class AccountEdit extends Component {
                 file: URL.createObjectURL(event.target.files[0])
             })
         }
-        else if (target.type === "emailCheck" || target.type === "passwordCheck") {
+        else if (target.type === "emailCheck" || target.name === "passwordCheck") {
             this.setState({
                 [name]: value
             });
         }
         else {
-            this.user.setState({
+            this.newUser.setState({
                 [name]: value
             });
         }
@@ -96,7 +96,7 @@ class AccountEdit extends Component {
                     "Username": this.state.newUser.username,
                     "Password": this.state.newUser.password,
                     "email": this.state.newUser.email,
-                    "postalcode": this.state.newUser.postalCode,
+                    "postalCode": this.state.newUser.postalCode,
                     "profilepicture": this.state.newUser.profilePicture
                 })
             })
@@ -138,7 +138,10 @@ class AccountEdit extends Component {
     openModal = () => this.setState({ isOpen: true });
     closeModal = () => this.setState({ isOpen: false });
 
+    
+
     render() {
+        console.log(this.state.newUser.username)
         return (
             <div className="AccountEdit">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
@@ -162,28 +165,28 @@ class AccountEdit extends Component {
                         <Col>
                             <Form.Group controlId="PostalCode">
                                 <Form.Label>Postcode</Form.Label>
-                                <Form.Control name="postalCode" type="PostalCode" value={this.props.location.data.postalCode} placeholder="" onChange={this.handleInputChange} />
+                                <Form.Control name="postalCode" type="PostalCode" value={this.state.newUser.postalCode} placeholder="" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
 
                     <Form.Group controlId="UserName">
                         <Form.Label>Gebruikersnaam</Form.Label>
-                        <Form.Control name="username" type="Username" value={this.props.location.user.username} placeholder="" onChange={this.handleInputChange} />
+                        <Form.Control name="username" type="Username" value={this.state.newUser.username} placeholder="" onChange={this.handleInputChange} />
                     </Form.Group>
 
                     <Row>
                         <Col>
                             <Form.Group controlId="EmailInput">
                                 <Form.Label>Emailadres</Form.Label>
-                                <Form.Control name="email" type="Email" value={this.props.location.user.email} onChange={this.handleInputChange} />
+                                <Form.Control name="email" type="Email" value={this.state.newUser.email} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="ConfirmEmailInput">
                                 <Form.Label>Bevestig emailadres</Form.Label>
-                                <Form.Control name="emailcheck" type="emailCheck" value={this.props.location.user.email} onChange={this.handleInputChange} />
+                                <Form.Control name="emailcheck" type="emailCheck" value={this.state.newUser.email} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -192,14 +195,14 @@ class AccountEdit extends Component {
                         <Col>
                             <Form.Group controlId="PasswordInput">
                                 <Form.Label>Wachtwoord</Form.Label>
-                                <Form.Control name="password" type="Password" value={this.props.location.user.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="password" type="Password" value={this.state.newUser.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="ConfirmPasswordInput">
                                 <Form.Label>Bevestig wachtwoord</Form.Label>
-                                <Form.Control name="passwordcheck" type="passwordCheck" value={this.props.location.user.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="passwordcheck" type="password" value={this.state.newUser.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
