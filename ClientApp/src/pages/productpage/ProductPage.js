@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './ProductPage.css';
-import {Carousel, Container, Col, Row, Button, Card} from 'react-bootstrap';
+import { Form, Carousel, Container, Col, Row, Button, Card} from 'react-bootstrap';
 import { BsGeoAlt, BsDroplet, BsBrightnessHigh, BsStar } from 'react-icons/bs';
 import styled from 'styled-components';
 import PlantItem from '../../components/PlantItem';
@@ -14,13 +14,22 @@ import { render } from '@testing-library/react';
 
 class ProductPage extends Component {
     onSubmitHandler = (e) => {
-        fetch('/api/Plants', {
-            method: 'DELETE',
+        fetch('/api/plants/' + this.props.location.state.id, {
+            method: 'delete',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            //body: JSON.stringify(YOUR_ADDITIONAL_DATA)  //if you do not want to send any addional data,  replace the complete JSON.stringify(YOUR_ADDITIONAL_DATA) with null
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + localStorage.getItem('bearer')
+            }
         })
+            .then(response => {
+                const data = response.json();
+                if (!response.ok) {
+                    const error = (data && data.message) || response.status;
+                    console.log('Error: ', error)
+                    return Promise.reject(error);
+                }
+                console.log('Succes!')
+            })
     }
 
     render() {
@@ -93,7 +102,10 @@ class ProductPage extends Component {
                                     }
                                 }}>Plant wijzigen</Link>
                                 <div class="divider" />
-                                <a href="/" class="btn btn-info" role="button" onClick={this.onSubmitHandler}>Plant verwijderen</a>
+                                <Button variant="primary" onClick={this.onSubmitHandler}>
+                                    Plant verwijderen
+                        </Button>
+                                
 
                                 <div class="divider"/>
                                 <Button>Neem contact op</Button>

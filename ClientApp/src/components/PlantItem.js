@@ -24,7 +24,7 @@ class PlantItem extends Component {
                                 <span class="p-name">{this.props.plant.name}</span>
                                 <span class="p-user">[user]</span>
                             </div>
-                            <div class="a-categories">Categorie: <span class="categories">[CATEGORIE]</span></div>
+                            <div class="a-categories">Categorie: <span class="categories">{this.props.plant.type}</span></div>
                         </div>
                     </div>
                     <div class="box-down">
