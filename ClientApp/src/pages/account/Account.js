@@ -70,7 +70,7 @@ class Account extends Component{
                                 username: this.state.user.username,
                                 password: this.state.user.password,
                                 email: this.state.user.email,
-                                postalCode: this.state.user.email,
+                                postalCode: this.state.user.postalCode,
                                 profilePicture: null,
                                 active: false
                             }
