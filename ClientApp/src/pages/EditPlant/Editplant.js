@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
-import './Create_trade.css';
+import './Editplant.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 
-class Create_trade extends Component{
+class Editplant extends Component{
     constructor(props) {
         super(props);
         this.state = {
             file: '',
             imagePreviewUrl: '',
             Image: "",
-            Name: "",
-            Description: "",
+            Name: "Viool",
+            Description: "Mooie plant, doet het goed",
             Available: true,
-            Type: "",
-            Perennial: "",
-            Shadow: "",
-            AmountOfWater: "",
-            Soil: "",
-            GrowthHeigth: "",
-            Color: "",
-            SeasonFrom: Date,
-            SeasonTo: Date,
-            SpecialFeatures: "",
+            Type: "Kruidachtige",
+            Perennial: "on",
+            Shadow: "Zon",
+            AmountOfWater: "Gemiddeld",
+            Soil: "off",
+            GrowthHeigth: "0 - 20 cm",
+            Color: "Blauw",
+            SeasonFrom: "2020-12-11",
+            SeasonTo: "2020-12-11",
+            SpecialFeatures: "Eetbaar",
             token: "",
             isAuthenticated: false
         }
@@ -39,7 +39,6 @@ class Create_trade extends Component{
         this.setState({
             [name]: value
         });
-        console.log("state",this.state.Name)
     }
 
     onSubmitHandler = (e) => {
@@ -48,8 +47,7 @@ class Create_trade extends Component{
             method: 'post', 
             headers: {
                 'Content-Type': 'application/json', 'Authorization': 'Bearer ' +
-                    ''
-            },
+                    ''     },
             body: JSON.stringify({
                 "Name": this.state.Name,
                 "Description": this.state.Description,
@@ -66,6 +64,7 @@ class Create_trade extends Component{
                 "SpecialFeatures": this.state.SpecialFeatures
             })
         })
+
             .then(response => {
                 const data = response.json();
                 if (!response.ok) {
@@ -80,7 +79,26 @@ class Create_trade extends Component{
         //.catch(error => { console.error('error: ', error) })
     }
 
-render () {
+
+    render() {
+        var isvast = false;
+        var isnietvast = false;
+    if (this.state.Perennial == "on") {
+        isvast = true;
+    }
+    else {
+        isnietvast = true;
+    }
+        var grondja = false;
+        var grondnee = false;
+        if (this.state.Soil == "on") {
+            grondja = true;
+        }
+        else {
+            grondnee = true;
+        }
+
+
 
   return (
       <div className="Create">
@@ -88,11 +106,11 @@ render () {
           <Form>
               <Form.Group controlId="TitleInput">
                   <Form.Label>Titel</Form.Label>
-                  <Form.Control type="Title" name="Name" placeholder="Titel" onChange={this.handleInputChange} />
+                  <Form.Control type="Title" name="Name" placeholder="Titel" onChange={this.handleInputChange} value={this.state.Name} />
               </Form.Group>
               <Form.Group controlId="omschInput">
                   <Form.Label>Omschrijving</Form.Label>
-                  <Form.Control as="textarea" rows={3} name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} />
+                  <Form.Control as="textarea" rows={3} name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} value={this.state.Description} />
               </Form.Group>
               <fieldset>
                   <Form.Group as={Row}>
@@ -104,12 +122,14 @@ render () {
                         type="radio"
                         label="Ja"
                         name="Perennial"
+                        checked = {isvast}
                         onChange={this.handleInputChange}
                     />
                     <Form.Check
                         type="radio"
                         label="Nee"
                         name="Perennial"
+                        checked = {isnietvast}
                         onChange={this.handleInputChange}
                     />
                     </Col>
@@ -117,7 +137,7 @@ render () {
               </fieldset>
               <Form.Group controlId="TypeInput">
                   <Form.Label>Soort</Form.Label>
-                  <Form.Control as="select" name="Type" onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="Type" value={this.state.Type} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option>Bomen</option>
                       <option>Struiken</option>
@@ -129,7 +149,7 @@ render () {
               </Form.Group>
               <Form.Group controlId="Shadowinput">
                   <Form.Label>Standplaats</Form.Label>
-                  <Form.Control as="select" name="Shadow" onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="Shadow" value={this.state.Shadow} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >Zon</option>
                       <option >Half schaduw</option>
@@ -139,7 +159,7 @@ render () {
               </Form.Group>
               <Form.Group controlId="waterinput">
                   <Form.Label>Water</Form.Label>
-                  <Form.Control as="select" name="AmountOfWater" onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="AmountOfWater" value={this.state.AmountOfWater} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >Nat</option>
                       <option >Gemiddeld</option>
@@ -157,12 +177,16 @@ render () {
                               type="radio"
                               label="Ja"
                               name="Soil"
+                              checked={grondja}
+                              value={this.state.Soil}
                               onChange={this.handleInputChange}
                           />
                           <Form.Check
                               type="radio"
                               label="Nee"
                               name="Soil"
+                              checked={grondnee}
+                              value={this.state.Soil}
                               onChange={this.handleInputChange}
                           />
                       </Col>
@@ -170,7 +194,7 @@ render () {
               </fieldset>
               <Form.Group controlId="HeightInput">
                   <Form.Label>Groeihoogte</Form.Label>
-                  <Form.Control as="select" name="GrowthHeigth" onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="GrowthHeigth" value={this.state.GrowthHeigth} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >0 - 20 cm</option>
                       <option >20 - 40 cm</option>
@@ -184,7 +208,7 @@ render () {
               </Form.Group>
               <Form.Group controlId="ColorInput">
                   <Form.Label>Bloeikleur</Form.Label>
-                  <Form.Control as="select" name="Color" onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="Color" value={this.state.Color} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >Blauw</option>
                       <option >Geel</option>
@@ -200,15 +224,15 @@ render () {
               </Form.Group>
               <Form.Group controlId="SeasonFromInput">
                   <Form.Label>Bloeimaand van:</Form.Label>
-                  <Form.Control type="date" name="SeasonFrom" placeholder="mm/dd/jj" onChange={this.handleInputChange} />
+                  <Form.Control type="date" name="SeasonFrom" placeholder="mm/dd/jj" onChange={this.handleInputChange} value={this.state.SeasonFrom} />
               </Form.Group>
               <Form.Group controlId="SeasonToInput">
                   <Form.Label>Bloeimaand tot:</Form.Label>
-                  <Form.Control type="date" name="SeasonTo" placeholder="mm/dd/jj" onChange={this.handleInputChange}/>
+                  <Form.Control type="date" name="SeasonTo" placeholder="mm/dd/jj" onChange={this.handleInputChange} value={this.state.SeasonTo} />
               </Form.Group>
               <Form.Group controlId="SpecialFeaturesInput">
                   <Form.Label>Extra eigenschappen</Form.Label>
-                  <Form.Control as="select" name="SpecialFeatures" onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="SpecialFeatures" value={this.state.SpecialFeatures} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >Geurend</option>
                       <option >Eetbaar</option>
@@ -223,13 +247,15 @@ render () {
                     <Form.File id="exampleFormControlFile1" label="Example file input" />
                 </Form.Group>
               <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
-                  Plant aanmaken
+                  Pas aan
               </Button>   
           </Form> 
+          
+
 
     </div>
     );
 }
 }
 
-export default Create_trade;
+export default Editplant;

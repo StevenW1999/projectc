@@ -4,7 +4,11 @@ import Button from 'react-bootstrap/Button';
 import './PlantItem.css';
 import { AiFillRightCircle } from "react-icons/ai";
 
+import { Link } from 'react-router-dom';
+
+
 class PlantItem extends Component {
+
     constructor(props) {
         super(props);
     }
@@ -20,17 +24,18 @@ class PlantItem extends Component {
                                 <span class="p-name">{this.props.plant.name}</span>
                                 <span class="p-user">[user]</span>
                             </div>
-                            <div class="a-categories">Categories: <span class="categories">[CATEGORIES]</span></div>
+                            <div class="a-categories">Categorie: <span class="categories">[CATEGORIE]</span></div>
                         </div>
                     </div>
                     <div class="box-down">
                         <div class="h-bg">
                             <div class="h-bg-inner"></div>
                         </div>
-                        <a class="bar" href="./ProductPage">
+                        <a class="bar">
                             <span class="detail"><AiFillRightCircle /></span>
                             <span class="view-detail">
-                                <span class="txt">VIEW DETAILS</span>
+                                
+                                <Link class="txt"to={{ pathname: '/productpage', state: { water: this.props.plant.water, title: this.props.plant.name, description: this.props.plant.description } }}>BEKIJK PLANT</Link>
                             </span>
                         </a>
                     </div>
