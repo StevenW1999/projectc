@@ -16,7 +16,6 @@ import Donatie from './pages/Donatie/Donate'
 import Contact from './pages/contact/Contact'
 import Editplant from './pages/EditPlant/Editplant';
 
-
 import {
   BrowserRouter as Router,
   Route,
