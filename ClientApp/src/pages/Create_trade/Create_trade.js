@@ -47,8 +47,7 @@ class Create_trade extends Component{
         fetch('/api/Plants', {
             method: 'post', 
             headers: {
-                'Content-Type': 'application/json', 'Authorization': 'Bearer ' +
-                    ''
+                'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('bearer')
             },
             body: JSON.stringify({
                 "Name": this.state.Name,
@@ -77,6 +76,8 @@ class Create_trade extends Component{
                 }
                 console.log('Plant aangemaakt')
             })
+        alert('aangemaakt');
+        this.props.history.push('/');
         //.catch(error => { console.error('error: ', error) })
     }
 
