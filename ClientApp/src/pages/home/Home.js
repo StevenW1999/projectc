@@ -82,17 +82,17 @@ class Home extends Component {
       <>
         <BannerContainer>
           <BannerContent>
-            <BannerItems>
-                        <BannerH1>BIO DIVERSITEIT</BannerH1>
+                    <BannerItems>
+                        <BannerH1 className="shadowhide">BIO DIVERSITEIT</BannerH1>
                         <BannerP>Natuur vriendelijk ruilen</BannerP>
-              <BannerBtn>
-                <Link to="/signup">NU REGISTREREN</Link>
+                        <BannerBtn className="registerbutton">
+                            <Link className="registertext" to="/AccountCreate">Nu registreren</Link>
               </BannerBtn>
             </BannerItems>
           </BannerContent>
         </BannerContainer>
-        <div className ="searchBar">
-          <h1>Catalogus</h1>
+            <div className="searchBar">
+                <h1 className="catext">Catalogus</h1>
         </div>
           <Catalogue data={this.state.plants}></Catalogue>
       </>

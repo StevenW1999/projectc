@@ -11,31 +11,57 @@ class PlantItem extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            User: {
+                Username: ""
+            }
+        }
     }
 
+    componentDidMount() {
+        fetch('/api/users/' + this.props.plant.userId, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + localStorage.getItem('bearer')
+            }
+        })
+            .then(response => { return response.json(); })
+            .then(data => {
+                this.setState({ "User": data });
+            })
+            .catch(err => {
+                console.log("fetch error" + err);
+            });
+    }
     render() {
         return (
             <>
                 <div class="el-wrapper">
                     <div class="box-up">
-                        <img class="img" src={this.props.plant.image} alt="" />
+                        <img class="img" src="images/plant1.png" alt="" />
                         <div class="img-info">
                             <div class="info-inner">
                                 <span class="p-name">{this.props.plant.name}</span>
-                                <span class="p-user">[user]</span>
+                                <span class="p-user">{this.state.User.username}</span>
                             </div>
-                            <div class="a-categories">Categorie: <span class="categories">[CATEGORIE]</span></div>
+                            <div class="a-categories">Categorie: <span class="categories">{this.props.plant.type}</span></div>
                         </div>
                     </div>
                     <div class="box-down">
-                        <div class="h-bg">
+                        <div class="h-bg bar-recolor">
                             <div class="h-bg-inner"></div>
                         </div>
                         <a class="bar">
                             <span class="detail"><AiFillRightCircle /></span>
                             <span class="view-detail">
                                 
-                                <Link class="txt"to={{ pathname: '/productpage', state: { water: this.props.plant.water, title: this.props.plant.name, description: this.props.plant.description } }}>BEKIJK PLANT</Link>
+                                <Link class="txt" to={{
+                                    pathname: '/productpage', state: {
+                                        id: this.props.plant.id,
+                                        userid: this.props.plant.userId
+                                    }
+                                }}>BEKIJK PLANT</Link>
                             </span>
                         </a>
                     </div>
