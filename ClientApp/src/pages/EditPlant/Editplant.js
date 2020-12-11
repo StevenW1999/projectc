@@ -1,29 +1,36 @@
 import React, { Component } from 'react';
 import './Editplant.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
+import dateFormat from 'dateformat';
 
 class Editplant extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            file: '',
-            imagePreviewUrl: '',
-            Image: "",
-            Name: this.props.location.state.title,
-            Description: this.props.location.state.description,
-            Available: true,
-            Type: "Kruidachtige",
-            Perennial: "on",
-            Shadow: this.props.location.state.shadow,
-            AmountOfWater: this.props.location.state.water,
-            Soil: this.props.location.state.soil,
-            GrowthHeigth: this.props.location.state.height,
-            Color: this.props.location.state.color,
-            SeasonFrom: this.props.location.state.SeasonFrom,
-            SeasonTo: this.props.location.state.SeasonTo,
-            SpecialFeatures: this.props.location.state.special,
-            token: "",
-            isAuthenticated: false
+            Plant: {
+                file: '',
+                imagePreviewUrl: '',
+                Id: "",
+                UserId: "",
+                Image: null,
+                Name: "",
+                Description: "",
+                Available: false,
+                Type: "",
+                Perennial: "",
+                Shadow: "",
+                AmountOfWater: "",
+                Soil: "",
+                GrowthHeigth: "",
+                Color: "",
+                SeasonFrom: null,
+                SeasonTo: null,
+                SpecialFeatures: "",
+                Timestamp: null,
+                token: "",
+                isAuthenticated: false
+            }
+            
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -43,7 +50,7 @@ class Editplant extends Component{
 
     onSubmitHandler = (e) => {
         e.preventDefault();
-        fetch('/api/Plants', {
+        fetch('/api/Plants' + this.props.location.state.id, {
             method: 'post', 
             headers: {
                 'Content-Type': 'application/json', 'Authorization': 'Bearer ' +
@@ -79,11 +86,28 @@ class Editplant extends Component{
         //.catch(error => { console.error('error: ', error) })
     }
 
+    componentDidMount() {
+        fetch('/api/plants/' + this.props.location.state.id, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + localStorage.getItem('bearer')
+            }
+        })
+            .then(response => { return response.json(); })
+            .then(data => {
+                this.setState({ "Plant": data });
+            })
+            .catch(err => {
+                console.log("fetch error" + err);
+            });
+    }
+
 
     render() {
         var isvast = false;
         var isnietvast = false;
-    if (this.state.Perennial == "on") {
+    if (this.state.Plant.perennial == "on") {
         isvast = true;
     }
     else {
@@ -91,14 +115,12 @@ class Editplant extends Component{
     }
         var grondja = false;
         var grondnee = false;
-        if (this.state.Soil == "on") {
+        if (this.state.Plant.soil == "on") {
             grondja = true;
         }
         else {
             grondnee = true;
         }
-
-
 
   return (
       <div className="Create">
@@ -106,11 +128,11 @@ class Editplant extends Component{
           <Form>
               <Form.Group controlId="TitleInput">
                   <Form.Label>Titel</Form.Label>
-                  <Form.Control type="Title" name="Name" placeholder="Titel" onChange={this.handleInputChange} value={this.props.location.state.title} />
+                  <Form.Control type="Title" name="Name" placeholder="Titel" onChange={this.handleInputChange} value={this.state.Plant.name} />
               </Form.Group>
               <Form.Group controlId="omschInput">
                   <Form.Label>Omschrijving</Form.Label>
-                  <Form.Control as="textarea" rows={3} name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} value={this.props.location.state.description} />
+                  <Form.Control as="textarea" rows={3} name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} value={this.state.Plant.description} />
               </Form.Group>
               <fieldset>
                   <Form.Group as={Row}>
@@ -137,7 +159,7 @@ class Editplant extends Component{
               </fieldset>
               <Form.Group controlId="TypeInput">
                   <Form.Label>Soort</Form.Label>
-                  <Form.Control as="select" name="Type" value={this.state.Type} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="Type" value={this.state.Plant.type} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option>Bomen</option>
                       <option>Struiken</option>
@@ -149,7 +171,7 @@ class Editplant extends Component{
               </Form.Group>
               <Form.Group controlId="Shadowinput">
                   <Form.Label>Standplaats</Form.Label>
-                  <Form.Control as="select" name="Shadow" value={this.state.Shadow} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="Shadow" value={this.state.Plant.shadow} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >Zon</option>
                       <option >Half schaduw</option>
@@ -159,7 +181,7 @@ class Editplant extends Component{
               </Form.Group>
               <Form.Group controlId="waterinput">
                   <Form.Label>Water</Form.Label>
-                  <Form.Control as="select" name="AmountOfWater" value={this.state.AmountOfWater} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="AmountOfWater" value={this.state.Plant.amountOfWater} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >Nat</option>
                       <option >Gemiddeld</option>
@@ -194,7 +216,7 @@ class Editplant extends Component{
               </fieldset>
               <Form.Group controlId="HeightInput">
                   <Form.Label>Groeihoogte</Form.Label>
-                  <Form.Control as="select" name="GrowthHeigth" value={this.state.GrowthHeigth} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="GrowthHeigth" value={this.state.Plant.growthHeigth} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >0 - 20 cm</option>
                       <option >20 - 40 cm</option>
@@ -208,7 +230,7 @@ class Editplant extends Component{
               </Form.Group>
               <Form.Group controlId="ColorInput">
                   <Form.Label>Bloeikleur</Form.Label>
-                  <Form.Control as="select" name="Color" value={this.state.Color} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="Color" value={this.state.Plant.color} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >Blauw</option>
                       <option >Geel</option>
@@ -224,15 +246,15 @@ class Editplant extends Component{
               </Form.Group>
               <Form.Group controlId="SeasonFromInput">
                   <Form.Label>Bloeimaand van:</Form.Label>
-                  <Form.Control type="date" name="SeasonFrom" placeholder="mm/dd/jj" onChange={this.handleInputChange} value={this.state.SeasonFrom} />
+                  <Form.Control type="date" name="SeasonFrom" placeholder="mm/dd/jj" onChange={this.handleInputChange} value={dateFormat(this.state.Plant.seasonFrom, "yyyy-mm-dd")} />
               </Form.Group>
               <Form.Group controlId="SeasonToInput">
                   <Form.Label>Bloeimaand tot:</Form.Label>
-                  <Form.Control type="date" name="SeasonTo" placeholder="mm/dd/jj" onChange={this.handleInputChange} value={this.state.SeasonTo} />
+                  <Form.Control type="date" name="SeasonTo" placeholder="mm/dd/jj" onChange={this.handleInputChange} value={dateFormat(this.state.Plant.seasonTo, "yyyy-mm-dd")} />
               </Form.Group>
               <Form.Group controlId="SpecialFeaturesInput">
                   <Form.Label>Extra eigenschappen</Form.Label>
-                  <Form.Control as="select" name="SpecialFeatures" value={this.state.SpecialFeatures} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="SpecialFeatures" value={this.state.Plant.specialFeatures} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >Geurend</option>
                       <option >Eetbaar</option>

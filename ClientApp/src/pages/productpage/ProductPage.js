@@ -11,8 +11,35 @@ import { render } from '@testing-library/react';
 //    router: React.PropTypes.object
 //} 
 
-
 class ProductPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            Plant: {
+                Id: "",
+                UserId: "",
+                Image: null,
+                Name: "",
+                Description: "",
+                Available: false,
+                Type: "",
+                Perennial: "",
+                Shadow: "",
+                AmountOfWater: "",
+                Soil: "",
+                GrowthHeigth: "",
+                Color: "",
+                SeasonFrom: null,
+                SeasonTo: null,
+                SpecialFeatures: "",
+                Timestamp: null
+            },
+            User: {
+                Username: ""
+            },
+    }
+}
+
     onSubmitHandler = (e) => {
         fetch('/api/plants/' + this.props.location.state.id, {
             method: 'delete',
@@ -30,6 +57,38 @@ class ProductPage extends Component {
                 }
                 console.log('Succes!')
             })
+    }
+
+    componentDidMount() {
+        fetch('/api/plants/' + this.props.location.state.id, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + localStorage.getItem('bearer')
+            }
+        })
+            .then(response => { return response.json(); })
+            .then(data => {
+                this.setState({ "Plant": data });
+            })
+            .catch(err => {
+                console.log("fetch error" + err);
+            });
+
+        fetch('/api/users/' + this.props.location.state.userid, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + localStorage.getItem('bearer')
+            }
+        })
+            .then(response => { return response.json(); })
+            .then(data => {
+                this.setState({ "User": data });
+            })
+            .catch(err => {
+                console.log("fetch error" + err);
+            });
     }
 
     render() {
@@ -73,36 +132,24 @@ class ProductPage extends Component {
                     <Col md={6}>
                         <Container className="dbackground">
 
-                            <h1>{this.props.location.state.title}</h1>
-                            <h4>Pieter</h4>
+                            <h1>{this.state.Plant.name}</h1>
+                            <h4>{this.state.User.username}</h4>
                             <br/>
                             <p className="normal-text">Plant details:</p>
-                            <p className="normal-text font-weight-bold">Water: {this.props.location.state.amountofwater}</p>
-                            <p className="normal-text font-weight-bold">Schaduw: {this.props.location.state.shadow}</p>
-                            <p className="normal-text font-weight-bold">Lengte: {this.props.location.state.height}</p>
-                            <p className="normal-text font-weight-bold">Kleur: {this.props.location.state.color}</p>
-                            <p className="normal-text font-weight-bold">Speciale kenmerken: {this.props.location.state.special}</p>
+                            <p className="normal-text font-weight-bold">Water: {this.state.Plant.amountOfWater}</p>
+                            <p className="normal-text font-weight-bold">Schaduw: {this.state.Plant.shadow}</p>
+                            <p className="normal-text font-weight-bold">Lengte: {this.state.Plant.growthHeigth}</p>
+                            <p className="normal-text font-weight-bold">Kleur: {this.state.Plant.color}</p>
+                            <p className="normal-text font-weight-bold">Speciale kenmerken: {this.state.Plant.specialFeatures}</p>
                             <Container className="text-center">
 
-                                <Link class="btn btn-info" to={{
+                                <Link class="btn btn-warning" to={{
                                     pathname: '/editplant', state: {
-                                        id: this.props.location.state.id,
-                                        water: this.props.location.state.water,
-                                        title: this.props.location.state.title,
-                                        description: this.props.location.state.description,
-                                        type: this.props.location.state.type,
-                                        shadow: this.props.location.state.shadow,
-                                        soil: this.props.location.state.soil,
-                                        height: this.props.location.state.height,
-                                        color: this.props.location.state.color,
-                                        special: this.props.location.state.special,
-                                        seasonfrom: this.props.location.state.seasonfrom,
-                                        seasonto: this.props.location.state.seasonto,
-                                        timestamp: this.props.location.state.timestamp,
+                                        id: this.props.location.state.id
                                     }
                                 }}>Plant wijzigen</Link>
                                 <div class="divider" />
-                                <Button variant="primary" onClick={this.onSubmitHandler}>
+                                <Button variant="danger" onClick={this.onSubmitHandler}>
                                     Plant verwijderen
                         </Button>
                                 
@@ -120,7 +167,7 @@ class ProductPage extends Component {
 
                 <Container className="dbackground">
                     <h2>Beschrijving</h2>
-                    <p className="normal-text">{this.props.location.state.description}</p>
+                    <p className="normal-text">{this.state.Plant.description}</p>
                     <br/>
                 </Container>
                 <br/>

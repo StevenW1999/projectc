@@ -11,18 +11,39 @@ class PlantItem extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            User: {
+                Username: ""
+            }
+        }
     }
 
+    componentDidMount() {
+        fetch('/api/users/' + this.props.plant.userId, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + localStorage.getItem('bearer')
+            }
+        })
+            .then(response => { return response.json(); })
+            .then(data => {
+                this.setState({ "User": data });
+            })
+            .catch(err => {
+                console.log("fetch error" + err);
+            });
+    }
     render() {
         return (
             <>
                 <div class="el-wrapper">
                     <div class="box-up">
-                        <img class="img" src={this.props.plant.image} alt="" />
+                        <img class="img" src="images/plant1.png" alt="" />
                         <div class="img-info">
                             <div class="info-inner">
                                 <span class="p-name">{this.props.plant.name}</span>
-                                <span class="p-user">[user]</span>
+                                <span class="p-user">{this.state.User.username}</span>
                             </div>
                             <div class="a-categories">Categorie: <span class="categories">{this.props.plant.type}</span></div>
                         </div>
@@ -38,18 +59,7 @@ class PlantItem extends Component {
                                 <Link class="txt" to={{
                                     pathname: '/productpage', state: {
                                         id: this.props.plant.id,
-                                        water: this.props.plant.amountofwater,
-                                        title: this.props.plant.name,
-                                        description: this.props.plant.description,
-                                        type: this.props.plant.type,
-                                        shadow: this.props.plant.shadow,
-                                        soil: this.props.plant.soil,
-                                        height: this.props.plant.growthheigth,
-                                        color: this.props.plant.color,
-                                        special: this.props.plant.specialfeatures,
-                                        seasonfrom: this.props.plant.seasonfrom,
-                                        seasonto: this.props.plant.seasonto,
-                                        timestamp: this.props.plant.timestamp,
+                                        userid: this.props.plant.userId
                                     }
                                 }}>BEKIJK PLANT</Link>
                             </span>
