@@ -49,7 +49,7 @@ class PlantItem extends Component {
                         </div>
                     </div>
                     <div class="box-down">
-                        <div class="h-bg">
+                        <div class="h-bg bar-recolor">
                             <div class="h-bg-inner"></div>
                         </div>
                         <a class="bar">

@@ -45,7 +45,7 @@ function Navigation() {
         <>
             <IconContext.Provider value={{ color: '#fff' }}>
                 <nav className='navbar'>
-                    <div className='navbar-container container'>
+                    <div className='navbar-container'>
                         <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
                             <RiPlantFill className='navbar-icon' />
               Stekoverflow
@@ -56,41 +56,50 @@ function Navigation() {
                         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
 
                             <li className='nav-item'>
-                                <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+                                <Link to='/' className='nav-links nodecoration' onClick={closeMobileMenu}>
                                     Home
                 </Link>
                             </li>
                             <li className='nav-item'>
                                 <Link
                                     to='/about'
-                                    className='nav-links'
+                                    className='nav-links nodecoration'
                                     onClick={closeMobileMenu}
                                 >
-                                    About us
+                                    Over ons
+                </Link>
+                            </li>
+                            <li className='nav-item'>
+                                <Link
+                                    to='/contact'
+                                    className='nav-links nodecoration'
+                                    onClick={closeMobileMenu}
+                                >
+                                    Contact
                 </Link>
                             </li>
                             <li className='nav-item'>
                                 <Link
                                     to='/allplants'
-                                    className='nav-links'
+                                    className='nav-links nodecoration'
                                     onClick={closeMobileMenu}
                                 >
-                                    All Plants
+                                    Catalogus
                 </Link>
                             </li>
                             <li className='nav-item'>
                                 <Link
                                     to='/Create_trade'
-                                    className='nav-links'
+                                    className='nav-links nodecoration'
                                     onClick={closeMobileMenu}
                                 >
-                                    Voeg een plant toe
+                                    Plant toevoegen
                 </Link>
                             </li>
                             <li className='nav-item'>
                                 <Link
                                     to='/login'
-                                    className='nav-links'
+                                    className='nav-links nodecoration'
                                     onClick={closeMobileMenu}
                                 >
                                     Inloggen
@@ -98,7 +107,7 @@ function Navigation() {
                             </li>
                             <li className='nav-item'>
                                 <Link
-                                    className='nav-links'
+                                    className='nav-links nodecoration'
                                     onClick={closeMobileMenu, handleLogout}
                                 >
                                     Uitloggen
@@ -107,7 +116,7 @@ function Navigation() {
                             <li className='nav-item'>
                                 <Link
                                     to='/account'
-                                    className='nav-links'
+                                    className='nav-links nodecoration'
                                     onClick={closeMobileMenu}
                                 >
                                     Mijn profiel
