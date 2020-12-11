@@ -53,8 +53,8 @@ class Editplant extends Component{
         fetch('/api/Plants' + this.props.location.state.id, {
             method: 'post', 
             headers: {
-                'Content-Type': 'application/json', 'Authorization': 'Bearer ' +
-                    ''     },
+                'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('bearer')
+            },
             body: JSON.stringify({
                 "Name": this.state.Name,
                 "Description": this.state.Description,
