@@ -80,7 +80,7 @@ function Navigation() {
                             </li>
                             <li className='nav-item'>
                                 <Link
-                                    to='/allplants'
+                                    to='/search'
                                     className='nav-links nodecoration'
                                     onClick={closeMobileMenu}
                                 >

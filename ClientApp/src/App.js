@@ -38,7 +38,6 @@ function App() {
         <Route exact path="/AccountEdit" component ={AccountEdit}/>
         <Route exact path="/Create_trade" component={Create_trade} />
         <Route exact path="/Editplant" component={Editplant} />
-        <Route exact path="/Search" component={Searchresults} />
         <Route exact path="/AdminPanel" component={AdminPanel} />
         <Route exact path="/Donate" component={Donatie} />
         <Route exact path="/Contact" component={Contact} />
