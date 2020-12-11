@@ -84,7 +84,7 @@ function Navigation() {
                                     className='nav-links nodecoration'
                                     onClick={closeMobileMenu}
                                 >
-                                    Catalogus
+                                    Aanbod 
                 </Link>
                             </li>
                             <li className='nav-item'>
