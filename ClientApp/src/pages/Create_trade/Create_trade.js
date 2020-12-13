@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Create_trade.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
+import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 
 class Create_trade extends Component{
     constructor(props) {
@@ -9,6 +10,7 @@ class Create_trade extends Component{
             file: '',
             imagePreviewUrl: '',
             Image: "",
+            Category: "",
             Name: "",
             Description: "",
             Available: true,
@@ -50,6 +52,7 @@ class Create_trade extends Component{
                 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('bearer')
             },
             body: JSON.stringify({
+                "Category": this.state.Category,
                 "Name": this.state.Name,
                 "Description": this.state.Description,
                 "Available": this.state.Available,
@@ -201,32 +204,52 @@ render () {
               </Form.Group>
               <Form.Group controlId="SeasonFromInput">
                   <Form.Label>Bloeimaand van:</Form.Label>
-                  <Form.Control type="date" name="SeasonFrom" placeholder="mm/dd/jj" onChange={this.handleInputChange} />
+                  <Form.Control as="select" name="SeasonFrom" onChange={this.handleInputChange}>
+                      <option> -- Kies een categorie -- </option>
+                      <option value="2020-01-01">Januari</option>
+                      <option value="2020-02-01">Februari</option>
+                      <option value="2020-03-01">Maart</option>
+                      <option value="2020-04-01">April</option>
+                      <option value="2020-05-01">Mei</option>
+                      <option value="2020-06-01">Juni</option>
+                      <option value="2020-07-01">Juli</option>
+                      <option value="2020-08-01">Augustus</option>
+                      <option value="2020-09-01">September</option>
+                      <option value="2020-10-01">Oktober</option>
+                      <option value="2020-11-01">November</option>
+                      <option value="2020-12-01">December</option>
+                  </Form.Control>
               </Form.Group>
               <Form.Group controlId="SeasonToInput">
                   <Form.Label>Bloeimaand tot:</Form.Label>
-                  <Form.Control type="date" name="SeasonTo" placeholder="mm/dd/jj" onChange={this.handleInputChange}/>
-              </Form.Group>
-              <Form.Group controlId="SpecialFeaturesInput">
-                  <Form.Label>Extra eigenschappen</Form.Label>
-                  <Form.Control as="select" name="SpecialFeatures" onChange={this.handleInputChange}>
-                      <option> -- Kies een categorie -- </option>
-                      <option >Geurend</option>
-                      <option >Eetbaar</option>
-                      <option >Giftig</option>
-                      <option >Trekt bijen aan</option>
-                      <option >Trekt hommels aan</option>
-                      <option >Trekt vlinders aan</option>
-                      <option >Trekt vogels aan</option>
+                  <Form.Control as="select" name="SeasonTo" onChange={this.handleInputChange}>
+                          <option> -- Kies een categorie -- </option>
+                          <option value="2020-01-01">Januari</option>
+                          <option value="2020-02-01">Februari</option>
+                          <option value="2020-03-01">Maart</option>
+                          <option value="2020-04-01">April</option>
+                          <option value="2020-05-01">Mei</option>
+                        <option value="2020-06-01">Juni</option>
+                        <option value="2020-07-01">Juli</option>
+                        <option value="2020-08-01">Augustus</option>
+                        <option value="2020-09-01">September</option>
+                        <option value="2020-10-01">Oktober</option>
+                        <option value="2020-11-01">November</option>
+                        <option value="2020-12-01">December</option>
                   </Form.Control>
               </Form.Group>
+                <Form.Group controlId="SpecialFeaturesInput">
+                    <Form.Label>Extra eigenschappen</Form.Label>
+                    <DropdownMultiselect
+                        options={["Geurend", "Eetbaar", "Giftig", "Trekt bijen aan", "Trekt hommels aan", "Trekt vlinders aan", "Trekt vogels aan"]} name="SpecialFeatures" onChange={this.handleInputChange} />
+                </Form.Group>
                 <Form.Group>
                     <Form.File id="exampleFormControlFile1" label="Example file input" />
                 </Form.Group>
               <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
                   Plant aanmaken
-              </Button>   
-          </Form> 
+              </Button>
+          </Form>
 
     </div>
     );
