@@ -51,6 +51,7 @@ class Login extends Component{
             .catch(err => {
                 console.log("fetch error" + err);
             });
+        alert('U bent ingelogd!');
     }
 
     onAlternativeHandler = (e) => {

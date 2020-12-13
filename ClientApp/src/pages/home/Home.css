@@ -1,4 +1,4 @@
-.searchBar{
+.searchBar {
     width: 80%;
     height: 80px;
     left: 10%;
@@ -6,9 +6,25 @@
     top: 105%;
     text-align: center;
     background-color: white;
-    border-style: groove;
-    border-radius: 20px;
+    border-radius: 20px 20px 0px 0px;
     border-width: 2px;
+}
+
+.catext {
+    margin-top: 10px;
+}
+
+.shadowhide {
+    box-shadow: none !important;
+}
+
+.registerbutton {
+    background-color: #40916c !important;
+}
+
+.registertext {
+    color: white !important;
+    text-decoration: none !important;
 }
 
 .searchBar .h1{

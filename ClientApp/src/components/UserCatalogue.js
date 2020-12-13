@@ -24,14 +24,6 @@ class UserCatalogue extends Component {
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-">
-                            <Form>
-                                <div class="input-group mb-3">
-                                <Form.Control type="text" placeholder="Gebruikersnaam..."/>
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-success">Zoek!</button>
-                                    </div>
-                                </div>
-                            </Form>
                         </div>
                     </div>
                 </div>
