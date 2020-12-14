@@ -30,7 +30,7 @@ class AccountEdit extends Component {
             password: this.props.location.state.password,
             email: this.props.location.state.email,
             postalCode: this.props.location.state.postalCode,
-            profilePicture: null
+            profilePicture: this.props.location.state.profilePicture
         })
     }
 
