@@ -15,6 +15,7 @@ namespace Project
         public string Name { get; set; }
         public string Description { get; set; }
         public bool Available { get; set; }
+        public string Category { get; set; }
         public string Type { get; set; }
         public string Perennial { get; set; }
         public string Shadow { get; set; }

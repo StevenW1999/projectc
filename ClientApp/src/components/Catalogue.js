@@ -120,7 +120,7 @@ class Catalogue extends Component {
     }
 
     componentDidMount() {
-        fetch('https://localhost:44338/api/plants')
+        fetch('/api/plants')
             .then(response => response.json())
             .then(data => this.setState({
                 plantList: data.map(plant => {
