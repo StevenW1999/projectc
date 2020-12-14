@@ -74,6 +74,17 @@ class AdminPanel extends Component {
         }
     }
 
+
+    jsonWrapper(data) {
+        console.log("DATA: ", data.ok);
+        if (data.ok === false) {
+            return {};
+        }
+        else {
+            return data.json();
+        }
+    }
+
     componentDidMount() {
         fetch('https://localhost:44338/api/Users', {
             method: 'get',
@@ -81,7 +92,7 @@ class AdminPanel extends Component {
                 'Authorization': 'bearer ' + localStorage.getItem('bearer')
             }
         })
-            .then(response => response.json())
+            .then(response => this.jsonWrapper(response))
             .then(data => this.setState({
                 userList: data            }))    }
 
