@@ -13,6 +13,7 @@ using Project.Models;
 using Microsoft.IdentityModel.Tokens;
 using Project.Services;
 using Project;
+using System.Text;
 
 namespace ProjectC.Controllers
 {
@@ -115,6 +116,9 @@ namespace ProjectC.Controllers
                     //check if there is an user with the given username, if not then:
                     if (!_userService.IsAnExistingUser(user.Username))
                     {
+                        var image = Encoding.ASCII.GetString(user.ProfilePicture);
+                        user.ProfilePicture = Convert.FromBase64String(image);
+
                         _context.Add(user);
                         await _context.SaveChangesAsync();
                         return CreatedAtAction("GetUser", new { id = user.Id }, user);
