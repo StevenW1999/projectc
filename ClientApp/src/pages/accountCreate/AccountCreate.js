@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './AccountCreate.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
-import { post } from 'jquery';
 
 class AccountCreate extends Component {
     constructor(props) {
@@ -24,22 +23,11 @@ class AccountCreate extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    readFileDataAsBase64(e) {
-        const file = e.target.files[0];
-
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-
-            reader.onload = (event) => {
-                resolve(event.target.result);
-            };
-
-            reader.onerror = (err) => {
-                reject(err);
-            };
-
-            reader.readAsDataURL(file);
-        });
+    _handleReaderLoaded = (readerEvt) => {
+        let binaryString = readerEvt.target.result
+        this.setState({
+            file2: btoa(binaryString)
+        })
     }
 
     handleInputChange(event) {
@@ -49,10 +37,15 @@ class AccountCreate extends Component {
         const name = target.name;
         
         if (target.type === "file") {
-            this.setState({
-                file: URL.createObjectURL(event.target.files[0]),
-                file2: this.readFileDataAsBase64()
-            })
+            let pic = target.files[0];
+
+            if (pic) {
+                const reader = new FileReader();
+
+                reader.onload = this._handleReaderLoaded.bind(this)
+
+                reader.readAsBinaryString(pic)
+            }
         }
         else {
             this.setState({
@@ -81,7 +74,7 @@ class AccountCreate extends Component {
         if(this.state.username.length < 4){
             alert("Gebruikersnaam moet minimaal 5 karakters lang zijn!")
         }
-        else if (this.state.postalCode.length != 6 || !parseInt(this.state.postalCode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.postalCode.slice(5, 6))) {
+        else if (this.state.postalCode.length !== 6 || !parseInt(this.state.postalCode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.postalCode.slice(5, 6))) {
             alert("Postcode is ongeldig")
         }
         else if (this.state.email.length<5) {
@@ -102,7 +95,7 @@ class AccountCreate extends Component {
         else if (!this.state.checkbox) {
             alert("U dient de algemene voorwaarden te accepteren!")
         }
-        else{
+        else {
             fetch('/api/users', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
@@ -137,7 +130,7 @@ class AccountCreate extends Component {
                 <Form onSubmit={this.onSubmitHandler}>
                     <Row>
                         <Col>
-                            <Image className="ProfPic" src={this.state.file} roundedCircle />
+                            <Image className="ProfPic" src={"data:file2/png;base64," + this.state.file2} roundedCircle />
                         </Col>  
                     </Row>
                     
@@ -145,7 +138,7 @@ class AccountCreate extends Component {
                         <Col>
                             <Form.Group controlId="ProfPicInput">
                                 <Form.Label>Profielfoto</Form.Label>
-                                <Form.File name="file" type="file" id="custom-file-translate-html" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
+                                <Form.File name="file" type="file" id="custom-file-translate-html" accept=".jpeg, .jpg, .png" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
