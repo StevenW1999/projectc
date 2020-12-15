@@ -220,7 +220,7 @@ class AccountEdit extends Component {
 
                 <Button variant="primary" type="remove" onClick={this.openModal}>
                     Account verwijderen
-                    </Button>
+                </Button>
 
                 <Modal show={this.state.isOpen} backdrop="static" keyboard={false}>
                     <Modal.Header>
