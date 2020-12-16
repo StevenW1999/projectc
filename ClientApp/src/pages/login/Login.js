@@ -32,7 +32,8 @@ class Login extends Component{
         
         this.setState({
             [name]: value,
-            fetchCompleted: false
+            fetchCompleted: false,
+            isAuthenticated: false
         });
     }
 
@@ -48,33 +49,25 @@ class Login extends Component{
         }).then(response => { return response.json(); })
             .then(data => {
                 this.setState({ "auth": data, "isAuthenticated": true }, () => localStorage.setItem("bearer", this.state.auth.accessToken));
-                this.state.fetchCompleted = true;
+                if (this.state.auth.accessToken === undefined) {
+                    this.state.isAuthenticated = false;
+                }
+                return this.state.isAuthenticated;
             })
             .catch(err => {
                 console.log("fetch error" + err);
-                this.state.fetchCompleted = true;
-            });
-
-        this.fetchCompletedCheck();
-        if (this.state.isAuthenticated === true) {
-            alert('U bent ingelogd!');
+                return this.state.isAuthenticated;
+            })
+            .then(data => { this.userAlert(data)})
+        }
+   
+    userAlert(input) {
+        if (input === true) {
+            alert('Je bent ingelogd!');
         } else {
             alert('Verkeerde informatie, probeer opnieuw.');
         }
-    }
-
-    fetchCompletedCheck() {
-        var start = new Date().getTime();
-        for (var i = 0; i < 1e7; i++) {
-            if ((new Date().getTime - start) > 100) {
-                if (this.state.fetchCompleted === true) {
-                    return true;
-                } else {
-                    this.fetchCompletedCheck();
-                }
-            }
-        }
-    }
+    } 
 
     onAlternativeHandler = (e) => {
         e.preventDefault();
