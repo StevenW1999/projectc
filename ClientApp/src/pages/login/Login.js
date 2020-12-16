@@ -51,7 +51,11 @@ class Login extends Component{
             .catch(err => {
                 console.log("fetch error" + err);
             });
-        alert('U bent ingelogd!');
+        if (this.state.isAuthenticated === true) {
+            alert('U bent ingelogd!');
+        } else {
+            alert('Verkeerde informatie, probeer opnieuw.');
+        }
     }
 
     onAlternativeHandler = (e) => {
