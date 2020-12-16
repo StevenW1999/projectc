@@ -117,11 +117,22 @@ namespace ProjectC.Controllers
                     if (!_userService.IsAnExistingUser(user.Username))
                     {
                         var image = Encoding.ASCII.GetString(user.ProfilePicture);
-                        user.ProfilePicture = Convert.FromBase64String(image);
 
-                        _context.Add(user);
+
+                        var newUser = new User
+                        {
+                            Id = user.Id,
+                            Username = user.Username,
+                            Password = user.Password,
+                            Email = user.Email,
+                            PostalCode = user.PostalCode,
+                            ProfilePicture = Convert.FromBase64String(image),
+                            Active = user.Active
+                        };
+
+                        _context.Add(newUser);
                         await _context.SaveChangesAsync();
-                        return CreatedAtAction("GetUser", new { id = user.Id }, user);
+                        return CreatedAtAction("GetUser", new { id = newUser.Id }, newUser);
                     }
                 }
             }
