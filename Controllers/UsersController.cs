@@ -116,23 +116,9 @@ namespace ProjectC.Controllers
                     //check if there is an user with the given username, if not then:
                     if (!_userService.IsAnExistingUser(user.Username))
                     {
-                        var image = Encoding.ASCII.GetString(user.ProfilePicture);
-
-
-                        var newUser = new User
-                        {
-                            Id = user.Id,
-                            Username = user.Username,
-                            Password = user.Password,
-                            Email = user.Email,
-                            PostalCode = user.PostalCode,
-                            ProfilePicture = Convert.FromBase64String(image),
-                            Active = user.Active
-                        };
-
-                        _context.Add(newUser);
+                        _context.Add(user);
                         await _context.SaveChangesAsync();
-                        return CreatedAtAction("GetUser", new { id = newUser.Id }, newUser);
+                        return CreatedAtAction("GetUser", new { id = user.Id }, user);
                     }
                 }
             }
