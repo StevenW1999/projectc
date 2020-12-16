@@ -31,7 +31,8 @@ class Login extends Component{
         const name = target.name;
         
         this.setState({
-          [name]: value    
+            [name]: value,
+            fetchCompleted: false
         });
     }
 
@@ -47,14 +48,31 @@ class Login extends Component{
         }).then(response => { return response.json(); })
             .then(data => {
                 this.setState({ "auth": data, "isAuthenticated": true }, () => localStorage.setItem("bearer", this.state.auth.accessToken));
+                this.state.fetchCompleted = true;
             })
             .catch(err => {
                 console.log("fetch error" + err);
+                this.state.fetchCompleted = true;
             });
+
+        this.fetchCompletedCheck();
         if (this.state.isAuthenticated === true) {
             alert('U bent ingelogd!');
         } else {
             alert('Verkeerde informatie, probeer opnieuw.');
+        }
+    }
+
+    fetchCompletedCheck() {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime - start) > 100) {
+                if (this.state.fetchCompleted === true) {
+                    return true;
+                } else {
+                    this.fetchCompletedCheck();
+                }
+            }
         }
     }
 
