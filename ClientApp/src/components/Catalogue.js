@@ -57,7 +57,10 @@ class Catalogue extends Component {
     }
 
     plantFilter(p) {
+        console.log("");
         console.log(p);
+        console.log(p.growthHeigth);
+        console.log(this.state.groeihoogte);
         if (this.state.zoek != "") {
             if (!(p.name.toLowerCase().includes(this.state.zoek.toLowerCase()))) {
                 return false;
@@ -91,7 +94,7 @@ class Catalogue extends Component {
 
         }
         if (this.state.groeihoogte != "") {
-            if (!(p.growthHeight === this.state.groeihoogte)) {
+            if (!(p.growthHeigth === this.state.groeihoogte)) {
                 return false;
             }
 
