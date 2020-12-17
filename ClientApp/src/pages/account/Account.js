@@ -36,6 +36,7 @@ class Account extends Component{
         .catch(err => {
             console.log("fetch error" + err);
         });
+        console.log(this.state.user)
     }
 
     render() {
@@ -49,7 +50,11 @@ class Account extends Component{
                     <h1>Naam:</h1>      
                     <h4>{this.state.user.username}</h4>
                     <br></br>
-
+                    <Row>
+                        <Col>
+                            <Image className="ProfPic" src={"data:file2/png;base64," + this.state.user.profilePicture} roundedCircle />
+                        </Col>
+                    </Row>
                     <br></br>
                     <h1>Email:</h1>
                     <h4>{this.state.user.email}</h4>
