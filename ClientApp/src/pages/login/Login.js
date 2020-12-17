@@ -64,6 +64,7 @@ class Login extends Component{
     userAlert(input) {
         if (input === true) {
             alert('Je bent ingelogd!');
+            window.location.href = "/";
         } else {
             alert('Verkeerde informatie, probeer opnieuw.');
         }
