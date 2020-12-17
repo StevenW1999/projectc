@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Project;
@@ -9,9 +10,10 @@ using Project;
 namespace ProjectC.Migrations
 {
     [DbContext(typeof(ProjectCContext))]
-    partial class ProjectCContextModelSnapshot : ModelSnapshot
+    [Migration("20201216204656_FriendsMigration")]
+    partial class FriendsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,9 +48,7 @@ namespace ProjectC.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsConfirmed")
                         .HasColumnType("boolean");

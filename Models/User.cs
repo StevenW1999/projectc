@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Project.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,6 +13,7 @@ namespace Project
         public User()
         {
             Plants = new HashSet<Plant>();
+            Friends = new HashSet<FriendList>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -25,6 +27,10 @@ namespace Project
 
         [JsonIgnore]
         public virtual ICollection<Plant> Plants { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<FriendList> FriendsOf { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<FriendList> Friends { get; set; }
 
     }
 }

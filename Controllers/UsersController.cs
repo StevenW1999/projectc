@@ -13,6 +13,7 @@ using Project.Models;
 using Microsoft.IdentityModel.Tokens;
 using Project.Services;
 using Project;
+using System.Text;
 
 namespace ProjectC.Controllers
 {
@@ -115,6 +116,8 @@ namespace ProjectC.Controllers
                     //check if there is an user with the given username, if not then:
                     if (!_userService.IsAnExistingUser(user.Username))
                     {
+                        //var image = Encoding.ASCII.GetString(user.ProfilePicture);
+                        //user.ProfilePicture = Convert.FromBase64String(image);
                         _context.Add(user);
                         await _context.SaveChangesAsync();
                         return CreatedAtAction("GetUser", new { id = user.Id }, user);
@@ -257,9 +260,87 @@ namespace ProjectC.Controllers
                 return Unauthorized(e.Message); // return 401 so that the client side can redirect the user to login page
             }
         }
+
+
+        [HttpPost("FriendAdd")]
+        [Authorize]
+        public async Task<IActionResult> FriendAdd([FromBody]FriendList friendList,string Username)
+        {
+            var user = CurrUser();
+            var Friend = _context.Users.FirstOrDefault(u => u.Username == Username);
+
+            try
+            {
+                //check if model is valid
+                if (ModelState.IsValid)
+                {
+                    if (Friend != null)
+                    {
+                        friendList.FriendFrom = user;
+                        friendList.FriendFromId = user.Id;
+                        friendList.FriendTo = Friend;
+                        friendList.FriendToId = Friend.Id;
+                        _context.Add(friendList);
+                        await _context.SaveChangesAsync();
+                        return Ok(friendList);
+                    }
+                }
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.
+                ModelState.AddModelError("", "Unable to save changes. " +
+                    "Try again, and if the problem persists " +
+                    "see your system administrator.");
+            }
+                return NotFound("user not found");
+
+        }
+
+        [HttpGet("ConfirmedFriends")]
+        [Authorize]
+        public ActionResult ConfirmedFriendsList()
+        {
+            var Friends = _context.FriendLists.Where(f => f.FriendFromId == CurrUser().Id && f.IsConfirmed == true);
+            return Ok(Friends);
+        }
+
+        [HttpGet("NotConfirmedFriends")]
+        [Authorize]
+        public ActionResult NotConfirmedFriendsList()
+        {
+            var Friends = _context.FriendLists.Where(f => f.FriendFromId == CurrUser().Id && f.IsConfirmed == false);
+            return Ok(Friends);
+        }
+
+        [HttpPost("ConfirmFriend")]
+        [Authorize]
+        public ActionResult ConfirmFriend(int Id)
+        {           
+            var Request = _context.FriendLists.Where(f => f.FriendFromId == CurrUser().Id && f.IsConfirmed == false && f.Id == Id).FirstOrDefault();
+            var Friend = _context.Users.FirstOrDefault(f => f.Id == Request.FriendToId);
+            Request.IsConfirmed = true;
+            FriendList friendList = new FriendList
+            {
+                FriendFrom = Friend,
+                FriendFromId = Friend.Id,
+                FriendTo = CurrUser(),
+                FriendToId = CurrUser().Id,
+                IsConfirmed = true
+            };
+            _context.Add(friendList);
+            _context.SaveChanges();
+            return Ok(Request);
+        }
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
+        }
+
+        private User CurrUser()
+        {
+            User user = _context.Users.FirstOrDefault(u => u.Username == User.Identity.Name); //query to find user with username found in the token
+            return user;
         }
     }
 }
