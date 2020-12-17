@@ -57,6 +57,7 @@ class Catalogue extends Component {
     }
 
     plantFilter(p) {
+        console.log(p);
         if (this.state.zoek != "") {
             if (!(p.name.toLowerCase().includes(this.state.zoek.toLowerCase()))) {
                 return false;
@@ -240,12 +241,12 @@ class Catalogue extends Component {
                                 <br />
                                 <Form.Control name="groeihoogte" onChange={this.handleInputChange} as="select">
                                     <option>Groeihoogte...</option>
-                                    <option>0-20 cm</option>
-                                    <option>20-40 cm</option>
-                                    <option>40-70 cm</option>
-                                    <option>70-100 cm</option>
-                                    <option>100-120 cm</option>
-                                    <option>120-150 cm</option>
+                                    <option>0 - 20 cm</option>
+                                    <option>20 - 40 cm</option>
+                                    <option>40 - 70 cm</option>
+                                    <option>70 - 100 cm</option>
+                                    <option>100 - 120 cm</option>
+                                    <option>120 - 150 cm</option>
                                     <option>1,5 - 2 m</option>
                                     <option>Hoger dan 2m</option>
                                 </Form.Control>
