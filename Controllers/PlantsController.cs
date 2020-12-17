@@ -98,26 +98,26 @@ namespace Project.Controllers
         }
 
         // PUT: api/Plants/5
-        [Authorize]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> setAvailable(int id, Plant plant)
-        {
-            User user = GetCurrentUser();
+        //[Authorize]
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> setAvailable(int id, Plant plant)
+        //{
+        //    User user = GetCurrentUser();
 
-            if (isAuthenticated())
-            {
-                if (id != plant.Id)
-                {
-                    return BadRequest();
-                }
-                if (plant.UserId == user.Id) //if user is logged in and the plant belongs the user, set the availability to the current opposite
-                {
-                    plant.Available = !plant.Available;
-                    return Ok(plant);
-                }
-            }
-            return NoContent();
-        }
+        //    if (isAuthenticated())
+        //    {
+        //        if (id != plant.Id)
+        //        {
+        //            return BadRequest();
+        //        }
+        //        if (plant.UserId == user.Id) //if user is logged in and the plant belongs the user, set the availability to the current opposite
+        //        {
+        //            plant.Available = !plant.Available;
+        //            return Ok(plant);
+        //        }
+        //    }
+        //    return NoContent();
+        //}
 
 
         // POST: api/Plants
