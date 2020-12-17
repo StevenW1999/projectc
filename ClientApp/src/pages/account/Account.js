@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import "./Account.css";
 import { Link } from 'react-router-dom';
-import { Form, Button, Row, Col} from 'react-bootstrap';
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
 
 class Account extends Component{
     constructor(props) {
@@ -42,6 +43,8 @@ class Account extends Component{
             <div className="Account">  
           
                 <Form>
+                    <Image className="ProfPic" src={"data:file/png;base64," + this.state.profilePicture} roundedCircle />
+
                     <header>Mijn account</header>
                     <h1>Naam:</h1>      
                     <h4>{this.state.user.username}</h4>
@@ -71,7 +74,7 @@ class Account extends Component{
                                 password: this.state.user.password,
                                 email: this.state.user.email,
                                 postalCode: this.state.user.postalCode,
-                                profilePicture: null,
+                                profilePicture: this.state.user.profilePicture,
                                 active: false
                             }
                         }} className="Lnk">

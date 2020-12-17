@@ -16,8 +16,7 @@ class AccountCreate extends Component {
             password: "",
             passwordCheck: "",
             checkbox: false,
-            file: null,
-            file2: null
+            file: null
         }
         
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -26,7 +25,7 @@ class AccountCreate extends Component {
     _handleReaderLoaded = (readerEvt) => {
         let binaryString = readerEvt.target.result
         this.setState({
-            file2: btoa(binaryString)
+            file: btoa(binaryString)
         })
     }
 
@@ -104,7 +103,7 @@ class AccountCreate extends Component {
                     'password': this.state.password,
                     'email': this.state.email,
                     'postalcode': this.state.postalCode,
-                    'profilepicture': this.state.file2,
+                    'profilepicture': this.state.file,
                     'active': true
                 })
             })
@@ -130,7 +129,7 @@ class AccountCreate extends Component {
                 <Form onSubmit={this.onSubmitHandler}>
                     <Row>
                         <Col>
-                            <Image className="ProfPic" src={"data:file2/png;base64," + this.state.file2} roundedCircle />
+                            <Image className="ProfPic" src={"data:file/png;base64," + this.state.file} roundedCircle />
                         </Col>  
                     </Row>
                     
