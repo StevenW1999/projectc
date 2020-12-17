@@ -3,6 +3,8 @@ import "./Account.css";
 import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
+import "../../components/UserPlantsCatalogue";
+import UserPlantsCatalogue from '../../components/UserPlantsCatalogue';
 
 class Account extends Component{
     constructor(props) {
@@ -86,6 +88,9 @@ class Account extends Component{
                             Account Aanpassen
                         </Link>
                     </Button>
+
+                    <UserPlantsCatalogue></UserPlantsCatalogue>
+
                 </Form>
             </div>
         );
