@@ -41,6 +41,17 @@ function Navigation() {
         window.alert('Uitgelogd!')
     }
 
+    var usernav = document.getElementsByClassName('user-nav')[0].style.display;
+    var guestnav = document.getElementsByClassName('guest-nav')[0].style.display;
+
+    if (localStorage.getItem('bearer')) {
+        guestnav = "none";
+        usernav = "block";
+    } else {
+        guestnav = "block";
+        usernav = "none";
+    }
+
     return (
         <>
             <IconContext.Provider value={{ color: '#fff' }}>
@@ -96,32 +107,38 @@ function Navigation() {
                                     Plant toevoegen
                 </Link>
                             </li>
-                            <li className='nav-item'>
-                                <Link
-                                    to='/login'
-                                    className='nav-links nodecoration'
-                                    onClick={closeMobileMenu}
-                                >
-                                    Inloggen
+                            <div className="guest-nav">
+                                <li className='nav-item'>
+                                    <Link
+                                        to='/login'
+                                        className='nav-links nodecoration'
+                                        onClick={closeMobileMenu}
+                                    >
+                                        Inloggen
                 </Link>
-                            </li>
-                            <li className='nav-item'>
-                                <Link
-                                    className='nav-links nodecoration'
-                                    onClick={closeMobileMenu, handleLogout}
-                                >
-                                    Uitloggen
+                                </li>
+                            </div>
+                            
+
+                            <div className="user-nav">
+                                <li className='nav-item'>
+                                    <Link
+                                        className='nav-links nodecoration'
+                                        onClick={closeMobileMenu, handleLogout}
+                                    >
+                                        Uitloggen
                 </Link>
-                            </li>
-                            <li className='nav-item'>
-                                <Link
-                                    to='/account'
-                                    className='nav-links nodecoration'
-                                    onClick={closeMobileMenu}
-                                >
-                                    Mijn profiel
+                                </li>
+                                <li className='nav-item'>
+                                    <Link
+                                        to='/account'
+                                        className='nav-links nodecoration'
+                                        onClick={closeMobileMenu}
+                                    >
+                                        Mijn profiel
                 </Link>
-                            </li>
+                                </li>
+                            </div>
                         </ul>
                     </div>
                 </nav>
