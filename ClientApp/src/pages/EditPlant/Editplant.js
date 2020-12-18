@@ -81,6 +81,7 @@ class Editplant extends Component{
         })
         //this.props.history.push('/');
         //.catch(error => { console.error('error: ', error) })
+        window.location.href = "/";
     }
 
     componentDidMount() {
