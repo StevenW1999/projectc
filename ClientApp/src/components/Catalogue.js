@@ -206,12 +206,7 @@ class Catalogue extends Component {
                             <Form onSubmit={this.onSubmitHandler}>
                                 <div class="input-group mb-3">
                                     <Form.Control type="text" name="zoek" onChange={this.handleInputChange} placeholder="Zoek..." />
-                                    <div class="input-group-append">
-                                        <button href="./Search" type="submit" class="btn btn-success" onClick={this.onSubmitHandler}>Zoek!</button>
-                                    </div>
                                 </div>
-                                <Form.Control type="text" placeholder="Postcode..." onChange={this.handleInputChange} name="postcode" style={{ width: "200px" }} />
-                                <br />
                                 <Form.Control name="typeplant" onChange={this.handleInputChange} as="select">
                                     <option>Type plant...</option>
                                     <option>Bomen</option>
@@ -265,14 +260,6 @@ class Catalogue extends Component {
                                     <option>Wit</option>
                                     <option>Zwart</option>
                                     <option>anders</option>
-                                </Form.Control>
-                                <br />
-                                <Form.Control name="afstand" onChange={this.handleInputChange} as="select">
-                                    <option>Afstand...</option>
-                                    <option>&lt;5KM</option>
-                                    <option>&lt;15KM</option>
-                                    <option>&lt;50KM</option>
-                                    <option>&lt;100KM</option>
                                 </Form.Control>
                                 <br />
                             </Form>
