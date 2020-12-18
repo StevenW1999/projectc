@@ -39,8 +39,7 @@ function Navigation() {
                 console.log("fetch error" + err);
             });
         window.alert('Uitgelogd!')
-        //this.props.history.push('/');
-        window.location.reload();
+        window.location.href = "/";
     }
 
     if (localStorage.getItem('bearer')) {
@@ -97,7 +96,7 @@ function Navigation() {
                                     Aanbod 
                 </Link>
                             </li>
-                            <li className='nav-item'>
+                            <li className='nav-item' style={{ display: localStorage.getItem('isUser') }}>
                                 <Link
                                     to='/Create_trade'
                                     className='nav-links nodecoration'
