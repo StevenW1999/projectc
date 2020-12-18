@@ -260,3 +260,4 @@ node/
 .vs/projectc/config/applicationhost.config
 ClientApp/.eslintcache
 appsettings.json
+package-lock.json
