@@ -214,12 +214,12 @@ class Catalogue extends Component {
                                 <br />
                                 <Form.Control name="typeplant" onChange={this.handleInputChange} as="select">
                                     <option>Type plant...</option>
-                                    <option>Boom</option>
-                                    <option>Struik</option>
+                                    <option>Bomen</option>
+                                    <option>Struiken</option>
                                     <option>Kruidachtige</option>
-                                    <option>Bodembedekker</option>
-                                    <option>klimplant</option>
-                                    <option>Vijverplant</option>
+                                    <option>Bodembedekkers</option>
+                                    <option>Klimplanten</option>
+                                    <option>Vijverplanten</option>
                                 </Form.Control>
                                 <br />
                                 <Form.Control name="vasteplant" onChange={this.handleInputChange} as="select">
@@ -231,7 +231,7 @@ class Catalogue extends Component {
                                 <Form.Control name="standplaats" onChange={this.handleInputChange} as="select">
                                     <option>Standplaats...</option>
                                     <option>Zon</option>
-                                    <option>Halfschaduw</option>
+                                    <option>Half schaduw</option>
                                     <option>Schaduw</option>
                                 </Form.Control>
                                 <br />
@@ -250,19 +250,21 @@ class Catalogue extends Component {
                                     <option>70 - 100 cm</option>
                                     <option>100 - 120 cm</option>
                                     <option>120 - 150 cm</option>
-                                    <option>1,5 - 2 m</option>
-                                    <option>Hoger dan 2m</option>
+                                    <option>1.5 - 2 m</option>
+                                    <option>Hoger dan 2 m</option>
                                 </Form.Control>
                                 <br />
                                 <Form.Control name="kleur" onChange={this.handleInputChange} as="select">
                                     <option>Kleur...</option>
                                     <option>Blauw</option>
                                     <option>Geel</option>
+                                    <option>Oranje</option>
                                     <option>Rood</option>
+                                    <option>Roze</option>
                                     <option>Violetblauw</option>
                                     <option>Wit</option>
                                     <option>Zwart</option>
-                                    <option>Anders</option>
+                                    <option>anders</option>
                                 </Form.Control>
                                 <br />
                                 <Form.Control name="afstand" onChange={this.handleInputChange} as="select">
