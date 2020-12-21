@@ -131,6 +131,7 @@ namespace Project.Controllers
                 }
 
                 User user = GetCurrentUser();
+                user.Plants.Add(plant);
                 plant.User = user; //set the owner of the plant to the current user
                 plant.Available = true; //standard available is true
                 plant.Timestamp = DateTime.Now; // timestamp is the time that the request is made

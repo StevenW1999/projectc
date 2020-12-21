@@ -25,13 +25,15 @@ namespace ProjectC.Controllers
         private readonly ProjectCContext _context;
         private readonly IJwtAuthManager _jwtAuthManager;
         private readonly IUserService _userService;
+        private readonly IFriendsService _friendsService;
 
-        public UsersController(ProjectCContext context, IUserService userService, IJwtAuthManager jwtAuthManager) //controller constructor
+        public UsersController(ProjectCContext context, IUserService userService, IJwtAuthManager jwtAuthManager, IFriendsService friendsService) //controller constructor
         {
             //to use them in the controller
             _context = context;
             _jwtAuthManager = jwtAuthManager;
             _userService = userService;
+            _friendsService = friendsService;
         }
 
         // GET: api/Users
@@ -116,6 +118,8 @@ namespace ProjectC.Controllers
                     //check if there is an user with the given username, if not then:
                     if (!_userService.IsAnExistingUser(user.Username))
                     {
+                        //var image = Encoding.ASCII.GetString(user.ProfilePicture);
+                        //user.ProfilePicture = Convert.FromBase64String(image);
                         _context.Add(user);
                         await _context.SaveChangesAsync();
                         return CreatedAtAction("GetUser", new { id = user.Id }, user);
@@ -258,9 +262,133 @@ namespace ProjectC.Controllers
                 return Unauthorized(e.Message); // return 401 so that the client side can redirect the user to login page
             }
         }
+        //todo: Check FriendTo = null bug
+
+        [HttpPost("FriendAdd")]
+        [Authorize]
+        public async Task<IActionResult> FriendAdd(string Username)
+        {
+            var user = CurrUser();
+            var Friend = _context.Users.FirstOrDefault(u => u.Username == Username);
+
+            try
+            {
+                //check if model is valid
+                if (ModelState.IsValid)
+                {
+                    if (Friend != null)
+                    {
+                        if (!_friendsService.IsExistingFriendship(user.Id, Friend.Id))
+                        {
+                            FriendRequest friendRequest = new FriendRequest
+                            {
+                                IsConfirmed = false,
+                                Friend1 = user,
+                                Friend1Id = user.Id,
+                                Friend2 = Friend,
+                                Friend2Id = Friend.Id
+                            };
+
+                            _context.Add(friendRequest);
+                            await _context.SaveChangesAsync();
+                            return Ok(friendRequest);
+                        }
+                        return BadRequest("Friendship already exists!");
+                    }
+                    return NotFound("user not found");
+                }
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.
+                ModelState.AddModelError("", "Unable to save changes. " +
+                    "Try again, and if the problem persists " +
+                    "see your system administrator.");
+            }
+            return BadRequest("Something went wrong!");
+        }
+
+        [HttpGet("ConfirmedFriends")]
+        [Authorize]
+        public ActionResult ConfirmedFriendsList()
+        {
+            var Friends = _friendsService.ConfirmedFriends(CurrUser().Id);
+            if (Friends == null)
+            {
+                return NotFound("No friends yet!");
+            }
+            if (Friends != null)
+            {
+                return Ok(Friends);
+            }
+            return BadRequest("Something went wrong!");
+        }
+
+        [HttpGet("NotConfirmedFriends")]
+        [Authorize]
+        public ActionResult NotConfirmedFriendsList()
+        {
+            var Friends = _friendsService.NotConfirmedFriends(CurrUser().Id);
+            if(Friends == null)
+            {
+                return NotFound("No friends yet!");
+            }
+            if(Friends != null)
+            {
+                return Ok(Friends);
+            }
+            return BadRequest("Something went wrong!");
+        }
+
+        [HttpPut("ConfirmFriend")]
+        [Authorize]
+        public ActionResult ConfirmFriend(string Username)
+        {
+            var User = CurrUser();
+            var Friend = _context.Users.FirstOrDefault(u => u.Username == Username);
+            if (!_userService.IsAnExistingUser(Username))
+            {
+                return NotFound("User does not exist");
+            }
+            if(_friendsService.IsExistingFriendship(User.Id, Friend.Id))
+            {
+                var Request = _friendsService.SpecificRequest(User.Id, Friend.Id);
+                Request.IsConfirmed = true;
+                _context.SaveChanges();
+                return Ok(Request);
+            }
+            return NotFound("You are not friends yet!");
+        }
+
+
+        [HttpDelete("DeleteFriend")]
+        [Authorize]
+        public async Task<IActionResult> DeleteFriend(string Username)
+        {
+            var User = CurrUser();
+            var Friend = _context.Users.FirstOrDefault(u => u.Username == Username);
+            if (!_userService.IsAnExistingUser(Username))
+            {
+                return NotFound("User does not exist");
+            }
+            if (_friendsService.IsExistingFriendship(User.Id, Friend.Id))
+            {
+                var Request = _friendsService.SpecificRequest(User.Id, Friend.Id);
+                _context.FriendRequests.Remove(Request);
+                await _context.SaveChangesAsync();
+                return Ok("Friend " + Username +  " deleted");
+            }
+            return NotFound("You are not friends yet!");
+        }
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
+        }
+
+        private User CurrUser()
+        {
+            User user = _context.Users.FirstOrDefault(u => u.Username == User.Identity.Name); //query to find user with username found in the token
+            return user;
         }
     }
 }
