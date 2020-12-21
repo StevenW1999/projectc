@@ -13,7 +13,6 @@ namespace Project
         public User()
         {
             Plants = new HashSet<Plant>();
-            Friends = new HashSet<FriendList>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,9 +27,8 @@ namespace Project
         [JsonIgnore]
         public virtual ICollection<Plant> Plants { get; set; }
         [JsonIgnore]
-        public virtual ICollection<FriendList> FriendsOf { get; set; }
+        public virtual ICollection<FriendRequest> MyFriends { get; set; }
         [JsonIgnore]
-        public virtual ICollection<FriendList> Friends { get; set; }
-
+        public virtual ICollection<FriendRequest> FriendsOf { get; set; }
     }
 }

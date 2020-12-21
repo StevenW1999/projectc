@@ -10,8 +10,8 @@ using Project;
 namespace ProjectC.Migrations
 {
     [DbContext(typeof(ProjectCContext))]
-    [Migration("20201217220608_IdentityFriends")]
-    partial class IdentityFriends
+    [Migration("20201220184442_FriendsUpdate")]
+    partial class FriendsUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,12 +39,12 @@ namespace ProjectC.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("Project.Models.FriendList", b =>
+            modelBuilder.Entity("Project.Models.FriendRequest", b =>
                 {
-                    b.Property<int>("FriendFromId")
+                    b.Property<int>("Friend1Id")
                         .HasColumnType("integer");
 
-                    b.Property<int>("FriendToId")
+                    b.Property<int>("Friend2Id")
                         .HasColumnType("integer");
 
                     b.Property<int>("Id")
@@ -55,11 +55,11 @@ namespace ProjectC.Migrations
                     b.Property<bool>("IsConfirmed")
                         .HasColumnType("boolean");
 
-                    b.HasKey("FriendFromId", "FriendToId");
+                    b.HasKey("Friend1Id", "Friend2Id");
 
-                    b.HasIndex("FriendToId");
+                    b.HasIndex("Friend2Id");
 
-                    b.ToTable("FriendLists");
+                    b.ToTable("FriendRequests");
                 });
 
             modelBuilder.Entity("Project.Plant", b =>
@@ -157,23 +157,23 @@ namespace ProjectC.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Project.Models.FriendList", b =>
+            modelBuilder.Entity("Project.Models.FriendRequest", b =>
                 {
-                    b.HasOne("Project.User", "FriendFrom")
-                        .WithMany("Friends")
-                        .HasForeignKey("FriendFromId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Project.User", "Friend1")
+                        .WithMany("MyFriends")
+                        .HasForeignKey("Friend1Id")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Project.User", "FriendTo")
+                    b.HasOne("Project.User", "Friend2")
                         .WithMany("FriendsOf")
-                        .HasForeignKey("FriendToId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("Friend2Id")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FriendFrom");
+                    b.Navigation("Friend1");
 
-                    b.Navigation("FriendTo");
+                    b.Navigation("Friend2");
                 });
 
             modelBuilder.Entity("Project.Plant", b =>
@@ -188,9 +188,9 @@ namespace ProjectC.Migrations
 
             modelBuilder.Entity("Project.User", b =>
                 {
-                    b.Navigation("Friends");
-
                     b.Navigation("FriendsOf");
+
+                    b.Navigation("MyFriends");
 
                     b.Navigation("Plants");
                 });

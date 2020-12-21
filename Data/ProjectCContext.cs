@@ -31,25 +31,24 @@ namespace Project
                 .WithOne(e => e.User)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<FriendList>(b => {
-                b.HasKey(x => new { x.FriendFromId, x.FriendToId });
+            modelBuilder.Entity<FriendRequest>()
+                .HasKey(f => new { f.Friend1Id, f.Friend2Id });
 
-                b.HasOne(x => x.FriendFrom)
-                    .WithMany(x => x.Friends)
-                    .HasForeignKey(x => x.FriendFromId)
-                    .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<FriendRequest>()
+                .HasOne(e => e.Friend1)
+                .WithMany(e => e.MyFriends)
+                .HasForeignKey(e => e.Friend1Id);
 
-                b.HasOne(x => x.FriendTo)
-                    .WithMany(x => x.FriendsOf)
-                    .HasForeignKey(x => x.FriendToId)
-                    .OnDelete(DeleteBehavior.Restrict);
-            });
+            modelBuilder.Entity<FriendRequest>()
+                .HasOne(e => e.Friend2)
+                .WithMany(e => e.FriendsOf)
+                .HasForeignKey(e => e.Friend2Id);
         }
 
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Plant> Plants { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<FriendList> FriendLists { get; set; }
+        public virtual DbSet<FriendRequest> FriendRequests { get; set; }
 
     }
 }

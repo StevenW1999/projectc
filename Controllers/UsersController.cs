@@ -25,13 +25,15 @@ namespace ProjectC.Controllers
         private readonly ProjectCContext _context;
         private readonly IJwtAuthManager _jwtAuthManager;
         private readonly IUserService _userService;
+        private readonly IFriendsService _friendsService;
 
-        public UsersController(ProjectCContext context, IUserService userService, IJwtAuthManager jwtAuthManager) //controller constructor
+        public UsersController(ProjectCContext context, IUserService userService, IJwtAuthManager jwtAuthManager, IFriendsService friendsService) //controller constructor
         {
             //to use them in the controller
             _context = context;
             _jwtAuthManager = jwtAuthManager;
             _userService = userService;
+            _friendsService = friendsService;
         }
 
         // GET: api/Users
@@ -260,11 +262,11 @@ namespace ProjectC.Controllers
                 return Unauthorized(e.Message); // return 401 so that the client side can redirect the user to login page
             }
         }
-
+        //todo: Check FriendTo = null bug
 
         [HttpPost("FriendAdd")]
         [Authorize]
-        public async Task<IActionResult> FriendAdd([FromBody]FriendList friendList,string Username)
+        public async Task<IActionResult> FriendAdd(string Username)
         {
             var user = CurrUser();
             var Friend = _context.Users.FirstOrDefault(u => u.Username == Username);
@@ -276,14 +278,24 @@ namespace ProjectC.Controllers
                 {
                     if (Friend != null)
                     {
-                        friendList.FriendFrom = user;
-                        friendList.FriendFromId = user.Id;
-                        friendList.FriendTo = Friend;
-                        friendList.FriendToId = Friend.Id;
-                        _context.Add(friendList);
-                        await _context.SaveChangesAsync();
-                        return Ok(friendList);
+                        if (!_friendsService.IsExistingFriendship(user.Id, Friend.Id))
+                        {
+                            FriendRequest friendRequest = new FriendRequest
+                            {
+                                IsConfirmed = false,
+                                Friend1 = user,
+                                Friend1Id = user.Id,
+                                Friend2 = Friend,
+                                Friend2Id = Friend.Id
+                            };
+
+                            _context.Add(friendRequest);
+                            await _context.SaveChangesAsync();
+                            return Ok(friendRequest);
+                        }
+                        return BadRequest("Friendship already exists!");
                     }
+                    return NotFound("user not found");
                 }
             }
             catch (DbUpdateException /* ex */)
@@ -293,44 +305,80 @@ namespace ProjectC.Controllers
                     "Try again, and if the problem persists " +
                     "see your system administrator.");
             }
-                return NotFound("user not found");
-
+            return BadRequest("Something went wrong!");
         }
 
         [HttpGet("ConfirmedFriends")]
         [Authorize]
         public ActionResult ConfirmedFriendsList()
         {
-            var Friends = _context.FriendLists.Where(f => f.FriendFromId == CurrUser().Id && f.IsConfirmed == true);
-            return Ok(Friends);
+            var Friends = _friendsService.ConfirmedFriends(CurrUser().Id);
+            if (Friends == null)
+            {
+                return NotFound("No friends yet!");
+            }
+            if (Friends != null)
+            {
+                return Ok(Friends);
+            }
+            return BadRequest("Something went wrong!");
         }
 
         [HttpGet("NotConfirmedFriends")]
         [Authorize]
         public ActionResult NotConfirmedFriendsList()
         {
-            var Friends = _context.FriendLists.Where(f => f.FriendFromId == CurrUser().Id && f.IsConfirmed == false);
-            return Ok(Friends);
+            var Friends = _friendsService.NotConfirmedFriends(CurrUser().Id);
+            if(Friends == null)
+            {
+                return NotFound("No friends yet!");
+            }
+            if(Friends != null)
+            {
+                return Ok(Friends);
+            }
+            return BadRequest("Something went wrong!");
         }
 
-        [HttpPost("ConfirmFriend")]
+        [HttpPut("ConfirmFriend")]
         [Authorize]
-        public ActionResult ConfirmFriend(int Id)
-        {           
-            var Request = _context.FriendLists.Where(f => f.FriendFromId == CurrUser().Id && f.IsConfirmed == false && f.Id == Id).FirstOrDefault();
-            var Friend = _context.Users.FirstOrDefault(f => f.Id == Request.FriendToId);
-            Request.IsConfirmed = true;
-            FriendList friendList = new FriendList
+        public ActionResult ConfirmFriend(string Username)
+        {
+            var User = CurrUser();
+            var Friend = _context.Users.FirstOrDefault(u => u.Username == Username);
+            if (!_userService.IsAnExistingUser(Username))
             {
-                FriendFrom = Friend,
-                FriendFromId = Friend.Id,
-                FriendTo = CurrUser(),
-                FriendToId = CurrUser().Id,
-                IsConfirmed = true
-            };
-            _context.Add(friendList);
-            _context.SaveChanges();
-            return Ok(Request);
+                return NotFound("User does not exist");
+            }
+            if(_friendsService.IsExistingFriendship(User.Id, Friend.Id))
+            {
+                var Request = _friendsService.SpecificRequest(User.Id, Friend.Id);
+                Request.IsConfirmed = true;
+                _context.SaveChanges();
+                return Ok(Request);
+            }
+            return NotFound("You are not friends yet!");
+        }
+
+
+        [HttpDelete("DeleteFriend")]
+        [Authorize]
+        public async Task<IActionResult> DeleteFriend(string Username)
+        {
+            var User = CurrUser();
+            var Friend = _context.Users.FirstOrDefault(u => u.Username == Username);
+            if (!_userService.IsAnExistingUser(Username))
+            {
+                return NotFound("User does not exist");
+            }
+            if (_friendsService.IsExistingFriendship(User.Id, Friend.Id))
+            {
+                var Request = _friendsService.SpecificRequest(User.Id, Friend.Id);
+                _context.FriendRequests.Remove(Request);
+                await _context.SaveChangesAsync();
+                return Ok("Friend " + Username +  " deleted");
+            }
+            return NotFound("You are not friends yet!");
         }
         private bool UserExists(int id)
         {
