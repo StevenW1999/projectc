@@ -135,6 +135,15 @@ function Navigation() {
                                     Mijn profiel
             </Link>
                             </li>
+                            <li className='nav-item' style={{ display: localStorage.getItem('isUser') }}>
+                                <Link
+                                    to='/chatAndFriends'
+                                    className='nav-links nodecoration'
+                                    onClick={closeMobileMenu}
+                                >
+                                    Chat
+            </Link>
+                            </li>
                         </ul>
                     </div>
                 </nav>

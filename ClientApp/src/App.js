@@ -15,6 +15,7 @@ import AdminPanel from './pages/adminpanel/AdminPanel';
 import Donatie from './pages/Donatie/Donate'
 import Contact from './pages/contact/Contact'
 import Editplant from './pages/EditPlant/Editplant';
+import ChatAndFriends from './pages/chatAndFriends/ChatAndFriends';
 
 import {
   BrowserRouter as Router,
@@ -41,6 +42,7 @@ function App() {
         <Route exact path="/AdminPanel" component={AdminPanel} />
         <Route exact path="/Donate" component={Donatie} />
         <Route exact path="/Contact" component={Contact} />
+        <Route exact path="/ChatAndFriends" component={ChatAndFriends} />
       </Switch>
       <Footer />
     </Router>
