@@ -8,7 +8,7 @@ header {
 
 .AccountEdit {
   width: 50%;
-  height: 85vh;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
 }
