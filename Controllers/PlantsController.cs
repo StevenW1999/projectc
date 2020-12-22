@@ -39,9 +39,7 @@ namespace Project.Controllers
 
             if (isAuthenticated())
             {
-                var plants = from p in _context.Plants
-                             where p.UserId == user.Id
-                             select p; //query to find all plants with userId equal to the current userId
+                var plants = await _context.Plants.Where(u => u.UserId == user.Id).ToListAsync();//query to find all plants with userId equal to the current userId
 
                 return Ok(plants);
             }
@@ -133,6 +131,7 @@ namespace Project.Controllers
                 }
 
                 User user = GetCurrentUser();
+                user.Plants.Add(plant);
                 plant.User = user; //set the owner of the plant to the current user
                 plant.Available = true; //standard available is true
                 plant.Timestamp = DateTime.Now; // timestamp is the time that the request is made

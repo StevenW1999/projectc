@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Project.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,6 +26,9 @@ namespace Project
 
         [JsonIgnore]
         public virtual ICollection<Plant> Plants { get; set; }
-
+        [JsonIgnore]
+        public virtual ICollection<FriendRequest> MyFriends { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<FriendRequest> FriendsOf { get; set; }
     }
 }
