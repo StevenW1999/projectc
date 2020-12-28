@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './AccountCreate.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
-import { post } from 'jquery';
 
 class AccountCreate extends Component {
     constructor(props) {
@@ -11,16 +10,23 @@ class AccountCreate extends Component {
         this.state = {
             redirect: false,
             username: "",
-            pcode: "",
+            postalCode: "",
             email: "",
-            emailcheck: "",
+            emailCheck: "",
             password: "",
-            passwordcheck: "",
+            passwordCheck: "",
             checkbox: false,
             file: null
         }
         
         this.handleInputChange = this.handleInputChange.bind(this);
+    }
+
+    _handleReaderLoaded = (readerEvt) => {
+        let binaryString = readerEvt.target.result
+        this.setState({
+            file: btoa(binaryString)
+        })
     }
 
     handleInputChange(event) {
@@ -30,9 +36,15 @@ class AccountCreate extends Component {
         const name = target.name;
         
         if (target.type === "file") {
-            this.setState({
-                file: URL.createObjectURL(event.target.files[0])
-            })
+            let pic = target.files[0];
+
+            if (pic) {
+                const reader = new FileReader();
+
+                reader.onload = this._handleReaderLoaded.bind(this)
+
+                reader.readAsBinaryString(pic)
+            }
         }
         else {
             this.setState({
@@ -58,10 +70,10 @@ class AccountCreate extends Component {
     onSubmitHandler = (e) => {
         e.preventDefault();
 
-        if(this.state.username.length < 6){
+        if(this.state.username.length < 4){
             alert("Gebruikersnaam moet minimaal 5 karakters lang zijn!")
         }
-        else if (this.state.pcode.length != 6 || !parseInt(this.state.pcode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.pcode.slice(5, 6))) {
+        else if (this.state.postalCode.length !== 6 || !parseInt(this.state.postalCode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.postalCode.slice(5, 6))) {
             alert("Postcode is ongeldig")
         }
         else if (this.state.email.length<5) {
@@ -70,19 +82,19 @@ class AccountCreate extends Component {
         else if (!this.emailValidation()) {
             alert("Emailadres is ongeldig!")
         }
-        else if (this.state.email!==this.state.emailcheck) {
+        else if (this.state.email!==this.state.emailCheck) {
             alert("Emailadressen komen niet overeen!")
         }
         else if (this.state.password.length<8) {
             alert("Wachtwoord moet minimaal 8 karakters lang zijn!")
         }
-        else if (this.state.password!==this.state.passwordcheck) {
+        else if (this.state.password!==this.state.passwordCheck) {
             alert("Wachtwoorden komen niet overeen!")
         }
         else if (!this.state.checkbox) {
             alert("U dient de algemene voorwaarden te accepteren!")
         }
-        else{
+        else {
             fetch('/api/users', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
@@ -90,8 +102,8 @@ class AccountCreate extends Component {
                     'username': this.state.username,
                     'password': this.state.password,
                     'email': this.state.email,
-                    'postalcode': this.state.pcode,
-                    'profilepicture': null,
+                    'postalcode': this.state.postalCode,
+                    'profilepicture': this.state.file,
                     'active': true
                 })
             })
@@ -117,7 +129,7 @@ class AccountCreate extends Component {
                 <Form onSubmit={this.onSubmitHandler}>
                     <Row>
                         <Col>
-                            <Image className="ProfPic" src={this.state.file} roundedCircle />
+                            <Image className="ProfPic" src={"data:file/png;base64," + this.state.file} roundedCircle />
                         </Col>  
                     </Row>
                     
@@ -125,14 +137,14 @@ class AccountCreate extends Component {
                         <Col>
                             <Form.Group controlId="ProfPicInput">
                                 <Form.Label>Profielfoto</Form.Label>
-                                <Form.File name="file" type="file" id="custom-file-translate-html" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
+                                <Form.File name="file" type="file" id="custom-file-translate-html" accept=".jpeg, .jpg, .png" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="PostalCode">
                                 <Form.Label>Postcode</Form.Label>
-                                <Form.Control name="pcode" type="PCode" placeholder="" onChange={this.handleInputChange} />
+                                <Form.Control name="postalCode" type="PostalCode" placeholder="" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -154,7 +166,7 @@ class AccountCreate extends Component {
                         <Col>
                             <Form.Group controlId="ConfirmEmailInput">
                                 <Form.Label>Bevestig emailadres</Form.Label>
-                                <Form.Control name="emailcheck" type="Email" placeholder="" onChange={this.handleInputChange} />
+                                <Form.Control name="emailCheck" type="Email" placeholder="" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -170,7 +182,7 @@ class AccountCreate extends Component {
                         <Col>
                             <Form.Group controlId="ConfirmPasswordInput">
                                 <Form.Label>Bevestig wachtwoord</Form.Label>
-                                <Form.Control name="passwordcheck" type="Password" placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="passwordCheck" type="Password" placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>

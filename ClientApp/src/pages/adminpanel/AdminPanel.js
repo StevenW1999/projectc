@@ -86,7 +86,7 @@ class AdminPanel extends Component {
     }
 
     componentDidMount() {
-        fetch('https://localhost:44338/api/Users', {
+        fetch('/api/Users', {
             method: 'get',
             headers: {
                 'Authorization': 'bearer ' + localStorage.getItem('bearer')

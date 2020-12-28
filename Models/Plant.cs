@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -27,6 +28,8 @@ namespace Project
         public DateTime SeasonTo { get; set; }
         public string SpecialFeatures { get; set; }
         public DateTime Timestamp { get; set; }
+
+        [JsonIgnore]
         public virtual User User { get; set; }
     }
 }

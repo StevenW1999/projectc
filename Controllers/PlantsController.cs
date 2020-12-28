@@ -39,9 +39,7 @@ namespace Project.Controllers
 
             if (isAuthenticated())
             {
-                var plants = from p in _context.Plants
-                             where p.UserId == user.Id
-                             select p; //query to find all plants with userId equal to the current userId
+                var plants = await _context.Plants.Where(u => u.UserId == user.Id).ToListAsync();//query to find all plants with userId equal to the current userId
 
                 return Ok(plants);
             }
@@ -98,26 +96,26 @@ namespace Project.Controllers
         }
 
         // PUT: api/Plants/5
-        [Authorize]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> setAvailable(int id, Plant plant)
-        {
-            User user = GetCurrentUser();
+        //[Authorize]
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> setAvailable(int id, Plant plant)
+        //{
+        //    User user = GetCurrentUser();
 
-            if (isAuthenticated())
-            {
-                if (id != plant.Id)
-                {
-                    return BadRequest();
-                }
-                if (plant.UserId == user.Id) //if user is logged in and the plant belongs the user, set the availability to the current opposite
-                {
-                    plant.Available = !plant.Available;
-                    return Ok(plant);
-                }
-            }
-            return NoContent();
-        }
+        //    if (isAuthenticated())
+        //    {
+        //        if (id != plant.Id)
+        //        {
+        //            return BadRequest();
+        //        }
+        //        if (plant.UserId == user.Id) //if user is logged in and the plant belongs the user, set the availability to the current opposite
+        //        {
+        //            plant.Available = !plant.Available;
+        //            return Ok(plant);
+        //        }
+        //    }
+        //    return NoContent();
+        //}
 
 
         // POST: api/Plants
@@ -133,6 +131,7 @@ namespace Project.Controllers
                 }
 
                 User user = GetCurrentUser();
+                user.Plants.Add(plant);
                 plant.User = user; //set the owner of the plant to the current user
                 plant.Available = true; //standard available is true
                 plant.Timestamp = DateTime.Now; // timestamp is the time that the request is made
