@@ -16,7 +16,7 @@ class AccountEdit extends Component {
             password: '',
             email: '',
             postalCode: '',
-            profilePicture: null
+            file: null
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -30,7 +30,14 @@ class AccountEdit extends Component {
             password: this.props.location.state.password,
             email: this.props.location.state.email,
             postalCode: this.props.location.state.postalCode,
-            profilePicture: null
+            file: this.props.location.state.profilePicture
+        })
+    }
+
+    _handleReaderLoaded = (readerEvt) => {
+        let binaryString = readerEvt.target.result
+        this.setState({
+            file: btoa(binaryString)
         })
     }
 
@@ -38,10 +45,16 @@ class AccountEdit extends Component {
         e.preventDefault();
         let name = e.target.name;
         let val = e.target.value;
-        if (name === "profilePicture") {
-            this.setState({
-                    "profilePicture": URL.createObjectURL(e.target.files[0])
-              })
+        if (name === "file") {
+            let pic = e.target.files[0];
+
+            if (pic) {
+                const reader = new FileReader();
+
+                reader.onload = this._handleReaderLoaded.bind(this)
+
+                reader.readAsBinaryString(pic)
+            }
         }
         else {
             this.setState({
@@ -49,6 +62,7 @@ class AccountEdit extends Component {
             })
         }
     }
+
     emailValidation() {
         let value = this.state.email;
         if (value.lastIndexOf("@") < value.lastIndexOf(".")) {
@@ -101,7 +115,7 @@ class AccountEdit extends Component {
                     'password': this.state.password,
                     'email': this.state.email,
                     'postalcode': this.state.postalCode,
-                    'profilepicture': this.state.profilePicture,
+                    'profilepicture': this.state.file,
                     'active': true
                 })
             })
@@ -156,7 +170,7 @@ class AccountEdit extends Component {
                 <Form>
                     <Row>
                         <Col>
-                            <Image className="ProfPic" src={this.state.profilePicture} roundedCircle />
+                            <Image className="ProfPic" src={"data:file/png;base64," + this.state.file} roundedCircle />
                         </Col>
                     </Row>
 
@@ -164,7 +178,7 @@ class AccountEdit extends Component {
                         <Col>
                             <Form.Group controlId="ProfPicInput">
                                 <Form.Label>Profielfoto</Form.Label>
-                                <Form.File name="profilePicture" type="profilePicture" id="custom-file-translate-html" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
+                                <Form.File name="file" type="file" id="custom-file-translate-html" accept=".jpeg, .jpg, .png" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
@@ -220,7 +234,7 @@ class AccountEdit extends Component {
 
                 <Button variant="primary" type="remove" onClick={this.openModal}>
                     Account verwijderen
-                    </Button>
+                </Button>
 
                 <Modal show={this.state.isOpen} backdrop="static" keyboard={false}>
                     <Modal.Header>

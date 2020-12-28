@@ -70,6 +70,7 @@ namespace Project
             services.AddSingleton<IJwtAuthManager, JwtAuthManager>();
             services.AddHostedService<JwtRefreshTokenCache>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFriendsService, FriendService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

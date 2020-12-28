@@ -57,6 +57,10 @@ class Catalogue extends Component {
     }
 
     plantFilter(p) {
+        console.log("");
+        console.log(p);
+        console.log(p.growthHeigth);
+        console.log(this.state.groeihoogte);
         if (this.state.zoek != "") {
             if (!(p.name.toLowerCase().includes(this.state.zoek.toLowerCase()))) {
                 return false;
@@ -90,7 +94,7 @@ class Catalogue extends Component {
 
         }
         if (this.state.groeihoogte != "") {
-            if (!(p.growthHeight === this.state.groeihoogte)) {
+            if (!(p.growthHeigth === this.state.groeihoogte)) {
                 return false;
             }
 
@@ -202,20 +206,15 @@ class Catalogue extends Component {
                             <Form onSubmit={this.onSubmitHandler}>
                                 <div class="input-group mb-3">
                                     <Form.Control type="text" name="zoek" onChange={this.handleInputChange} placeholder="Zoek..." />
-                                    <div class="input-group-append">
-                                        <button href="./Search" type="submit" class="btn btn-success" onClick={this.onSubmitHandler}>Zoek!</button>
-                                    </div>
                                 </div>
-                                <Form.Control type="text" placeholder="Postcode..." onChange={this.handleInputChange} name="postcode" style={{ width: "200px" }} />
-                                <br />
                                 <Form.Control name="typeplant" onChange={this.handleInputChange} as="select">
                                     <option>Type plant...</option>
-                                    <option>Boom</option>
-                                    <option>Struik</option>
+                                    <option>Bomen</option>
+                                    <option>Struiken</option>
                                     <option>Kruidachtige</option>
-                                    <option>Bodembedekker</option>
-                                    <option>klimplant</option>
-                                    <option>Vijverplant</option>
+                                    <option>Bodembedekkers</option>
+                                    <option>Klimplanten</option>
+                                    <option>Vijverplanten</option>
                                 </Form.Control>
                                 <br />
                                 <Form.Control name="vasteplant" onChange={this.handleInputChange} as="select">
@@ -227,7 +226,7 @@ class Catalogue extends Component {
                                 <Form.Control name="standplaats" onChange={this.handleInputChange} as="select">
                                     <option>Standplaats...</option>
                                     <option>Zon</option>
-                                    <option>Halfschaduw</option>
+                                    <option>Half schaduw</option>
                                     <option>Schaduw</option>
                                 </Form.Control>
                                 <br />
@@ -240,33 +239,27 @@ class Catalogue extends Component {
                                 <br />
                                 <Form.Control name="groeihoogte" onChange={this.handleInputChange} as="select">
                                     <option>Groeihoogte...</option>
-                                    <option>0-20 cm</option>
-                                    <option>20-40 cm</option>
-                                    <option>40-70 cm</option>
-                                    <option>70-100 cm</option>
-                                    <option>100-120 cm</option>
-                                    <option>120-150 cm</option>
-                                    <option>1,5 - 2 m</option>
-                                    <option>Hoger dan 2m</option>
+                                    <option>0 - 20 cm</option>
+                                    <option>20 - 40 cm</option>
+                                    <option>40 - 70 cm</option>
+                                    <option>70 - 100 cm</option>
+                                    <option>100 - 120 cm</option>
+                                    <option>120 - 150 cm</option>
+                                    <option>1.5 - 2 m</option>
+                                    <option>Hoger dan 2 m</option>
                                 </Form.Control>
                                 <br />
                                 <Form.Control name="kleur" onChange={this.handleInputChange} as="select">
                                     <option>Kleur...</option>
                                     <option>Blauw</option>
                                     <option>Geel</option>
+                                    <option>Oranje</option>
                                     <option>Rood</option>
+                                    <option>Roze</option>
                                     <option>Violetblauw</option>
                                     <option>Wit</option>
                                     <option>Zwart</option>
-                                    <option>Anders</option>
-                                </Form.Control>
-                                <br />
-                                <Form.Control name="afstand" onChange={this.handleInputChange} as="select">
-                                    <option>Afstand...</option>
-                                    <option>&lt;5KM</option>
-                                    <option>&lt;15KM</option>
-                                    <option>&lt;50KM</option>
-                                    <option>&lt;100KM</option>
+                                    <option>anders</option>
                                 </Form.Control>
                                 <br />
                             </Form>
