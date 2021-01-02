@@ -19,7 +19,8 @@ class User extends Component {
                     'Authorization': 'bearer ' + localStorage.getItem('bearer')
                 }
             })
-                .then(() => alert('Profiel verwijderd!'));
+                .then(() => alert('Profiel verwijderd!'))
+                .then(() => window.location.href = "/AdminPanel");
         }
     }
 
