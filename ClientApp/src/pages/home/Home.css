@@ -22,6 +22,10 @@
     background-color: #40916c !important;
 }
 
+.registerbutton:hover {
+    opacity: 0.75;
+}
+
 .registertext {
     color: white !important;
     text-decoration: none !important;

@@ -55,10 +55,7 @@ function Navigation() {
             <IconContext.Provider value={{ color: '#fff' }}>
                 <nav className='navbar'>
                     <div className='navbar-container'>
-                        <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-                            <RiPlantFill className='navbar-icon' />
-              Stekoverflow
-            </Link>
+                        <Link to='/' className='navbar-logo logotext' onClick={closeMobileMenu}><RiPlantFill className='navbar-icon' />Stekoverflow</Link>
                         <div className='menu-icon' onClick={handleClick}>
                             {click ? <FaTimes /> : <FaBars />}
                         </div>
