@@ -102,6 +102,12 @@ width: 100% !important;
   font-size: 24px;
 }
 
+.social-icon-link:hover {
+    opacity: 0.75;
+    color: white;
+    transition: 0.2s ease-out;
+}
+
 .social-media {
   max-width: 1000px;
   width: 100%;
@@ -124,15 +130,21 @@ width: 100% !important;
 }
 
 .social-logo {
-  color: #fff;
-  justify-self: start;
-  margin-left: 20px;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 2rem;
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
+    color: #fff;
+    justify-self: start;
+    margin-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.social-logo:hover {
+    opacity: 0.75;
+    color: white;
+    transition: 0.2s ease-out;
 }
 
 .website-rights {

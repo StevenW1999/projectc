@@ -10,6 +10,19 @@ class User extends Component {
         super(props);
     }
 
+    delete() {
+        var letThrough = window.confirm('Verwijder gebruiker ' + this.props.user.username + '?');
+        if (letThrough) {
+            fetch('/api/users/' + this.props.user.id, {
+                method: 'delete',
+                headers: {
+                    'Authorization': 'bearer ' + localStorage.getItem('bearer')
+                }
+            })
+                .then(() => alert('Profiel verwijderd!'))
+                .then(() => window.location.href = "/AdminPanel");
+        }
+    }
 
     render() {
         return (
@@ -26,10 +39,10 @@ class User extends Component {
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <Button variant="success" size="sm">Bekijk profiel</Button>
+                                                    <Button variant="success" size="sm">Bekijk profiel</Button>
                                                     </div>
                                                     <div class="col">
-                                                        <Button variant="danger" size="sm">Verwijder profiel</Button>
+                                                    <Button variant="danger" size="sm" onClick={() => this.delete()}>Verwijder profiel</Button>
                                                     </div>
                                             </div>
                                         </div>

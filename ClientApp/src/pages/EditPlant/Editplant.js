@@ -227,7 +227,7 @@ class Editplant extends Component{
               </fieldset>
               <Form.Group controlId="HeightInput">
                   <Form.Label>Groeihoogte</Form.Label>
-                  <Form.Control as="select" name="GrowthHeigth" defaultValue={this.state.Plant.growthHeigth} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="GrowthHeigth" value={this.state.Plant.growthHeigth} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option defaultValue="0 - 20 cm">0 - 20 cm</option>
                       <option >20 - 40 cm</option>
