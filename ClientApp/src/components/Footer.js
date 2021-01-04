@@ -41,7 +41,7 @@ function Footer() {
       <section className='social-media'>
         <div className='social-media-wrap'>
           <div className='footer-logo'>
-            <Link to='/' className='social-logo'>
+            <Link to='/' className='social-logo' style={{ textDecoration: 'none' }}>
               <RiPlantFill className='navbar-icon' />
               Stekoverflow
             </Link>

@@ -55,7 +55,7 @@ function Navigation() {
             <IconContext.Provider value={{ color: '#fff' }}>
                 <nav className='navbar'>
                     <div className='navbar-container'>
-                        <Link to='/' className='navbar-logo logotext' onClick={closeMobileMenu}><RiPlantFill className='navbar-icon' />Stekoverflow</Link>
+                        <Link to='/' className='navbar-logo logotext' style={{ textDecoration: 'none' }} onClick={closeMobileMenu}><RiPlantFill className='navbar-icon' />Stekoverflow</Link>
                         <div className='menu-icon' onClick={handleClick}>
                             {click ? <FaTimes /> : <FaBars />}
                         </div>
@@ -102,11 +102,11 @@ function Navigation() {
                                     Plant toevoegen
                 </Link>
                             </li>
-                            <div className="guest-nav" style={{ display: localStorage.getItem('isGuest')}}>
-                                <li className='nav-item'>
+                            <div className="nav-item2" style={{ display: localStorage.getItem('isGuest')}}>
+                                <li className='nav-login'>
                                     <Link
                                         to='/login'
-                                        className='nav-links nodecoration'
+                                        className='nav-links nodecoration2'
                                         onClick={closeMobileMenu}
                                     >
                                         Inloggen

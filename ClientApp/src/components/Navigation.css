@@ -19,6 +19,14 @@
     color: white !important;
     margin-top: 4px;
 }
+
+.nodecoration2 {
+    text-decoration: none !important;
+}
+
+.nodecoration2:hover {
+    color: white !important;
+}
   
   .navbar-container {
     display: flex;
@@ -47,10 +55,24 @@
     margin-top: 8px;
     margin-right: 50px;
 }
-  
-  .navbar-icon {
+
+.navbar-logo:hover {
+    color: white;
+    opacity: 0.75;
+    transition: 0.2s ease-out;
+}
+
+.nav-login:hover {
+    margin-bottom: 0px !important;
+}
+
+.nav-login {
+    height: 76px;
+}
+
+.navbar-icon {
     height: 44px;
-  }
+}
   
   .nav-menu {
     display: flex;
@@ -70,6 +92,15 @@
     border-bottom: 2px solid #f00946;
     margin-bottom: 2px;
   }
+
+.nav-item2 {
+    height: 78px;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-item2:hover {
+    border-bottom: 2px solid #f00946;
+}
 
 .nav-links {
     color: #fff;
