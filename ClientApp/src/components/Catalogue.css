@@ -13,14 +13,15 @@
     flex: 30%;
     background-color: white;
     padding-top: 50px;
-    border-right-style: solid;
+    border-style: groove;
     text-align: center;
-    border-right-width: 1px;
+    border-width: 1px;
   }
   .filters{
     width: 300px;
     padding: 50px;
     margin-left: 20%;
+    border-bottom-style: groove;
     border-width: 1px;
   }
   /* Main column */
