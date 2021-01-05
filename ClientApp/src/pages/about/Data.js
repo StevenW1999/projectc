@@ -2,7 +2,7 @@ export const aboutObjOne = {
     lightBg: true,
     lightText: false,
     lightTextDesc: false,
-    topLine: 'WHO ARE WE?',
+    topLine: 'WIE ZIJN WE?',
     headline: 'STADSKWEKERIJ DE KAS',
     description:
       'Blablablalbalbla blablalbal blablalbalbalbl ablabla lbalblabla blalbalbalblab lablalbalb lablablabllba',
@@ -15,7 +15,7 @@ export const aboutObjOne = {
     lightBg: false,
     lightText: false,
     lightTextDesc: false,
-    topLine: 'OUR GOAL',
+    topLine: 'ONS DOEL',
     headline: 'BIO DIVERSITY',
     description:
       'Blablablalbalbla blablalbal blablalbalbalbl ablabla lbalblabla blalbalbalblab lablalbalb lablablabllba',
@@ -28,10 +28,10 @@ export const aboutObjOne = {
     lightBg: true,
     lightText: false,
     lightTextDesc: false,
-    topLine: 'HOW DOES IT WORK?',
-    headline: 'Super nature friendly and simple trading',
+    topLine: 'HOE WERKT HET?',
+    headline: 'Super natuurvriendelijk en simpel ruilen',
     description:
-      "Get everything set up and ready in under 10 minutes. All you need to do is add your information and you're ready to go.",
+      "Alles in minder dan 10 minuten gemaakt. Het enige dat u hoeft te doen, is uw gegevens toevoegen en u bent klaar om te beginnen.",
     imgStart: 'start',
     img: 'images/seedling.svg',
     alt: 'seedling'
@@ -41,11 +41,11 @@ export const aboutObjOne = {
     lightBg: false,
     lightText: false,
     lightTextDesc: false,
-    topLine: 'JOIN NOW',
-    headline: 'Join us now, its free!',
+    topLine: 'MELD JE NU AAN',
+    headline: 'Meld je nu aan, het is gratis!',
     description:
       'blablablalb ballbalbl lbalalbalblab blablalbalbl balblalb.',
-    buttonLabel: 'Sign Up Now',
+    buttonLabel: 'Nu registreren',
     imgStart: 'start',
     img: 'images/seedling.png',
     alt: 'seedling'

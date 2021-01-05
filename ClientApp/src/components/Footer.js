@@ -32,7 +32,7 @@ function Footer() {
           <div className='footer-link-items'>
             <h2>Volg ons</h2>
             <Link to='/'>Instagram</Link>
-            <Link to='/'>Facebook</Link>
+            <a href='https://www.facebook.com/stadskwekerijdekas/'>Facebook</a>
             <Link to='/'>Youtube</Link>
             <Link to='/'>Twitter</Link>
           </div>
@@ -41,7 +41,7 @@ function Footer() {
       <section className='social-media'>
         <div className='social-media-wrap'>
           <div className='footer-logo'>
-            <Link to='/' className='social-logo'>
+                      <Link to='/' className='social-logo' style={{ textDecoration: 'none' }}>
               <RiPlantFill className='navbar-icon' />
               Stekoverflow
             </Link>

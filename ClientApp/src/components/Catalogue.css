@@ -8,20 +8,19 @@
   
   /* Create two unequal columns that sits next to each other */
   /* Sidebar/left column */
-  .side {
+.side {
     -ms-flex: 30%; /* IE10 */
     flex: 30%;
     background-color: white;
     padding-top: 50px;
-    border-style: groove;
+    border-right-style: solid;
     text-align: center;
-    border-width: 1px;
-  }
+    border-right-width: 1px;
+}
   .filters{
     width: 300px;
     padding: 50px;
     margin-left: 20%;
-    border-bottom-style: groove;
     border-width: 1px;
   }
   /* Main column */

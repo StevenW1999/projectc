@@ -6,7 +6,11 @@ import { RiPlantFill } from 'react-icons/ri';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { IconContext } from 'react-icons/lib';
 import ukflag from '../images/UK.png'; 
-import nlflag from '../images/NL.jpg'; 
+import nlflag from '../images/NL.jpg';
+
+//window.addEventListener("beforeunload", (ev) => {
+//    window.localStorage.removeItem('bearer');
+//});
 
 function Navigation() {
 
@@ -34,7 +38,7 @@ function Navigation() {
             method: 'post',
             headers: { 'Content-Type': 'application/json', 'Authorization': 'bearer ' + localStorage.getItem('bearer') }
         }).then(response => { return response.json(); })
-            .then(localStorage.removeItem('bearer'))
+            .then(localStorage.removeItem('bearer'), localStorage.removeItem('role'))
             .catch(err => {
                 console.log("fetch error" + err);
             });
@@ -42,10 +46,31 @@ function Navigation() {
         window.location.href = "/";
     }
 
-    if (localStorage.getItem('bearer')) {
+    const handleAdminLogout = () => {
+        fetch('/api/admins/cms-logout', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'bearer ' + localStorage.getItem('bearer') }
+        }).then(response => { return response.json(); })
+            .then(localStorage.removeItem('bearer'), localStorage.removeItem('role'))
+            .catch(err => {
+                console.log("fetch error" + err);
+            });
+        window.alert('Uitgelogd!')
+        window.location.href = "/";
+    }
+
+    if (localStorage.getItem('role') == 'User') {
         localStorage.setItem('isUser', "block");
+        localStorage.setItem('isAdmin', "none");
         localStorage.setItem('isGuest', "none");
-    } else {
+    }
+    else if (localStorage.getItem('role') == 'Admin') {
+        localStorage.setItem('isAdmin', "block");
+        localStorage.setItem('isUser', "none");
+        localStorage.setItem('isGuest', "none");
+    }
+    else {
+        localStorage.setItem('isAdmin', "none");
         localStorage.setItem('isUser', "none");
         localStorage.setItem('isGuest', "block");
     }
@@ -55,61 +80,67 @@ function Navigation() {
             <IconContext.Provider value={{ color: '#fff' }}>
                 <nav className='navbar'>
                     <div className='navbar-container'>
-                        <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-                            <RiPlantFill className='navbar-icon' />
-              Stekoverflow
-            </Link>
+                        <Link to='/' className='navbar-logo logotext' style={{ textDecoration: 'none' }} onClick={closeMobileMenu}><RiPlantFill className='navbar-icon' />Stekoverflow</Link>
                         <div className='menu-icon' onClick={handleClick}>
                             {click ? <FaTimes /> : <FaBars />}
                         </div>
                         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
 
-                            <li className='nav-item'>
-                                <Link to='/' className='nav-links nodecoration' onClick={closeMobileMenu}>
+                            <li className='nav-item2'>
+                                <Link to='/' className='nav-links nodecoration2' onClick={closeMobileMenu}>
                                     Home
                 </Link>
                             </li>
-                            <li className='nav-item'>
+                            <li className='nav-item2'>
                                 <Link
                                     to='/about'
-                                    className='nav-links nodecoration'
+                                    className='nav-links nodecoration2'
                                     onClick={closeMobileMenu}
                                 >
                                     Over ons
                 </Link>
                             </li>
-                            <li className='nav-item'>
+                            <li className='nav-item2'>
                                 <Link
                                     to='/contact'
-                                    className='nav-links nodecoration'
+                                    className='nav-links nodecoration2'
                                     onClick={closeMobileMenu}
                                 >
                                     Contact
                 </Link>
                             </li>
-                            <li className='nav-item'>
+                            <li className='nav-item2'>
                                 <Link
                                     to='/search'
-                                    className='nav-links nodecoration'
+                                    className='nav-links nodecoration2'
                                     onClick={closeMobileMenu}
                                 >
-                                    Aanbod 
+                                    Aanbod
                 </Link>
                             </li>
-                            <li className='nav-item' style={{ display: localStorage.getItem('isUser') }}>
+                            <li className='nav-item2' style={{ display: localStorage.getItem('isAdmin') }}>
+                                <Link
+                                    to='/adminpanel'
+                                    className='nav-links nodecoration2'
+                                    onClick={closeMobileMenu}
+                                >
+                                    Gebruikerspaneel
+                </Link>
+                            </li>
+                            <li className='nav-item2' style={{ display: localStorage.getItem('isUser') }}>
                                 <Link
                                     to='/Create_trade'
-                                    className='nav-links nodecoration'
+                                    className='nav-links nodecoration2'
                                     onClick={closeMobileMenu}
                                 >
                                     Plant toevoegen
                 </Link>
                             </li>
-                            <div className="guest-nav" style={{ display: localStorage.getItem('isGuest')}}>
-                                <li className='nav-item'>
+                            <div className="nav-item2" style={{ display: localStorage.getItem('isGuest')}}>
+                                <li className='nav-login'>
                                     <Link
                                         to='/login'
-                                        className='nav-links nodecoration'
+                                        className='nav-links nodecoration2'
                                         onClick={closeMobileMenu}
                                     >
                                         Inloggen
@@ -118,18 +149,26 @@ function Navigation() {
                             </div>
                             
 
-                            <li className='nav-item' style={{ display: localStorage.getItem('isUser') }}>
+                            <li className='nav-item2' style={{ display: localStorage.getItem('isUser') }}>
                                 <Link
-                                    className='nav-links nodecoration'
+                                    className='nav-links nodecoration2'
                                     onClick={closeMobileMenu, handleLogout}
                                 >
                                     Uitloggen
             </Link>
                             </li>
-                            <li className='nav-item' style={{ display: localStorage.getItem('isUser') }}>
+                            <li className='nav-item2' style={{ display: localStorage.getItem('isAdmin') }}>
+                                <Link
+                                    className='nav-links nodecoration2'
+                                    onClick={closeMobileMenu, handleAdminLogout}
+                                >
+                                    Uitloggen
+            </Link>
+                            </li>
+                            <li className='nav-item2' style={{ display: localStorage.getItem('isUser') }}>
                                 <Link
                                     to='/account'
-                                    className='nav-links nodecoration'
+                                    className='nav-links nodecoration2'
                                     onClick={closeMobileMenu}
                                 >
                                     Mijn profiel
