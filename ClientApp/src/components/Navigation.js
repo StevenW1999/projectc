@@ -60,19 +60,19 @@ function Navigation() {
     }
 
     if (localStorage.getItem('role') == 'User') {
-        localStorage.setItem('isUser', "block");
+        localStorage.setItem('isUser', "inline-block");
         localStorage.setItem('isAdmin', "none");
         localStorage.setItem('isGuest', "none");
     }
     else if (localStorage.getItem('role') == 'Admin') {
-        localStorage.setItem('isAdmin', "block");
+        localStorage.setItem('isAdmin', "inline-block");
         localStorage.setItem('isUser', "none");
         localStorage.setItem('isGuest', "none");
     }
     else {
         localStorage.setItem('isAdmin', "none");
         localStorage.setItem('isUser', "none");
-        localStorage.setItem('isGuest', "block");
+        localStorage.setItem('isGuest', "inline-block");
     }
 
     return (

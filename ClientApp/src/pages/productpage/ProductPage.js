@@ -143,13 +143,13 @@ class ProductPage extends Component {
                             <p className="normal-text font-weight-bold">Speciale kenmerken: {this.state.Plant.specialFeatures}</p>
                             <Container className="text-center">
 
-                                <Link class="btn btn-warning" to={{
+                                <Link class="btn btn-warning" style={{ display: localStorage.getItem('isUser') }} to={{
                                     pathname: '/editplant', state: {
                                         id: this.props.location.state.id
                                     }
                                 }}>Plant wijzigen</Link>
                                 <div class="divider" />
-                                <Button variant="danger" onClick={this.onSubmitHandler}>
+                                <Button variant="danger" onClick={this.onSubmitHandler} style={{ display: localStorage.getItem('isUser') }}>
                                     Plant verwijderen
                         </Button>
                                 
