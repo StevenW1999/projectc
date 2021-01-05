@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import './Create_trade.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
+import Image from 'react-bootstrap/Image';
 
 class Create_trade extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            file: '',
-            imagePreviewUrl: '',
-            Image: "",
+            Image: null,
             Name: "",
             Description: "",
             Category: "",
@@ -32,6 +31,34 @@ class Create_trade extends Component{
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
     }
 
+    _handleReaderLoaded = (readerEvt) => {
+        let binaryString = readerEvt.target.result
+        this.setState({
+            file: btoa(binaryString)
+        })
+    }
+
+    handleImage = (e) => {
+        e.preventDefault();
+
+        let file = e.target.files[0];
+        let reader = new FileReader();
+
+        if (e.target.files.length === 0) {
+            return;
+        }
+
+        reader.onloadend = (e) => {
+            let binaryString = e.target.result
+            this.setState({
+                Image: btoa(binaryString)
+            });
+        }
+
+        reader.readAsBinaryString(file)
+    }
+
+
     handleInputChange(event) {
         event.preventDefault();
         const target = event.target;
@@ -41,8 +68,9 @@ class Create_trade extends Component{
         this.setState({
             [name]: value
         });
-        console.log("state",this.state.Name)
+        
     }
+
 
     onSubmitHandler = (e) => {
         e.preventDefault();
@@ -52,6 +80,7 @@ class Create_trade extends Component{
                 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('bearer')
             },
             body: JSON.stringify({
+                "Image": this.state.Image,
                 "Name": this.state.Name,
                 "Description": this.state.Description,
                 "Category": this.state.Category,
@@ -256,9 +285,12 @@ render () {
                       options={["Geurend", "Eetbaar", "Giftig", "Trekt bijen aan", "Trekt hommels aan", "Trekt vlinders aan", "Trekt vogels aan"]}
                       name="SpecialFeatures" onChange={this.handleInputChange} />
               </Form.Group>
-                <Form.Group>
-                    <Form.File id="exampleFormControlFile1" label="Example file input" />
-                </Form.Group>
+              <Form.Group controlId="ImageInput">
+                  <Form.Label>Voeg een afbeelding toe</Form.Label><br></br>
+                  <input type="file" name="Image" onChange={this.handleImage} />
+                  <p>Voorbeeld afbeelding:</p>
+                  <Image className="Previmage" src={"data:file/png;base64," + this.state.Image} />
+              </Form.Group>
               <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
                   Plant aanmaken
               </Button>   
