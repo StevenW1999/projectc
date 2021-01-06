@@ -156,7 +156,7 @@ namespace ProjectC.Controllers
         //search for specific user
         [AllowAnonymous]
         [HttpGet("search")]
-        public async Task<IActionResult> Index(string searchString)
+        public ActionResult Index(string searchString)
         {
             //query to get all users
             var users = from u in _context.Users

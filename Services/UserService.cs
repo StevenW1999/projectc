@@ -26,7 +26,6 @@ namespace Project.Services
 
         public bool IsValidUserCredentials(string userName, string password)
         {
-            _logger.LogInformation($"Validating user [{userName}]");
             if (string.IsNullOrWhiteSpace(userName))
             {
                 return false;
@@ -36,7 +35,7 @@ namespace Project.Services
             {
                 return false;
             }
-            return _context.Users.Any(u => u.Username == userName && u.Password == password);
+            return _context.Users.Any(u => (u.Username == userName) && (u.Password == password));
         }
 
         public bool IsAnExistingUser(string userName)
@@ -67,7 +66,6 @@ namespace Project.Services
 
         public bool IsValidAdminCredentials(string userName, string password)
         {
-            _logger.LogInformation($"Validating admin [{userName}]");
             if (string.IsNullOrWhiteSpace(userName))
             {
                 return false;

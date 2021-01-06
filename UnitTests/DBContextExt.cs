@@ -1,4 +1,5 @@
 ﻿using Project;
+using Project.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +14,7 @@ namespace XUnitTestProject1
             {
                 Id = 1,
                 Username = "test1",
-                Password = "test",
+                Password = "123456789",
                 Email = "test@test.nl",
                 PostalCode = "1234AA",
                 ProfilePicture = null,
@@ -24,7 +25,7 @@ namespace XUnitTestProject1
             {
                 Id = 2,
                 Username = "test2",
-                Password = "test",
+                Password = "123456789",
                 Email = "test2@test.nl",
                 PostalCode = "1234AA",
                 ProfilePicture = null,
@@ -35,11 +36,33 @@ namespace XUnitTestProject1
             {
                 Id = 3,
                 Username = "test3",
-                Password = "test",
+                Password = "123456789",
                 Email = "tes3t@test.nl",
                 PostalCode = "1234AA",
                 ProfilePicture = null,
                 Active = true
+            });
+            dbContext.Admins.Add(new Admin
+            {
+                Id = 1,
+                Username = "Admin1",
+                Password = "password"
+            });
+
+            dbContext.FriendRequests.Add(new FriendRequest
+            {
+                Id = 1,
+                IsConfirmed = true,
+                Friend1Id = 1,
+                Friend2Id = 2
+            });
+
+            dbContext.FriendRequests.Add(new FriendRequest
+            {
+                Id = 1,
+                IsConfirmed = false,
+                Friend1Id = 1,
+                Friend2Id = 3
             });
         }
     }

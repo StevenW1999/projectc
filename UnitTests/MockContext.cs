@@ -19,7 +19,7 @@ namespace XUnitTestProject1
             var dbContext = new ProjectCContext(options);
 
             // Add entities in memory
-            dbContext.Seed();
+            //dbContext.Seed();
 
             return dbContext;
         }
