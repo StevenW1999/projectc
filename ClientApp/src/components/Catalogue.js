@@ -204,9 +204,10 @@ class Catalogue extends Component {
                     <div class="side">
                         <div className="filters">
                             <Form onSubmit={this.onSubmitHandler}>
-                                <div class="input-group mb-3">
+                                <div class="input-group">
                                     <Form.Control type="text" name="zoek" onChange={this.handleInputChange} placeholder="Zoek..." />
                                 </div>
+                                <br />
                                 <Form.Control name="typeplant" onChange={this.handleInputChange} as="select">
                                     <option>Type plant...</option>
                                     <option>Bomen</option>
@@ -266,6 +267,7 @@ class Catalogue extends Component {
                         </div>
                     </div>
                     <div class="main">
+                        <h1 className="catext">Catalogus</h1>
                         <section className="cards">
                             {this.filterLoop()}
                         </section>
