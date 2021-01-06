@@ -12,6 +12,9 @@ using System.Linq;
 using Microsoft.Extensions.Logging;
 using static Project.Services.UserService;
 using Project.Models;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace XUnitTestProject1
 {
@@ -59,13 +62,11 @@ namespace XUnitTestProject1
 
         [Theory]
         [InlineData(-1)]
-        [InlineData(0)]
         [InlineData(10)]
         public async Task GetNonExistingUser(int id)
         {
             // Arrange
             var dbContext = MockContext.GetContext(nameof(GetNonExistingUser));
-            dbContext.Seed();
             var _userService = new UserService(null, dbContext);
             var controller = new UsersController(dbContext, _userService, _jwtAuthManager, _friendsService);
             var response = await controller.GetUser(id);
@@ -199,7 +200,7 @@ namespace XUnitTestProject1
 
             dbContext.Dispose();
 
-            Assert.Equal("Admin",response);
+            Assert.Equal("Admin", response);
         }
 
         [Fact]
@@ -298,6 +299,7 @@ namespace XUnitTestProject1
         public async Task GetNotConfirmedFriendsWithNotExistingUser()
         {
             int Id = 5;
+            var emptyList = new List<User>();
             var dbContext = MockContext.GetContext(nameof(GetNotConfirmedFriendsWithNotExistingUser));
             dbContext.Seed();
             var friendService = new FriendService(null, dbContext);
@@ -305,7 +307,7 @@ namespace XUnitTestProject1
             var response = friendService.NotConfirmedFriends(Id);
 
             dbContext.Dispose();
-            Assert.Null(response);
+            Assert.Equal(emptyList,response);
         }
 
         [Fact]
@@ -331,14 +333,15 @@ namespace XUnitTestProject1
             var friendService = new FriendService(null, dbContext);
 
             var response = friendService.ConfirmedFriends(Id);
+            var emptyList = new List<User>();
 
             dbContext.Dispose();
-            Assert.Null(response);
+            Assert.Equal(emptyList,response);
         }
 
         [Theory]
         [InlineData(1,2)]
-        [InlineData(1, 3)]
+        [InlineData(1,3)]
         public async Task GetSpecificRequest(int Id1, int Id2)
         {
             var dbContext = MockContext.GetContext(nameof(GetSpecificRequest));
@@ -357,13 +360,288 @@ namespace XUnitTestProject1
         public async Task GetSpecificNonExistingRequest(int Id1, int Id2)
         {
             var dbContext = MockContext.GetContext(nameof(GetSpecificNonExistingRequest));
-            dbContext.Seed();
             var friendService = new FriendService(null, dbContext);
 
             var response = friendService.SpecificRequest(Id1, Id2);
 
             dbContext.Dispose();
             Assert.Null(response);
+        }
+
+        [Fact]
+        public async Task NewAuthToken()
+        {
+            var username = "test1";
+            var claims = new[]
+        {
+                new Claim("username",username),
+                new Claim("role", "user")
+            };
+            var tokenConfig = new JwTokenConfig 
+            { 
+                Secret = "test",
+                Issuer = "testServer",
+                Audience = "everyone",
+                AccessTokenExpiration = 10,
+                RefreshTokenExpiration = 10
+
+            };
+            var dbContext = MockContext.GetContext(nameof(NewAuthToken));
+            dbContext.Seed();
+            var service = new JwtAuthManager(tokenConfig);
+
+            var result = service.GenerateTokens(username, claims, DateTime.Now);
+
+            Assert.IsType<JwtAuthResult>(result);
+        }
+
+
+        [Fact]
+        public async Task RemoveExpiredTokens()
+        {
+            var tokens = new List<Project.Auth.RefreshToken>();
+
+            tokens.Add(new Project.Auth.RefreshToken
+            {
+                UserName = "test",
+                TokenString = "tokenstring",
+                ExpireAt = DateTime.Now
+            });
+            tokens.Add(new Project.Auth.RefreshToken
+            {
+                UserName = "test",
+                TokenString = "tokenstring",
+                ExpireAt = DateTime.Now
+            });
+
+            var tokenConfig = new JwTokenConfig
+            {
+                Secret = "test",
+                Issuer = "testServer",
+                Audience = "everyone",
+                AccessTokenExpiration = 10,
+                RefreshTokenExpiration = 10
+
+            };
+            var dbContext = MockContext.GetContext(nameof(RemoveExpiredTokens));
+            dbContext.Seed();
+            var service = new JwtAuthManager(tokenConfig);
+
+            service.RemoveExpiredRefreshTokens(DateTime.Now);
+            var count = tokens.Count();
+            Assert.True(count == 0);
+        }
+
+        [Fact]
+        public async Task RemoveUserTokens()
+        {
+            var tokens = new List<Project.Auth.RefreshToken>();
+
+            tokens.Add(new Project.Auth.RefreshToken
+            {
+                UserName = "test",
+                TokenString = "tokenstring",
+                ExpireAt = DateTime.Now
+            });
+            tokens.Add(new Project.Auth.RefreshToken
+            {
+                UserName = "test",
+                TokenString = "tokenstring",
+                ExpireAt = DateTime.Now
+            });
+
+            var tokenConfig = new JwTokenConfig
+            {
+                Secret = "test",
+                Issuer = "testServer",
+                Audience = "everyone",
+                AccessTokenExpiration = 10,
+                RefreshTokenExpiration = 10
+
+            };
+            var dbContext = MockContext.GetContext(nameof(RemoveUserTokens));
+            dbContext.Seed();
+            var service = new JwtAuthManager(tokenConfig);
+
+            service.RemoveRefreshTokenByUserName("test");
+            var count = tokens.Count();
+            Assert.True(count == 0);
+        }
+
+
+        [Fact]
+        public async Task RemoveNonExistingUserTokens()
+        {
+            var tokens = new List<Project.Auth.RefreshToken>();
+
+            tokens.Add(new Project.Auth.RefreshToken
+            {
+                UserName = "test",
+                TokenString = "tokenstring",
+                ExpireAt = DateTime.Now
+            });
+            tokens.Add(new Project.Auth.RefreshToken
+            {
+                UserName = "test",
+                TokenString = "tokenstring",
+                ExpireAt = DateTime.Now
+            });
+
+            var tokenConfig = new JwTokenConfig
+            {
+                Secret = "test",
+                Issuer = "testServer",
+                Audience = "everyone",
+                AccessTokenExpiration = 10,
+                RefreshTokenExpiration = 10
+
+            };
+            var dbContext = MockContext.GetContext(nameof(RemoveNonExistingUserTokens));
+            dbContext.Seed();
+            var service = new JwtAuthManager(tokenConfig);
+
+            service.RemoveRefreshTokenByUserName("fake user");
+            var count = tokens.Count();
+            Assert.True(count == 2);
+        }
+
+        [Fact]
+        public async Task RefreshExistingToken()
+        {
+            var tokens = new List<Project.Auth.RefreshToken>();
+
+            tokens.Add(new Project.Auth.RefreshToken
+            {
+                UserName = "test",
+                TokenString = "tokenstring",
+                ExpireAt = DateTime.Now
+            });
+            tokens.Add(new Project.Auth.RefreshToken
+            {
+                UserName = "test",
+                TokenString = "tokenstring",
+                ExpireAt = DateTime.Now
+            });
+            var token = tokens.First().TokenString;
+
+            var tokenConfig = new JwTokenConfig
+            {
+                Secret = "test",
+                Issuer = "testServer",
+                Audience = "everyone",
+                AccessTokenExpiration = 10,
+                RefreshTokenExpiration = 10
+
+            };
+            var dbContext = MockContext.GetContext(nameof(RefreshExistingToken));
+            dbContext.Seed();
+            var service = new JwtAuthManager(tokenConfig);
+
+            var response = service.Refresh("test", token, DateTime.Now);
+            var count = tokens.Count();
+            Assert.True(count == 2);
+            Assert.IsType<JwtAuthResult>(response);
+        }
+
+        [Theory]
+        [InlineData("fake user", "tokenstring")]
+        [InlineData("test", "fake token")]
+        [InlineData("fake user", "fake token")]
+        [InlineData("test", "")]
+        [InlineData("" , "tokenstring")]
+        [InlineData("" , "")]
+        public async Task RefreshNonExistingToken(string username, string token)
+        {
+            var tokens = new List<Project.Auth.RefreshToken>();
+
+            tokens.Add(new Project.Auth.RefreshToken
+            {
+                UserName = "test",
+                TokenString = "tokenstring",
+                ExpireAt = DateTime.Now
+            });
+            tokens.Add(new Project.Auth.RefreshToken
+            {
+                UserName = "test",
+                TokenString = "tokenstring",
+                ExpireAt = DateTime.Now
+            });
+
+            var tokenConfig = new JwTokenConfig
+            {
+                Secret = "test",
+                Issuer = "testServer",
+                Audience = "everyone",
+                AccessTokenExpiration = 10,
+                RefreshTokenExpiration = 10
+
+            };
+            var dbContext = MockContext.GetContext(nameof(RefreshNonExistingToken));
+            dbContext.Seed();
+            var service = new JwtAuthManager(tokenConfig);
+
+            var response = service.Refresh(username, token, DateTime.Now);
+            var count = tokens.Count();
+
+            Assert.True(count == 2);
+            Assert.IsType<SecurityTokenException>(response);
+        }
+
+        [Fact]
+        public async Task DecodeValidToken()
+        {
+            var error = false;
+            var token = "valid token";
+            var tokenConfig = new JwTokenConfig
+            {
+                Secret = "test",
+                Issuer = "testServer",
+                Audience = "everyone",
+                AccessTokenExpiration = 10,
+                RefreshTokenExpiration = 10
+
+            };
+            var dbContext = MockContext.GetContext(nameof(DecodeValidToken));
+            dbContext.Seed();
+            var service = new JwtAuthManager(tokenConfig);
+
+            try
+            {
+                var response = service.DecodeJwtToken(token);
+            }
+            catch (ArgumentException)
+            {
+                error = false;
+            }
+            Assert.False(error);
+        }
+
+        [Fact]
+        public async Task DecodeInvalidToken()
+        {
+            var error = false;
+            var token = "";
+            var tokenConfig = new JwTokenConfig
+            {
+                Secret = "test",
+                Issuer = "testServer",
+                Audience = "everyone",
+                AccessTokenExpiration = 10,
+                RefreshTokenExpiration = 10
+
+            };
+            var dbContext = MockContext.GetContext(nameof(DecodeInvalidToken));
+            dbContext.Seed();
+            var service = new JwtAuthManager(tokenConfig);
+            try
+            {
+                var response = service.DecodeJwtToken(token);
+            }
+            catch(SecurityTokenException)
+            {
+                error = true;
+            }
+            Assert.True(error);
         }
     }
 }

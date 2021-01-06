@@ -51,7 +51,7 @@ namespace XUnitTestProject1
 
             dbContext.FriendRequests.Add(new FriendRequest
             {
-                Id = 1,
+                Id = 2,
                 IsConfirmed = true,
                 Friend1Id = 1,
                 Friend2Id = 2
@@ -59,11 +59,12 @@ namespace XUnitTestProject1
 
             dbContext.FriendRequests.Add(new FriendRequest
             {
-                Id = 1,
+                Id = 3,
                 IsConfirmed = false,
                 Friend1Id = 1,
                 Friend2Id = 3
             });
+            dbContext.SaveChanges();
         }
     }
 }

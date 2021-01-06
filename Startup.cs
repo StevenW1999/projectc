@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Project.Auth;
 using Project.Services;
+using Microsoft.IdentityModel.Logging;
 
 namespace Project
 {
@@ -79,6 +80,8 @@ namespace Project
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                IdentityModelEventSource.ShowPII = true;
+
             }
             else
             {
@@ -86,7 +89,6 @@ namespace Project
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
