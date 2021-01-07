@@ -48,7 +48,7 @@ class Login extends Component{
             })
         }).then(response => { return response.json(); })
             .then(data => {
-                this.setState({ "auth": data, "isAuthenticated": true }, () => localStorage.setItem("bearer", this.state.auth.accessToken));
+                this.setState({ "auth": data, "isAuthenticated": true }, () => sessionStorage.setItem("bearer", this.state.auth.accessToken));
                 if (this.state.auth.accessToken === undefined) {
                     this.state.isAuthenticated = false;
                 }
@@ -63,7 +63,7 @@ class Login extends Component{
    
     userAlert(input) {
         if (input === true) {
-            localStorage.setItem("role", this.state.auth.role);
+            sessionStorage.setItem("role", this.state.auth.role);
             alert('Je bent ingelogd!');
             window.location.href = "/adminpanel";
         } else {

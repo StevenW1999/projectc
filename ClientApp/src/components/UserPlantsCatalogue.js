@@ -18,7 +18,7 @@ class UserPlantsCatalogue extends Component {
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'bearer ' + localStorage.getItem('bearer')
+                'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
             }
         })
             .then(response => response.json())

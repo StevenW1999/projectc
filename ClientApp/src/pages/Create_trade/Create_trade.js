@@ -77,7 +77,7 @@ class Create_trade extends Component{
         fetch('/api/Plants', {
             method: 'post', 
             headers: {
-                'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('bearer')
+                'Content-Type': 'application/json', 'Authorization': 'Bearer ' + sessionStorage.getItem('bearer')
             },
             body: JSON.stringify({
                 "Image": this.state.Image,
@@ -106,9 +106,9 @@ class Create_trade extends Component{
                     }
                     return Promise.reject(error);
                 }
-                console.log('Plant aangemaakt')
+                //console.log('Plant aangemaakt')
             })
-        alert('aangemaakt');
+        alert('Plant aangemaakt');
         this.props.history.push('/');
         //.catch(error => { console.error('error: ', error) })
     }

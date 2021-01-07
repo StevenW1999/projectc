@@ -85,11 +85,11 @@ class AdminPanel extends Component {
     }
 
     componentDidMount() {
-        if (localStorage.getItem('role') === 'Admin') {
+        if (sessionStorage.getItem('role') === 'Admin') {
             fetch('/api/Users', {
                 method: 'get',
                 headers: {
-                    'Authorization': 'bearer ' + localStorage.getItem('bearer')
+                    'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
                 }
             })
                 .then(response => this.jsonWrapper(response))
