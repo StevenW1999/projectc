@@ -3,6 +3,7 @@ import './Editplant.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import dateFormat from 'dateformat';
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
+import Image from 'react-bootstrap/Image';
 
 class Editplant extends Component{
     constructor(props) {
@@ -39,6 +40,31 @@ class Editplant extends Component{
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
     }
 
+    _handleReaderLoaded = (readerEvt) => {
+        let binaryString = readerEvt.target.result
+        this.setState({
+            file: btoa(binaryString)
+        })
+    }
+
+    handleImage = (e) => {
+        e.preventDefault();
+
+        let file = e.target.files[0];
+        let reader = new FileReader();
+
+        if (e.target.files.length === 0) {
+            return;
+        }
+
+        reader.onloadend = (e) => {
+            let binaryString = e.target.result
+            this.setState({ Plant: { ...this.state.Plant, image: btoa(binaryString) } });
+        }
+
+        reader.readAsBinaryString(file)
+    }
+
     handleInputChange(event) {
         event.preventDefault();
         const target = event.target;
@@ -55,13 +81,12 @@ class Editplant extends Component{
         fetch('/api/plants/' + this.props.location.state.id, {
             method: 'put',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'bearer ' + localStorage.getItem('bearer')
+                'Content-Type': 'application/json', 'Authorization': 'Bearer ' + sessionStorage.getItem('bearer')
             },
             body: JSON.stringify({
                 'id': this.state.Plant.id,
                 'userid': this.state.Plant.userId,
-                'image': null,
+                'image': this.state.Plant.image,
                 'name': this.state.Name ? this.state.Name : this.state.Plant.name,
                 'description': this.state.Description ? this.state.Description : this.state.Plant.description,
                 'available': true,
@@ -79,6 +104,18 @@ class Editplant extends Component{
                 'category': this.state.Category ? this.state.Category : this.state.Plant.category,
             })
         })
+            .then(response => {
+                const data = response.json();
+                if (!response.ok) {
+                    const error = (data && data.message) || response.status;
+                    if (response.status === 401) {
+                        alert('gegevens onjuist, probeer het opnieuw!')
+                    }
+                    return Promise.reject(error);
+                }
+                //console.log('Plant gewijzigd')
+            })
+        alert('Plant gewijzigd');
         //this.props.history.push('/');
         //.catch(error => { console.error('error: ', error) })
         window.location.href = "/";
@@ -89,7 +126,7 @@ class Editplant extends Component{
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'bearer ' + localStorage.getItem('bearer')
+                'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
             }
         })
             .then(response => { return response.json(); })
@@ -227,7 +264,7 @@ class Editplant extends Component{
               </fieldset>
               <Form.Group controlId="HeightInput">
                   <Form.Label>Groeihoogte</Form.Label>
-                  <Form.Control as="select" name="GrowthHeigth" value={this.state.Plant.growthHeigth} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="GrowthHeigth" defaultValue={this.state.Plant.growthHeigth} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option defaultValue="0 - 20 cm">0 - 20 cm</option>
                       <option >20 - 40 cm</option>
@@ -297,9 +334,12 @@ class Editplant extends Component{
                       options={["Geurend", "Eetbaar", "Giftig", "Trekt bijen aan", "Trekt hommels aan", "Trekt vlinders aan", "Trekt vogels aan"]}
                       name="SpecialFeatures" defaultValue={this.state.Plant.specialFeatures} onChange={this.handleInputChange} />
               </Form.Group>
-                <Form.Group>
-                    <Form.File id="exampleFormControlFile1" label="Example file input" />
-                </Form.Group>
+              <Form.Group controlId="ImageInput">
+                  <Form.Label>Voeg een afbeelding toe</Form.Label><br></br>
+                  <input type="file" name="Image" onChange={this.handleImage} />
+                  <p>Voorbeeld afbeelding:</p>
+                  <Image className="Previmage" src={"data:file/png;base64," + this.state.Plant.image} />
+              </Form.Group>
               <Button variant="primary" onClick={this.onSubmitHandler}>
                   Pas aan
               </Button>   

@@ -11,6 +11,7 @@ import AccountCreate from './pages/accountCreate/AccountCreate';
 import Account from './pages/account/Account';
 import AccountEdit from './pages/accountEdit/AccountEdit';
 import Login from './pages/login/Login';
+import AdminLogin from './pages/adminlogin/AdminLogin';
 import AdminPanel from './pages/adminpanel/AdminPanel';
 import Donatie from './pages/Donatie/Donate'
 import Contact from './pages/contact/Contact'
@@ -33,6 +34,7 @@ function App() {
         <Route exact path="/ProductPage" component={ProductPage} />
         <Route exact path="/Search" component={Searchresults} />
         <Route exact path="/Login" component ={Login}/>
+        <Route exact path="/AdminLogin" component ={AdminLogin}/>
         <Route exact path="/Account" component ={Account}/>
         <Route exact path="/AccountCreate" component ={AccountCreate}/>
         <Route exact path="/AccountEdit" component ={AccountEdit}/>

@@ -74,7 +74,6 @@ class AdminPanel extends Component {
         }
     }
 
-
     jsonWrapper(data) {
         console.log("DATA: ", data.ok);
         if (data.ok === false) {
@@ -86,15 +85,23 @@ class AdminPanel extends Component {
     }
 
     componentDidMount() {
-        fetch('/api/Users', {
-            method: 'get',
-            headers: {
-                'Authorization': 'bearer ' + localStorage.getItem('bearer')
+        if (sessionStorage.getItem('role') === 'Admin') {
+            fetch('/api/Users', {
+                method: 'get',
+                headers: {
+                    'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
+                }
+            })
+                .then(response => this.jsonWrapper(response))
+                .then(data => this.setState({
+                    userList: data
+                }))
+        } else {
+            alert('Uw account is niet bevoegd voor deze actie!');
+            window.location.href = "/";
             }
-        })
-            .then(response => this.jsonWrapper(response))
-            .then(data => this.setState({
-                userList: data            }))    }
+        }
+    
 
     getData() {
         if (this.state.userList === null) {

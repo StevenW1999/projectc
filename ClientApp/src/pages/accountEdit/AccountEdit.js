@@ -108,7 +108,7 @@ class AccountEdit extends Component {
                 method: 'put',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'bearer ' + localStorage.getItem('bearer')
+                    'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
                 },
                 body: JSON.stringify({
                     'username': this.state.username,
@@ -140,7 +140,7 @@ class AccountEdit extends Component {
             method: 'delete',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'bearer ' + localStorage.getItem('bearer')
+                'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
             }
         })
             .then(response => {

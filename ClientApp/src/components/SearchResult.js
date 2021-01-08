@@ -7,8 +7,8 @@ class SearchResult extends Component {
     }
 
     render() {
-	return (
-	    <div style={{"border-style":"solid"}, {"overflow":"hidden"}}>
+		return (
+		<div style={{ "border-style": "solid" }, { "overflow": "hidden" }}>
 	    <Jumbotron fluid style={{"padding":"1px"}}>
 
 		<div style={{"border":"5px solid brown"},{"height":"0px"}, {"width":"750px"}}>

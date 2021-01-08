@@ -91,9 +91,6 @@ class Home extends Component {
             </BannerItems>
           </BannerContent>
         </BannerContainer>
-            <div className="searchBar">
-                <h1 className="catext">Catalogus</h1>
-        </div>
           <Catalogue data={this.state.plants}></Catalogue>
       </>
     );

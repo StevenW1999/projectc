@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Login.css';
+import './AdminLogin.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 
 class Login extends Component{
@@ -39,7 +39,7 @@ class Login extends Component{
 
     onSubmitHandler = (e) => {
         e.preventDefault();
-        fetch('/api/users/login', {
+        fetch('/api/admins/cms-login', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -65,8 +65,7 @@ class Login extends Component{
         if (input === true) {
             sessionStorage.setItem("role", this.state.auth.role);
             alert('Je bent ingelogd!');
-            window.location.href = "/";
-            //this.props.history.push('/');
+            window.location.href = "/adminpanel";
         } else {
             alert('Verkeerde informatie, probeer opnieuw.');
         }
@@ -85,7 +84,7 @@ class Login extends Component{
         return (
             <div className="Login">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-                <header>Inloggen</header>  
+                <header>Adminlogin</header>  
                 <Form onSubmit={this.onSubmitHandler}>
                     <Form.Group controlId="UsernameInput">
                         <Form.Label>Gebruikersnaam</Form.Label>

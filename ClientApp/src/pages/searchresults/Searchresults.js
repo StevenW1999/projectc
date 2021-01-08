@@ -74,10 +74,9 @@ class Searchresults extends Component{
 
 		return (
             <>
-                <div className="cata">
+                <div>
                     </div>
                     <Catalogue data={this.state.plants}></Catalogue>
-                    <div className="cata"></div>
 				</>
         );
     }

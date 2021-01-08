@@ -10,6 +10,11 @@ function HeroSection({
   lightTextDesc,
   headline,
   description,
+  description2,
+  description3,
+  description4,
+  description5,
+  description6,
   buttonLabel,
   img,
   alt,
@@ -41,7 +46,22 @@ function HeroSection({
                       : 'home__hero-subtitle dark'
                   }
                 >
-                  {description}
+                                  {description}
+                                  <br></br>
+                                  <br></br>
+                                  {description2}
+                                  <br></br>
+                                  <br></br>
+                                  {description3}
+                                  <br></br>
+                                  <br></br>
+                                  {description4}
+                                  <br></br>
+                                  <br></br>
+                                  {description5}
+                                  <br></br>
+                                  <br></br>
+                                  {description6}
                 </p>
                 <Link to='/AccountCreate'>
                   <Button buttonSize='btn--wide' buttonColor='blue'>
