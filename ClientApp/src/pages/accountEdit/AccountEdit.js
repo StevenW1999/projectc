@@ -41,12 +41,14 @@ class AccountEdit extends Component {
         })
     }
 
-    handleInputChange = (e) => {
-        e.preventDefault();
-        let name = e.target.name;
-        let val = e.target.value;
-        if (name === "file") {
-            let pic = e.target.files[0];
+    handleInputChange(event) {
+        event.preventDefault();
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        if (target.type === "file") {
+            let pic = target.files[0];
 
             if (pic) {
                 const reader = new FileReader();
@@ -58,8 +60,8 @@ class AccountEdit extends Component {
         }
         else {
             this.setState({
-                [name]: val
-            })
+                [name]: value
+            });
         }
     }
 
@@ -102,7 +104,6 @@ class AccountEdit extends Component {
             alert("Wachtwoorden komen niet overeen!")
         }
         else {
-            let fetchString = '/api/users/' + this.props.location.state.id.toString();
             fetch('/api/users/' + this.props.location.state.id.toString(), {
                 method: 'put',
                 headers: {
@@ -110,7 +111,6 @@ class AccountEdit extends Component {
                     'Authorization': 'bearer ' + localStorage.getItem('bearer')
                 },
                 body: JSON.stringify({
-                    'id': this.props.location.state.id,
                     'username': this.state.username,
                     'password': this.state.password,
                     'email': this.state.email,
@@ -119,6 +119,7 @@ class AccountEdit extends Component {
                     'active': true
                 })
             })
+                .then(this.props.history.push('/'))
             //    .then(response => {
             //        const data = response.json();
             //        if (!response.ok) {
@@ -128,7 +129,7 @@ class AccountEdit extends Component {
             //        }
             //        console.log('Succes!');
             //    })
-            this.props.history.push('/');
+           
         }
     }
 
@@ -158,10 +159,6 @@ class AccountEdit extends Component {
     closeModal = () => this.setState({ isOpen: false });
 
     render() {
-        console.log(this.state.username);
-        console.log(this.state.isOpen);
-        console.log(this.state.emailCheck);
-        console.log(this.state.postalCode);
         return (
             <div className="AccountEdit">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>

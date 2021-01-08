@@ -79,10 +79,10 @@ namespace ProjectC.Controllers
                 return BadRequest();
             }
             //check if the updated username exists or not
-            if (_userService.IsAnExistingUser(user.Username))
-            {
-                return BadRequest();
-            }
+            //if (_userService.IsAnExistingUser(user.Username))
+            //{
+            //    return BadRequest();
+            //}
             //update user
             _context.Entry(user).State = EntityState.Modified;
 
