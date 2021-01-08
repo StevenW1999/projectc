@@ -64,6 +64,72 @@ namespace XUnitTestProject1
                 Friend1Id = 1,
                 Friend2Id = 3
             });
+
+            dbContext.Plants.Add(new Plant
+            {
+                Id = 1,
+                UserId = 1,
+                Image = null,
+                Name = "Test Plant1",
+                Description = "some description",
+                Available = true,
+                Category = "some category A",
+                Type = "some Type A",
+                Perennial = "some Perennial",
+                Shadow = "Dark",
+                AmountOfWater = "a lot", 
+                Soil = "some soil",
+                GrowthHeigth = "very tall",
+                Color = "red",
+                SeasonFrom = DateTime.Now,
+                SeasonTo = DateTime.Now,
+                SpecialFeatures = "some special features",
+                Timestamp = DateTime.Now
+            });
+
+            dbContext.Plants.Add(new Plant
+            {
+                Id = 2,
+                UserId = 1,
+                Image = null,
+                Name = "Test Plant2",
+                Description = "some description",
+                Available = true,
+                Category = "some category A",
+                Type = "some Type A",
+                Perennial = "some Perennial",
+                Shadow = "Dark",
+                AmountOfWater = "a lot",
+                Soil = "some soil",
+                GrowthHeigth = "very tall",
+                Color = "red",
+                SeasonFrom = DateTime.Now,
+                SeasonTo = DateTime.Now,
+                SpecialFeatures = "some special features",
+                Timestamp = DateTime.Now
+            });
+
+            dbContext.Plants.Add(new Plant
+            {
+                Id = 3,
+                UserId = 2,
+                Image = null,
+                Name = "another",
+                Description = "another",
+                Available = false,
+                Category = "some category B",
+                Type = "some Type B",
+                Perennial = "another Perennial",
+                Shadow = "Light",
+                AmountOfWater = "not much",
+                Soil = "another soil",
+                GrowthHeigth = "small",
+                Color = "blue",
+                SeasonFrom = DateTime.Now,
+                SeasonTo = DateTime.Now,
+                SpecialFeatures = "another feature",
+                Timestamp = DateTime.Now
+            });
             dbContext.SaveChanges();
         }
     }

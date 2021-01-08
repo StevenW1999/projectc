@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Project;
 
@@ -12,6 +14,9 @@ namespace Project.Services
         string GetUserRole(string userName);
         bool IsValidAdminCredentials(string userName, string password);
         bool IsAnExistingAdmin(string userName);
+        Task<List<User>> GetUsers();
+        Task<User> GetSpecificUser(int Id);
+        Task<List<User>> GetSpecificUserByName(string searchString);
     }
     //basic userservice
     public class UserService : IUserService
@@ -80,6 +85,20 @@ namespace Project.Services
         public bool IsAnExistingAdmin(string userName)
         {
             return _context.Admins.Any(u => u.Username == userName);
+        }
+
+        public async Task<List<User>> GetUsers()
+        {
+            return await _context.Users.ToListAsync();
+        }
+        public async Task<User> GetSpecificUser(int Id)
+        {
+           return await _context.Users.FindAsync(Id);
+        }
+
+        public async Task<List<User>> GetSpecificUserByName(string searchString)
+        {
+            return await _context.Users.Where(u => u.Username == searchString).ToListAsync();
         }
     }
 }

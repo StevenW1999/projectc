@@ -31,14 +31,12 @@ namespace XUnitTestProject1
             _context.Seed();
             var _userService = new UserService(null, _context);
 
-            var controller = new UsersController(_context, _userService, _jwtAuthManager, _friendsService);
+            var response = await _userService.GetUsers();
 
-            var response = await controller.GetUsers();
-
-            _context.Dispose();
-
+            var count = _context.Users.Count();
+            var count2 = response.Count();
             // Assert
-            Assert.NotNull(response);
+            Assert.Equal(count,count2);
         }
         [Fact]
         public async Task GetUserAsync()
@@ -61,21 +59,66 @@ namespace XUnitTestProject1
         }
 
         [Theory]
-        [InlineData(-1)]
-        [InlineData(10)]
-        public async Task GetNonExistingUser(int id)
+        [InlineData(1)]
+        [InlineData(2)]
+        public async Task GetUserById(int id)
         {
             // Arrange
-            var dbContext = MockContext.GetContext(nameof(GetNonExistingUser));
+            var dbContext = MockContext.GetContext(nameof(GetUserAsync));
             var _userService = new UserService(null, dbContext);
-            var controller = new UsersController(dbContext, _userService, _jwtAuthManager, _friendsService);
-            var response = await controller.GetUser(id);
-            var result = response.Result;
+
+            var response = await _userService.GetSpecificUser(id);
+            var user = await dbContext.Users.FindAsync(id);
+            // Assert
+            Assert.Equal(user, response);
+        }
+
+        [Theory]
+        [InlineData("test1")]
+        [InlineData("test2")]
+        public async Task GetUsersByUsername(string username)
+        {
+            // Arrange
+            var dbContext = MockContext.GetContext(nameof(GetUserAsync));
+            var _userService = new UserService(null, dbContext);
+
+            var response = await _userService.GetSpecificUserByName(username);
+            var count = response.Count();
+            // Assert
+            Assert.Equal(1, count);
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(10)]
+        public async Task GetNonExistingUserById(int id)
+        {
+            // Arrange
+            var dbContext = MockContext.GetContext(nameof(GetUserAsync));
+            var _userService = new UserService(null, dbContext);
+            var response = await _userService.GetSpecificUser(id);
 
             dbContext.Dispose();
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.Null(response);
+        }
+
+        [Theory]
+        [InlineData("fake")]
+        [InlineData("")]
+        public async Task GetNonExistingUserByUsername(string username)
+        {
+            // Arrange
+            var dbContext = MockContext.GetContext(nameof(GetUserAsync));
+            var _userService = new UserService(null, dbContext);
+            var response = await _userService.GetSpecificUserByName(username);
+
+            var count = response.Count();
+            dbContext.Dispose();
+
+            // Assert
+            Assert.Equal(0,count);
         }
 
         [Theory]
