@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project;
+using Project.Services;
 
 namespace Project.Controllers
 {
@@ -16,10 +17,12 @@ namespace Project.Controllers
     public class PlantsController : ControllerBase
     {
         private readonly ProjectCContext _context;
+        private readonly IPlantsService _plantsService;
 
-        public PlantsController(ProjectCContext context)
+        public PlantsController(ProjectCContext context, IPlantsService plantsService)
         {
             _context = context;
+            _plantsService = plantsService;
         }
 
         // GET: api/Plants
@@ -27,7 +30,7 @@ namespace Project.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Plant>>> getPLants()
         {
-            return await _context.Plants.ToListAsync();
+            return await _plantsService.GetPLants();
         }
 
         // GET: api/Plants/UserPLants
@@ -39,9 +42,7 @@ namespace Project.Controllers
 
             if (isAuthenticated())
             {
-                var plants = await _context.Plants.Where(u => u.UserId == user.Id).ToListAsync();//query to find all plants with userId equal to the current userId
-
-                return Ok(plants);
+                return Ok(await _plantsService.GetUserPLants(user.Id));
             }
             return BadRequest("Not logged in");
         }
@@ -51,12 +52,12 @@ namespace Project.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Plant>> GetPlant(int id)
         {
-            var plant = await _context.Plants.FindAsync(id); //find specific plant with id
+            var plant = await _plantsService.GetSpecificPLant(id); //find specific plant with id
             if (plant == null)
             {
                 return NotFound(); //return notfound if there isn't any
             }
-            return plant; //return the plant
+            return Ok(plant); //return the plant
         }
 
         // PUT: api/Plants/5
@@ -95,27 +96,27 @@ namespace Project.Controllers
             return NoContent();
         }
 
-        // PUT: api/Plants/5
-        //[Authorize]
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> setAvailable(int id, Plant plant)
-        //{
-        //    User user = GetCurrentUser();
+        //PUT: api/Plants/5
+        [Authorize]
+        [HttpPut("setAvailable")]
+        public async Task<IActionResult> setAvailable(int id, Plant plant)
+        {
+            User user = GetCurrentUser();
 
-        //    if (isAuthenticated())
-        //    {
-        //        if (id != plant.Id)
-        //        {
-        //            return BadRequest();
-        //        }
-        //        if (plant.UserId == user.Id) //if user is logged in and the plant belongs the user, set the availability to the current opposite
-        //        {
-        //            plant.Available = !plant.Available;
-        //            return Ok(plant);
-        //        }
-        //    }
-        //    return NoContent();
-        //}
+            if (isAuthenticated())
+            {
+                if (id != plant.Id)
+                {
+                    return BadRequest();
+                }
+                if (plant.UserId == user.Id) //if user is logged in and the plant belongs the user, set the availability to the current opposite
+                {
+                    await _plantsService.UpdatePlantAvailability(plant);
+                    return Ok(plant);
+                }
+            }
+            return NoContent();
+        }
 
 
         // POST: api/Plants
@@ -129,15 +130,8 @@ namespace Project.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-
                 User user = GetCurrentUser();
-                user.Plants.Add(plant);
-                plant.User = user; //set the owner of the plant to the current user
-                plant.Available = true; //standard available is true
-                plant.Timestamp = DateTime.Now; // timestamp is the time that the request is made
-                _context.Plants.Add(plant); //add the plant from the request
-                await _context.SaveChangesAsync(); //save the database state
-
+                await _plantsService.AddPlant(plant, user);
                 return Ok(plant); //return Ok result with the plant
             }
             return NotFound(); //return notFound if something goes wrong
@@ -149,17 +143,12 @@ namespace Project.Controllers
         public async Task<ActionResult<Plant>> DeletePlant(int id)
         {
             User user = GetCurrentUser();
-            var plant = await _context.Plants.FindAsync(id);
-            if (plant == null)
+            var plant = await _plantsService.DeletePlant(id, user);
+            if(plant != null)
             {
-                return NotFound();
+                return Ok(plant);
             }
-            if (plant.UserId == user.Id)
-            {
-                _context.Plants.Remove(plant); //check if plant belongs to user and deletes the plant if so
-                await _context.SaveChangesAsync();
-            }
-            return plant;
+            return NotFound();
         }
 
         //GET: api/plants/search?searchString=
@@ -168,65 +157,9 @@ namespace Project.Controllers
         public async Task<IActionResult> Index(string searchString, string sortString, string typeString, string Perennial, string AmountOfWater, string Shadow, string Soil, string GrowthHeight, string Color)
         {
             //get all plants
-            var plants = from p in _context.Plants
-                         where p.Available == true
-                         select p;
-            //filters
-            if (!String.IsNullOrEmpty(typeString))
-            {
-                plants = plants.Where(b => b.Type.Equals(typeString));
-            }
-
-            if (!String.IsNullOrEmpty(Perennial))
-            {
-                plants = plants.Where(b => b.Perennial.Equals(Perennial));
-            }
-
-            if (!String.IsNullOrEmpty(AmountOfWater))
-            {
-                plants = plants.Where(b => b.AmountOfWater.Equals(AmountOfWater));
-            }
-
-            if (!String.IsNullOrEmpty(Shadow))
-            {
-                plants = plants.Where(b => b.Shadow.Equals(Shadow));
-            }
-
-            if (!String.IsNullOrEmpty(Soil))
-            {
-                plants = plants.Where(b => b.Soil.Equals(Soil));
-            }
-
-            if (!String.IsNullOrEmpty(GrowthHeight))
-            {
-                plants = plants.Where(b => b.GrowthHeigth.Equals(GrowthHeight));
-            }
-
-            if (!String.IsNullOrEmpty(Color))
-            {
-                plants = plants.Where(b => b.Color.Equals(Color));
-            }
-            //order filters
-            switch (sortString)
-            {
-                case "date_asc":
-                    plants = plants.OrderBy(s => s.Timestamp);
-                    break;
-                case "date_desc":
-                    plants = plants.OrderByDescending(s => s.Timestamp);
-                    break;
-                default:
-                    plants = plants.OrderBy(s => s.Timestamp);
-                    break;
-            }
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                plants = plants.Where(s => s.Name.Contains(searchString) || s.Description.Contains(searchString) || s.Color.Equals(searchString) || s.GrowthHeigth.Equals(searchString));
-            }
-
+            var plants = await _plantsService.FilterPLants(searchString, sortString, typeString, Perennial, AmountOfWater, Shadow, Soil, GrowthHeight, Color);
             return Ok(plants);
-            }
+        }
  
 
         private bool PlantExists(int id)

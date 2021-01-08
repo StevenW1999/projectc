@@ -41,7 +41,7 @@ namespace ProjectC.Controllers
         [Authorize] //use authorize tags to determine which actions need authorization
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync(); //return all users in a list
+            return await _userService.GetUsers(); //return all users in a list
         }
 
         // GET: api/Users
@@ -49,8 +49,8 @@ namespace ProjectC.Controllers
         [Authorize] //use authorize tags to determine which actions need authorization
         public ActionResult<User> GetCurrentUser()
         {
-            User user =  _context.Users.FirstOrDefault(u => u.Username == User.Identity.Name); //query to find user with username found in the token
-            return  user;
+            User user = _context.Users.FirstOrDefault(u => u.Username == User.Identity.Name); //query to find user with username found in the token
+            return user;
         }
 
         // GET: api/Users/5
@@ -58,14 +58,14 @@ namespace ProjectC.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = _userService.GetSpecificUser(id);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return await user;
         }
 
         // PUT: api/Users/5
@@ -141,12 +141,16 @@ namespace ProjectC.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _userService.GetSpecificUser(id);
+            User currUser = CurrUser();
             if (user == null)
             {
                 return NotFound();
             }
-
+            if (user.Id != currUser.Id)
+            {
+                return BadRequest("This is not you!");
+            }
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
@@ -156,18 +160,9 @@ namespace ProjectC.Controllers
         //search for specific user
         [AllowAnonymous]
         [HttpGet("search")]
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<ActionResult<IEnumerable<User>>> Index (string searchString)
         {
-            //query to get all users
-            var users = from u in _context.Users
-                         select u;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                users = users.Where(s => s.Username.Contains(searchString)); //query to search for user
-            }
-
-            return Ok(users);
+            return await _userService.GetSpecificUserByName(searchString);
         }
 
         [AllowAnonymous]
