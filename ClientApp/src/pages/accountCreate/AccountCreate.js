@@ -120,6 +120,7 @@ class AccountCreate extends Component {
             }
     }
 
+
     render() {
         return (
             <div className="AccountCreate">
@@ -186,12 +187,10 @@ class AccountCreate extends Component {
                             </Form.Group>
                         </Col>
                     </Row>
-
                     <Form.Group controlId="Checkbox">
                         <Form.Check name="checkbox" type="checkbox" label="Ik heb de algemene voorwaarden gelezen en ga hiermee akkoord." onChange={this.handleInputChange} />
+                        <Link target="_blank" rel="noopener noreferrer" to='/Voorwaarden'>Algemene Voorwaarden</Link>
                     </Form.Group>
-
-                    
                     <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
                         Account aanmaken
                     </Button>                       
