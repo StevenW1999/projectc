@@ -16,6 +16,7 @@ import AdminPanel from './pages/adminpanel/AdminPanel';
 import Donatie from './pages/Donatie/Donate'
 import Contact from './pages/contact/Contact'
 import Editplant from './pages/EditPlant/Editplant';
+import Voorwaarden from './pages/voorwaarden/Voorwaarden';
 
 import {
   BrowserRouter as Router,
@@ -43,6 +44,7 @@ function App() {
         <Route exact path="/AdminPanel" component={AdminPanel} />
         <Route exact path="/Donate" component={Donatie} />
         <Route exact path="/Contact" component={Contact} />
+        <Route exact path="/Voorwaarden" component={Voorwaarden} />
       </Switch>
       <Footer />
     </Router>
