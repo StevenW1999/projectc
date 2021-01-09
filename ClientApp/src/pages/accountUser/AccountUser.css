@@ -1,0 +1,25 @@
+header {
+    padding: 50px;
+    text-align: center;
+    font-size: 75px;
+    color: black;
+    padding-bottom: 50px;
+}
+
+.Account {
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Lnk {
+    color: white;
+}
+
+.ProfPic {
+    width: auto;
+    height: auto;
+}
