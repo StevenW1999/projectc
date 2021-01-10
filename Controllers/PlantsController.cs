@@ -33,6 +33,15 @@ namespace Project.Controllers
             return await _plantsService.GetPLants();
         }
 
+        // GET: api/Plants/ChosenUserPlants/5
+        [AllowAnonymous]
+        [HttpGet("ChosenUserPlants/{id}")]
+        public async Task<ActionResult<IEnumerable<Plant>>> GetChosenUserPlants(int id)
+        {
+            var plants = await _context.Plants.Where(u => u.UserId == id).ToListAsync();//query to find all plants from id of specific user
+            return Ok(plants);
+        }
+
         // GET: api/Plants/UserPLants
         [Authorize]
         [HttpGet("UserPlants")]

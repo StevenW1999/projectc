@@ -55,7 +55,9 @@ class ProductPage extends Component {
                     console.log('Error: ', error)
                     return Promise.reject(error);
                 }
-                console.log('Succes!')
+                //console.log('Succes!');
+                alert('Plant is verwijderd');
+                window.location.href = "/";
             })
     }
 
@@ -103,7 +105,12 @@ class ProductPage extends Component {
                         <Container className="dbackground">
 
                             <h1>{this.state.Plant.name}</h1>
-                            <h4>{this.state.User.username}</h4>
+                            <Link to={{
+                                pathname: '/accountuser', state: {
+                                    plantid: this.props.location.state.id,
+                                    userid: this.state.User.id
+                                }
+                            }}><h4>{this.state.User.username}</h4></Link>
                             <br/>
                             <p className="normal-text">Plant details:</p>
                             <p className="normal-text font-weight-bold">Water: {this.state.Plant.amountOfWater}</p>
