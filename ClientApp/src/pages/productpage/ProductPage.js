@@ -105,9 +105,10 @@ class ProductPage extends Component {
                         <Container className="dbackground">
 
                             <h1>{this.state.Plant.name}</h1>
-                            <Link style={{ display: sessionStorage.getItem('isUser') }} to={{
+                            <Link to={{
                                 pathname: '/accountuser', state: {
-                                    id: this.props.location.state.id
+                                    plantid: this.props.location.state.id,
+                                    userid: this.state.User.id
                                 }
                             }}><h4>{this.state.User.username}</h4></Link>
                             <br/>

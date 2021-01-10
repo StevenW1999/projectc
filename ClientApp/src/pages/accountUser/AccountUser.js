@@ -5,6 +5,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import "../../components/UserPlantsCatalogue";
 import UserPlantsCatalogue from '../../components/UserPlantsCatalogue';
+import PlantItem from '../../components/PlantItem';
 
 class AccountUser extends Component {
     constructor(props) {
@@ -19,12 +20,13 @@ class AccountUser extends Component {
                 postalCode: '',
                 profilePicture: null,
                 active: false
-            }
+            },
+            plantList: []
         }
     }
 
     componentDidMount() {
-        fetch('/api/users/current', {
+        fetch('/api/users/' + this.props.location.state.userid, {
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,14 +40,25 @@ class AccountUser extends Component {
             .catch(err => {
                 console.log("fetch error" + err);
             });
+
+        fetch('/api/plants/chosenuserplants/' + this.props.location.state.userid)
+            .then(response => response.json())
+            .then(data => this.setState({
+                plantList: data.map(plant => {
+                    return (
+                        <PlantItem plant={plant} />
+                    )
+                }
+                )
+            }))
     }
 
     render() {
         return (
-            <div className="Account">
+            <div className="Accountshow">
 
                 <Form>
-                    <header>Mijn account</header>
+                    <header>Account van {this.state.user.username}</header>
 
                     <Image className="ProfPic" src={"data:file/png;base64," + this.state.user.profilePicture} roundedCircle />
 
@@ -60,30 +73,22 @@ class AccountUser extends Component {
                     <br></br>
                     <h1>Postcode:</h1>
                     <h4>{this.state.user.postalCode}</h4>
-
-                    <Button variant="primary" type="submit">
-                        <Link to="/" className="Lnk">
-                            Uitloggen
-                        </Link>
-                    </Button>
-
-                    <Button className="float-right" variant="primary" type="submit">
-                        <Link to={{
-                            pathname: '/AccountEdit',
-                            state: {
-                                id: this.state.user.id,
-                                username: this.state.user.username,
-                                password: this.state.user.password,
-                                email: this.state.user.email,
-                                postalCode: this.state.user.postalCode,
-                                profilePicture: this.state.user.profilePicture,
-                                active: false
-                            }
-                        }} className="Lnk">
-                            Account Aanpassen
-                        </Link>
-                    </Button>
-                    <UserPlantsCatalogue></UserPlantsCatalogue>
+                    <Link className="btn btn-primary" to={{
+                        pathname: '/productpage', state: {
+                            id: this.props.location.state.plantid,
+                            userid: this.props.location.state.userid
+                        }
+                    }}>
+                        Terug
+                    </Link>
+                    <h1 className="text-center">Stekjes van {this.state.user.username}:</h1>
+                    <div class="row">
+                        <div class="main">
+                            <section className="cards">
+                                {this.state.plantList}
+                            </section>
+                        </div>
+                    </div>
 
                 </Form>
             </div>
