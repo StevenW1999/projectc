@@ -272,7 +272,7 @@ namespace XUnitTestProject1
 
             var _userService = new UserService(null, dbContext);
             var service = _userService;
-            var response = service.IsValidUserCredentials(username, password);
+            var response = service.IsValidAdminCredentials(username, password);
             Assert.False(response);
         }
 
