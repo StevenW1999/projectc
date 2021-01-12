@@ -120,9 +120,13 @@ namespace ProjectC.Controllers
                     {
                         //var image = Encoding.ASCII.GetString(user.ProfilePicture);
                         //user.ProfilePicture = Convert.FromBase64String(image);
-                        _context.Add(user);
-                        await _context.SaveChangesAsync();
-                        return CreatedAtAction("GetUser", new { id = user.Id }, user);
+                        if (!_userService.IsAnExistingEmail(user.Email))
+                        {
+                            _context.Add(user);
+                            await _context.SaveChangesAsync();
+                            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+                        }
+
                     }
                 }
             }

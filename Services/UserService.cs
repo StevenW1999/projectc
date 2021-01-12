@@ -14,6 +14,7 @@ namespace Project.Services
         string GetUserRole(string userName);
         bool IsValidAdminCredentials(string userName, string password);
         bool IsAnExistingAdmin(string userName);
+        bool IsAnExistingEmail(string mail);
         Task<List<User>> GetUsers();
         Task<User> GetSpecificUser(int Id);
         Task<List<User>> GetSpecificUserByName(string searchString);
@@ -47,7 +48,12 @@ namespace Project.Services
         {
             return _context.Users.Any(u => u.Username == userName);
         }
-       
+
+        public bool IsAnExistingEmail(string mail)
+        {
+            return _context.Users.Any(u => u.Email == mail);
+        }
+
         public string GetUserRole(string userName)
         {
             if (IsAnExistingUser(userName))
