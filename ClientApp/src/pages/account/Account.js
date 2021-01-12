@@ -12,7 +12,7 @@ class Account extends Component{
         this.state = {
             redirect: false,
             user: {
-                id: '',
+                id: 0,
                 username: '',
                 password: '',
                 email: '',
@@ -40,6 +40,20 @@ class Account extends Component{
         });
     }
 
+    handleLogout = (e) => {
+        e.preventDefault();
+        fetch('/api/users/logout', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'bearer ' + localStorage.getItem('bearer') }
+        }).then(response => { return response.json(); })
+            .then(localStorage.removeItem('bearer'))
+            .catch(err => {
+                console.log("fetch error" + err);
+            });
+        window.alert('Uitgelogd!')
+        window.location.href = "/";
+    }
+
     render() {
         return (
             <div className="Account">  
@@ -61,10 +75,8 @@ class Account extends Component{
                     <h1>Postcode:</h1>
                     <h4>{this.state.user.postalCode}</h4>
 
-                    <Button variant="primary" type="submit">
-                        <Link to="/" className="Lnk">
-                            Uitloggen
-                        </Link>
+                    <Button variant="primary" type="submit" onClick={this.handleLogout}>
+                        Uitloggen
                     </Button>
           
                     <Button className="float-right" variant="primary" type="submit">

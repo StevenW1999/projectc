@@ -10,61 +10,109 @@ class AccountEdit extends Component {
         this.state = {
             redirect: false,
             isOpen: false,
-            passwordCheck: '',
-            emailCheck: '',
-            username: '',
-            password: '',
-            email: '',
-            postalCode: '',
-            file: null
+            userCheck: {
+                password: '',
+                email: ''
+            },
+            user: {
+                id: 0,
+                username: '',
+                password: '',
+                email: '',
+                postalCode: '',
+                profilePicture: null,
+                active: false
+            }
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     componentDidMount() {
-        this.setState({
-            passwordCheck: this.props.location.state.password,
-            emailCheck: this.props.location.state.email,
-            username: this.props.location.state.username,
-            password: this.props.location.state.password,
-            email: this.props.location.state.email,
-            postalCode: this.props.location.state.postalCode,
-            file: this.props.location.state.profilePicture
+        fetch('/api/users/current', {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
+            }
         })
+            .then(response => { return response.json(); })
+            .then(data => {
+                this.setState({ "user": data, "userCheck": data });
+            })
+            .catch(err => {
+                console.log("fetch error" + err);
+            });           
     }
 
     _handleReaderLoaded = (readerEvt) => {
         let binaryString = readerEvt.target.result
         this.setState({
-            file: btoa(binaryString)
+            user: {
+                ...this.state.user,
+                file: btoa(binaryString)
+            } 
         })
     }
 
-    handleInputChange = (e) => {
+    handleImage = (e) => {
         e.preventDefault();
-        let name = e.target.name;
-        let val = e.target.value;
-        if (name === "file") {
-            let pic = e.target.files[0];
 
-            if (pic) {
-                const reader = new FileReader();
+        let pic = e.target.files[0];
+        let reader = new FileReader();
 
-                reader.onload = this._handleReaderLoaded.bind(this)
+        if (e.target.files.length === 0) {
+            return;
+        }
 
-                reader.readAsBinaryString(pic)
-            }
+        reader.onloadend = (e) => {
+            let binaryString = e.target.result
+            this.setState({
+                user: {
+                    ...this.state.user,
+                    profilePicture: btoa(binaryString)
+                }
+            });
+        }
+
+        reader.readAsBinaryString(pic)
+    }
+
+    handleInputChange(event) {
+        event.preventDefault();
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        if (name === "emailCheck") {
+            this.setState({
+                userCheck: {
+                    ...this.state.userCheck,
+                    email: value
+                }
+            })
+        }
+        else if (name === "passwordCheck") {
+            this.setState({
+                userCheck: {
+                    ...this.state.userCheck,
+                    password: value
+                }
+            })
         }
         else {
             this.setState({
-                [name]: val
+                user: {
+                    ...this.state.user,
+                    [name]: value
+                }
             })
         }
+
     }
 
     emailValidation() {
-        let value = this.state.email;
+        let value = this.state.user.email;
         if (value.lastIndexOf("@") < value.lastIndexOf(".")) {
             if (value.lastIndexOf("@") > 0) {
                 if (value.lastIndexOf(".") < value.length - 1) {
@@ -80,55 +128,58 @@ class AccountEdit extends Component {
     onSubmitHandler = (e) => {
         e.preventDefault();
 
-        if (this.state.username.length < 6) {
+        if (this.state.user.username.length < 6) {
             alert("Gebruikernaam moet minimaal 5 karakters lang zijn!")
         }
-        else if (this.state.postalCode.length != 6 || !parseInt(this.state.postalCode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.postalCode.slice(5, 6))) {
+        else if (this.state.user.postalCode.length != 6 || !parseInt(this.state.user.postalCode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.user.postalCode.slice(5, 6))) {
             alert("Postcode is ongeldig")
         }
-        else if (this.state.email < 5) {
+        else if (this.state.user.email < 5) {
             alert("Email mag niet leeg zijn!")
         }
         else if (!this.emailValidation()) {
             alert("Emailadres is ongeldig!")
         }
-        else if (this.state.email !== this.state.emailCheck) {
+        else if (this.state.user.email !== this.state.userCheck.email) {
             alert("Emailadressen komen niet overeen!")
         }
-        else if (this.state.password.length < 8) {
+        else if (this.state.user.password.length < 8) {
             alert("Wachtwoord moet minimaal 8 karakters lang zijn!")
         }
-        else if (this.state.password !== this.state.passwordCheck) {
+        else if (this.state.user.password !== this.state.userCheck.password) {
             alert("Wachtwoorden komen niet overeen!")
         }
         else {
-            let fetchString = '/api/users/' + this.props.location.state.id.toString();
-            fetch('/api/users/' + this.props.location.state.id.toString(), {
+            fetch('/api/users/' + this.state.user.id, {
                 method: 'put',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
                 },
                 body: JSON.stringify({
-                    'id': this.props.location.state.id,
-                    'username': this.state.username,
-                    'password': this.state.password,
-                    'email': this.state.email,
-                    'postalcode': this.state.postalCode,
-                    'profilepicture': this.state.file,
+                    'id': this.state.user.id,
+                    'username': this.state.user.username,
+                    'password': this.state.user.password,
+                    'email': this.state.user.email,
+                    'postalcode': this.state.user.postalCode,
+                    'profilepicture': this.state.user.profilePicture,
                     'active': true
                 })
             })
-            //    .then(response => {
-            //        const data = response.json();
-            //        if (!response.ok) {
-            //            const error = (data && data.message) || response.status;
-            //            console.log('Error: ', error)
-            //            return Promise.reject(error);
-            //        }
-            //        console.log('Succes!');
-            //    })
-            this.props.history.push('/');
+                //.then(this.props.history.push('/'))
+                .then(response => {
+                    const data = response.json();
+                    if (!response.ok) {
+                        const error = (data && data.message) || response.status;
+                        console.log('Error: ', error)
+                        return Promise.reject(error);
+                    }
+                    console.log('Succes!');
+                })
+            alert('Plant gewijzigd');
+            //this.props.history.push('/');
+            //.catch(error => { console.error('error: ', error) })
+            window.location.href = "/";
         }
     }
 
@@ -158,10 +209,6 @@ class AccountEdit extends Component {
     closeModal = () => this.setState({ isOpen: false });
 
     render() {
-        console.log(this.state.username);
-        console.log(this.state.isOpen);
-        console.log(this.state.emailCheck);
-        console.log(this.state.postalCode);
         return (
             <div className="AccountEdit">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
@@ -170,7 +217,7 @@ class AccountEdit extends Component {
                 <Form>
                     <Row>
                         <Col>
-                            <Image className="ProfPic" src={"data:file/png;base64," + this.state.file} roundedCircle />
+                            <Image className="ProfPic" src={"data:file/png;base64," + this.state.user.profilePicture} roundedCircle />
                         </Col>
                     </Row>
 
@@ -178,35 +225,35 @@ class AccountEdit extends Component {
                         <Col>
                             <Form.Group controlId="ProfPicInput">
                                 <Form.Label>Profielfoto</Form.Label>
-                                <Form.File name="file" type="file" id="custom-file-translate-html" accept=".jpeg, .jpg, .png" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleInputChange} />
+                                <Form.File name="file" type="file" id="custom-file-translate-html" accept=".jpeg, .jpg, .png" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleImage} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="PostalCode">
                                 <Form.Label>Postcode</Form.Label>
-                                <Form.Control name="postalCode" type="PostalCode" defaultValue={this.state.postalCode} placeholder="" onChange={this.handleInputChange} />
+                                <Form.Control name="postalCode" type="PostalCode" defaultValue={this.state.user.postalCode} placeholder="" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
 
                     <Form.Group controlId="UserName">
                         <Form.Label>Gebruikersnaam</Form.Label>
-                        <Form.Control name="username" type="username" defaultValue={this.state.username} placeholder="" onChange={this.handleInputChange} />
+                        <Form.Control name="username" type="username" defaultValue={this.state.user.username} placeholder="" onChange={this.handleInputChange} />
                     </Form.Group>
 
                     <Row>
                         <Col>
                             <Form.Group controlId="EmailInput">
                                 <Form.Label>Emailadres</Form.Label>
-                                <Form.Control name="email" type="Email" defaultValue={this.state.email} onChange={this.handleInputChange} />
+                                <Form.Control name="email" type="Email" defaultValue={this.state.user.email} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="ConfirmEmailInput">
                                 <Form.Label>Bevestig emailadres</Form.Label>
-                                <Form.Control name="emailCheck" type="emailCheck" defaultValue={this.state.emailCheck} onChange={this.handleInputChange} />
+                                <Form.Control name="emailCheck" type="emailCheck" defaultValue={this.state.userCheck.email} onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -215,14 +262,14 @@ class AccountEdit extends Component {
                         <Col>
                             <Form.Group controlId="PasswordInput">
                                 <Form.Label>Wachtwoord</Form.Label>
-                                <Form.Control name="password" type="password" defaultValue={this.state.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="password" type="password" defaultValue={this.state.user.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
 
                         <Col>
                             <Form.Group controlId="ConfirmPasswordInput">
                                 <Form.Label>Bevestig wachtwoord</Form.Label>
-                                <Form.Control name="passwordCheck" type="password" defaultValue={this.state.passwordCheck} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
+                                <Form.Control name="passwordCheck" type="password" defaultValue={this.state.userCheck.password} placeholder="Minimaal 8 karakters" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>

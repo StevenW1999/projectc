@@ -81,7 +81,8 @@ class Editplant extends Component{
         fetch('/api/plants/' + this.props.location.state.id, {
             method: 'put',
             headers: {
-                'Content-Type': 'application/json', 'Authorization': 'Bearer ' + sessionStorage.getItem('bearer')
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
             },
             body: JSON.stringify({
                 'id': this.state.Plant.id,
