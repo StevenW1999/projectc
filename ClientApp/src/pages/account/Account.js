@@ -12,7 +12,7 @@ class Account extends Component{
         this.state = {
             redirect: false,
             user: {
-                id: '',
+                id: 0,
                 username: '',
                 password: '',
                 email: '',
