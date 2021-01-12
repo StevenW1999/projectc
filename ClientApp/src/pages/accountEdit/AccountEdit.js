@@ -70,7 +70,7 @@ class AccountEdit extends Component {
             this.setState({
                 user: {
                     ...this.state.user,
-                    file: btoa(binaryString)
+                    profilePicture: btoa(binaryString)
                 }
             });
         }
@@ -150,32 +150,36 @@ class AccountEdit extends Component {
             alert("Wachtwoorden komen niet overeen!")
         }
         else {
-            fetch('/api/users/' + this.state.user.id.toString(), {
+            fetch('/api/users/' + this.state.user.id, {
                 method: 'put',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
                 },
                 body: JSON.stringify({
+                    'id': this.state.user.id,
                     'username': this.state.user.username,
                     'password': this.state.user.password,
                     'email': this.state.user.email,
                     'postalcode': this.state.user.postalCode,
-                    'profilepicture': this.state.user.file,
+                    'profilepicture': this.state.user.profilePicture,
                     'active': true
                 })
             })
-                .then(this.props.history.push('/'))
-            //    .then(response => {
-            //        const data = response.json();
-            //        if (!response.ok) {
-            //            const error = (data && data.message) || response.status;
-            //            console.log('Error: ', error)
-            //            return Promise.reject(error);
-            //        }
-            //        console.log('Succes!');
-            //    })
-           
+                //.then(this.props.history.push('/'))
+                .then(response => {
+                    const data = response.json();
+                    if (!response.ok) {
+                        const error = (data && data.message) || response.status;
+                        console.log('Error: ', error)
+                        return Promise.reject(error);
+                    }
+                    console.log('Succes!');
+                })
+            alert('Plant gewijzigd');
+            //this.props.history.push('/');
+            //.catch(error => { console.error('error: ', error) })
+            window.location.href = "/";
         }
     }
 
@@ -213,7 +217,7 @@ class AccountEdit extends Component {
                 <Form>
                     <Row>
                         <Col>
-                            <Image className="ProfPic" src={"data:file/png;base64," + this.state.user.file} roundedCircle />
+                            <Image className="ProfPic" src={"data:file/png;base64," + this.state.user.profilePicture} roundedCircle />
                         </Col>
                     </Row>
 
