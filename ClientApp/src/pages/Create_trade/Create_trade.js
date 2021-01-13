@@ -107,9 +107,9 @@ class Create_trade extends Component{
                     return Promise.reject(error);
                 }
                 //console.log('Plant aangemaakt')
+                alert('Plant aangemaakt');
+                this.props.history.push('/');
             })
-        alert('Plant aangemaakt');
-        this.props.history.push('/');
         //.catch(error => { console.error('error: ', error) })
     }
 
