@@ -37,8 +37,11 @@ class ProductPage extends Component {
             User: {
                 Username: ""
             },
+            CurrentUser: {
+                Id: ""
+            },
+        }
     }
-}
 
     onSubmitHandler = (e) => {
         fetch('/api/plants/' + this.props.location.state.id, {
@@ -92,9 +95,23 @@ class ProductPage extends Component {
             .catch(err => {
                 console.log("fetch error" + err);
             });
+
+        if (sessionStorage.getItem('role') === 'User') {
+            if (this.props.location.state.userid === this.props.location.state.activeuserid) {
+                sessionStorage.setItem('isActiveUser', "inline-block");
+            }
+            else {
+                sessionStorage.setItem('isActiveUser', "none")
+            }
+        }
+        else {
+            sessionStorage.setItem('isActiveUser', "none")
+        }
     }
 
     render() {
+        console.log(this.props.location.state.userid);
+        console.log(this.props.location.state.activeuserid);
         return (
             <Container className="container-padding">
                 <Row>
@@ -120,15 +137,15 @@ class ProductPage extends Component {
                             <p className="normal-text font-weight-bold">Speciale kenmerken: {this.state.Plant.specialFeatures}</p>
                             <Container className="text-center">
 
-                                <Link class="btn btn-warning" style={{ display: sessionStorage.getItem('isUser') }} to={{
+                                <Link class="btn btn-warning" style={{ display: sessionStorage.getItem('isActiveUser') }} to={{
                                     pathname: '/editplant', state: {
                                         id: this.props.location.state.id
                                     }
                                 }}>Plant wijzigen</Link>
                                 <div class="divider" />
-                                <Button variant="danger" onClick={this.onSubmitHandler} style={{ display: sessionStorage.getItem('isUser') }}>
+                                <Button variant="danger" onClick={this.onSubmitHandler} style={{ display: sessionStorage.getItem('isActiveUser') }}>
                                     Plant verwijderen
-                        </Button>
+                                </Button>
                                 
 
                                 <div class="divider"/>

@@ -176,7 +176,7 @@ class AccountEdit extends Component {
                     }
                     console.log('Succes!');
                 })
-            alert('Plant gewijzigd');
+            alert('Account aangepast');
             //this.props.history.push('/');
             //.catch(error => { console.error('error: ', error) })
             window.location.href = "/";
