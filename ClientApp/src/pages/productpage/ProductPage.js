@@ -35,7 +35,8 @@ class ProductPage extends Component {
                 Timestamp: null
             },
             User: {
-                Username: ""
+                Username: "",
+                Email: ""
             },
     }
 }
@@ -132,7 +133,7 @@ class ProductPage extends Component {
                                 
 
                                 <div class="divider"/>
-                                <Button>Neem contact op</Button>
+                                <a className="btn btn-primary" href={`mailto:${this.state.User.email}`}>Neem contact op</a>
                             </Container>
                             <br/>
                         </Container>

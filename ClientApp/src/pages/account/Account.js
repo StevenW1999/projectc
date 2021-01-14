@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "./Account.css";
 import { Link } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, Container } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import "../../components/UserPlantsCatalogue";
 import UserPlantsCatalogue from '../../components/UserPlantsCatalogue';
@@ -75,12 +75,11 @@ class Account extends Component{
                     <h1>Postcode:</h1>
                     <h4>{this.state.user.postalCode}</h4>
 
-                    <Button variant="primary" type="submit" onClick={this.handleLogout}>
-                        Uitloggen
+                    <Container className="text-center" style={{ margin: 10 }}>
+                        <Button variant="primary" type="submit" onClick={this.handleLogout}>
+                            Uitloggen
                     </Button>
-          
-                    <Button className="float-right" variant="primary" type="submit">
-                        <Link to={{
+                        <Link class="btn btn-primary" style={{margin: 10}} to={{
                             pathname: '/AccountEdit',
                             state: {
                                 id: this.state.user.id,
@@ -91,10 +90,9 @@ class Account extends Component{
                                 profilePicture: this.state.user.profilePicture,
                                 active: false
                             }
-                        }} className="Lnk">
-                            Account Aanpassen
-                        </Link>
-                    </Button>
+                        }}>Account Aanpassen</Link>
+                    </Container>
+                    
                     <UserPlantsCatalogue></UserPlantsCatalogue>
 
                 </Form>

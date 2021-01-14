@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AccountEdit.css';
-import { Form, Button, Row, Col, Modal } from 'react-bootstrap';
+import { Form, Button, Row, Col, Modal, Container } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 
 class AccountEdit extends Component {
@@ -66,7 +66,7 @@ class AccountEdit extends Component {
         }
 
         reader.onloadend = (e) => {
-            let binaryString = e.target.result
+            let binaryString = e.target.result;
             this.setState({
                 user: {
                     ...this.state.user,
@@ -176,7 +176,7 @@ class AccountEdit extends Component {
                     }
                     console.log('Succes!');
                 })
-            alert('Plant gewijzigd');
+            alert('Account gewijzigd');
             //this.props.history.push('/');
             //.catch(error => { console.error('error: ', error) })
             window.location.href = "/";
@@ -274,14 +274,19 @@ class AccountEdit extends Component {
                         </Col>
                     </Row>
 
-                    <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
-                        Account aanpassen
-                    </Button>
+                    
                 </Form>
 
-                <Button variant="primary" type="remove" onClick={this.openModal}>
-                    Account verwijderen
-                </Button>
+                <Container>
+                    <Button variant="primary" type="submit" style={{ margin: 10}} onClick={this.onSubmitHandler}>
+                        Account aanpassen
+                    </Button>
+
+                    <Button variant="primary" type="remove" style={{ margin: 10 }} onClick={this.openModal}>
+                        Account verwijderen
+                    </Button>
+                </Container>
+                
 
                 <Modal show={this.state.isOpen} backdrop="static" keyboard={false}>
                     <Modal.Header>
