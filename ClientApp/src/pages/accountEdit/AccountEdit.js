@@ -50,7 +50,7 @@ class AccountEdit extends Component {
         this.setState({
             user: {
                 ...this.state.user,
-                file: btoa(binaryString)
+                profilePicture: btoa(binaryString)
             } 
         })
     }
@@ -174,12 +174,11 @@ class AccountEdit extends Component {
                         console.log('Error: ', error)
                         return Promise.reject(error);
                     }
-                    console.log('Succes!');
+                    alert('Account aangepast');
+                    //this.props.history.push('/');
+                    //.catch(error => { console.error('error: ', error) })
+                    window.location.href = "/";
                 })
-            alert('Account aangepast');
-            //this.props.history.push('/');
-            //.catch(error => { console.error('error: ', error) })
-            window.location.href = "/";
         }
     }
 

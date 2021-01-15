@@ -287,7 +287,7 @@ render () {
               </Form.Group>
               <Form.Group controlId="ImageInput">
                   <Form.Label>Voeg een afbeelding toe</Form.Label><br></br>
-                  <input type="file" name="Image" accept=".jpeg, .jpg, .png" onChange={this.handleImage} />
+                  <input type="file" name="Image" accept='image/jpeg, image/png, image/jpg' onChange={this.handleImage} />
                   <p>Voorbeeld afbeelding:</p>
                   <Image className="Previmage" src={"data:file/png;base64," + this.state.Image} />
               </Form.Group>

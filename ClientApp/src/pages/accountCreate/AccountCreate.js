@@ -112,6 +112,10 @@ class AccountCreate extends Component {
                     if (!response.ok) {
                         const error = (data && data.message) || response.status;
                         console.log('error: ', error)
+                        if (response.status === 400) {
+                            alert("Emailadres of gebruikersnaam bestaat al!")
+                            return Promise.reject(error);
+                        }
                         return Promise.reject(error);
                     }
                     console.log('User aangemaakt!');
