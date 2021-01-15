@@ -14,6 +14,9 @@ class PlantItem extends Component {
         this.state = {
             User: {
                 Username: ""
+            },
+            Activeuser: {
+                id: ""
             }
         }
     }
@@ -29,6 +32,21 @@ class PlantItem extends Component {
             .then(response => { return response.json(); })
             .then(data => {
                 this.setState({ "User": data });
+            })
+            .catch(err => {
+                console.log("fetch error" + err);
+            });
+
+        fetch('/api/users/current', {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
+            }
+        })
+            .then(response => { return response.json(); })
+            .then(data => {
+                this.setState({ "Activeuser": data });
             })
             .catch(err => {
                 console.log("fetch error" + err);
@@ -59,7 +77,8 @@ class PlantItem extends Component {
                                 <Link class="txt" to={{
                                     pathname: '/productpage', state: {
                                         id: this.props.plant.id,
-                                        userid: this.props.plant.userId
+                                        userid: this.props.plant.userId,
+                                        activeuserid: this.state.Activeuser.id
                                     }
                                 }}>BEKIJK PLANT</Link>
                             </span>
