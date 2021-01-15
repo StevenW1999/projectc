@@ -175,8 +175,14 @@ class AccountEdit extends Component {
                         return Promise.reject(error);
                     }
                     alert('Account aangepast');
-                    //this.props.history.push('/');
-                    //.catch(error => { console.error('error: ', error) })
+                    fetch('/api/users/logout', {
+                        method: 'post',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': 'bearer ' + sessionStorage.getItem('bearer') }
+                    }).then(response => { return response.json(); })
+                        .then(sessionStorage.removeItem('bearer'), sessionStorage.removeItem('role'))
+                        .catch(err => {
+                            console.log("fetch error" + err);
+                        });
                     window.location.href = "/";
                 })
         }
