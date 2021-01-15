@@ -60,7 +60,7 @@ class Create_trade extends Component{
 
 
     handleInputChange(event) {
-        event.preventDefault();
+        event.stopPropagation()
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
