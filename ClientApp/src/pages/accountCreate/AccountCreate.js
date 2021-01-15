@@ -4,6 +4,16 @@ import './AccountCreate.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 
+const fileTypes = [
+    "image/jpg",
+    "image/jpeg",
+    "image/png"
+];
+
+function validFileType(file) {
+    return fileTypes.includes(file.type);
+}
+
 class AccountCreate extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +40,7 @@ class AccountCreate extends Component {
     }
 
     handleInputChange(event) {
-        event.preventDefault();
+        event.stopPropagation()
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
@@ -39,11 +49,16 @@ class AccountCreate extends Component {
             let pic = target.files[0];
 
             if (pic) {
-                const reader = new FileReader();
+                if (validFileType(pic)) {
+                    const reader = new FileReader();
 
-                reader.onload = this._handleReaderLoaded.bind(this)
+                    reader.onload = this._handleReaderLoaded.bind(this)
 
-                reader.readAsBinaryString(pic)
+                    reader.readAsBinaryString(pic)
+                }
+                else {
+                    alert("Bestand is ongeldig! Alleen foto's zijn toegestaan.")
+                }
             }
         }
         else {
@@ -112,9 +127,13 @@ class AccountCreate extends Component {
                     if (!response.ok) {
                         const error = (data && data.message) || response.status;
                         console.log('error: ', error)
+                        if (response.status === 400) {
+                            alert("Emailadres of gebruikersnaam bestaat al!")
+                            return Promise.reject(error);
+                        }
                         return Promise.reject(error);
                     }
-                    console.log('User aangemaakt!');
+                    alert('Account aangemaakt!');
                     this.props.history.push('/Login');
                 })
             }

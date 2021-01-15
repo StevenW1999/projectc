@@ -40,20 +40,6 @@ class Account extends Component{
         });
     }
 
-    handleLogout = (e) => {
-        e.preventDefault();
-        fetch('/api/users/logout', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json', 'Authorization': 'bearer ' + localStorage.getItem('bearer') }
-        }).then(response => { return response.json(); })
-            .then(localStorage.removeItem('bearer'))
-            .catch(err => {
-                console.log("fetch error" + err);
-            });
-        window.alert('Uitgelogd!')
-        window.location.href = "/";
-    }
-
     render() {
         return (
             <div className="Account">  
@@ -76,9 +62,6 @@ class Account extends Component{
                     <h4>{this.state.user.postalCode}</h4>
 
                     <Container className="text-center" style={{ margin: 10 }}>
-                        <Button variant="primary" type="submit" onClick={this.handleLogout}>
-                            Uitloggen
-                    </Button>
                         <Link class="btn btn-primary" style={{margin: 10}} to={{
                             pathname: '/AccountEdit',
                             state: {

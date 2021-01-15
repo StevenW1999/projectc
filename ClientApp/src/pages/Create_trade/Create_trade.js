@@ -4,6 +4,16 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 import Image from 'react-bootstrap/Image';
 
+const fileTypes = [
+    "image/jpg",
+    "image/jpeg",
+    "image/png"
+];
+
+function validFileType(file) {
+    return fileTypes.includes(file.type);
+}
+
 class Create_trade extends Component{
     constructor(props) {
         super(props);
@@ -47,20 +57,26 @@ class Create_trade extends Component{
         if (e.target.files.length === 0) {
             return;
         }
+        else {
+            if (validFileType(file)) {
+                reader.onloadend = (e) => {
+                    let binaryString = e.target.result
+                    this.setState({
+                        Image: btoa(binaryString)
+                    });
+                }
 
-        reader.onloadend = (e) => {
-            let binaryString = e.target.result
-            this.setState({
-                Image: btoa(binaryString)
-            });
+                reader.readAsBinaryString(file)
+            }
+            else {
+                alert("Bestand is ongeldig! Alleen foto's zijn toegestaan.")
+            }
         }
-
-        reader.readAsBinaryString(file)
     }
 
 
     handleInputChange(event) {
-        event.preventDefault();
+        event.stopPropagation()
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
@@ -287,7 +303,7 @@ render () {
               </Form.Group>
               <Form.Group controlId="ImageInput">
                   <Form.Label>Voeg een afbeelding toe</Form.Label><br></br>
-                  <input type="file" name="Image" accept=".jpeg, .jpg, .png" onChange={this.handleImage} />
+                  <input type="file" name="Image" accept='image/jpeg, image/png, image/jpg' onChange={this.handleImage} />
                   <p>Voorbeeld afbeelding:</p>
                   <Image className="Previmage" src={"data:file/png;base64," + this.state.Image} />
               </Form.Group>

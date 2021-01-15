@@ -5,6 +5,16 @@ import dateFormat from 'dateformat';
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 import Image from 'react-bootstrap/Image';
 
+const fileTypes = [
+    "image/jpg",
+    "image/jpeg",
+    "image/png"
+];
+
+function validFileType(file) {
+    return fileTypes.includes(file.type);
+}
+
 class Editplant extends Component{
     constructor(props) {
         super(props);
@@ -56,17 +66,23 @@ class Editplant extends Component{
         if (e.target.files.length === 0) {
             return;
         }
+        else {
+            if (validFileType(file)) {
+                reader.onloadend = (e) => {
+                    let binaryString = e.target.result
+                    this.setState({ Plant: { ...this.state.Plant, image: btoa(binaryString) } });
+                }
 
-        reader.onloadend = (e) => {
-            let binaryString = e.target.result
-            this.setState({ Plant: { ...this.state.Plant, image: btoa(binaryString) } });
+                reader.readAsBinaryString(file)
+            }
+            else {
+                alert("Bestand is ongeldig! Alleen foto's zijn toegestaan.")
+            }
         }
-
-        reader.readAsBinaryString(file)
     }
 
     handleInputChange(event) {
-        event.preventDefault();
+        event.stopPropagation()
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;

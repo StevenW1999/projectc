@@ -4,6 +4,16 @@ import './AccountEdit.css';
 import { Form, Button, Row, Col, Modal, Container } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 
+const fileTypes = [
+    "image/jpg",
+    "image/jpeg",
+    "image/png"
+];
+
+function validFileType(file) {
+    return fileTypes.includes(file.type);
+}
+
 class AccountEdit extends Component {
     constructor(props) {
         super(props);
@@ -50,7 +60,7 @@ class AccountEdit extends Component {
         this.setState({
             user: {
                 ...this.state.user,
-                file: btoa(binaryString)
+                profilePicture: btoa(binaryString)
             } 
         })
     }
@@ -64,22 +74,28 @@ class AccountEdit extends Component {
         if (e.target.files.length === 0) {
             return;
         }
-
-        reader.onloadend = (e) => {
-            let binaryString = e.target.result;
-            this.setState({
-                user: {
-                    ...this.state.user,
-                    profilePicture: btoa(binaryString)
+        else {
+            if (validFileType(pic)) {
+                reader.onloadend = (e) => {
+                    let binaryString = e.target.result;
+                    this.setState({
+                        user: {
+                            ...this.state.user,
+                            profilePicture: btoa(binaryString)
+                        }
+                    });
                 }
-            });
-        }
 
-        reader.readAsBinaryString(pic)
+                reader.readAsBinaryString(pic)
+            }
+            else {
+                alert("Bestand is ongeldig! Alleen foto's zijn toegestaan.")
+            }
+        }
     }
 
     handleInputChange(event) {
-        event.preventDefault();
+        event.stopPropagation();
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
@@ -174,12 +190,17 @@ class AccountEdit extends Component {
                         console.log('Error: ', error)
                         return Promise.reject(error);
                     }
-                    console.log('Succes!');
+                    alert('Account aangepast');
+                    fetch('/api/users/logout', {
+                        method: 'post',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': 'bearer ' + sessionStorage.getItem('bearer') }
+                    }).then(response => { return response.json(); })
+                        .then(sessionStorage.removeItem('bearer'), sessionStorage.removeItem('role'))
+                        .catch(err => {
+                            console.log("fetch error" + err);
+                        });
+                    window.location.href = "/";
                 })
-            alert('Account aangepast');
-            //this.props.history.push('/');
-            //.catch(error => { console.error('error: ', error) })
-            window.location.href = "/";
         }
     }
 
