@@ -126,8 +126,8 @@ namespace ProjectC.Controllers
                             await _context.SaveChangesAsync();
                             return CreatedAtAction("GetUser", new { id = user.Id }, user);
                         }
-
                     }
+                    return BadRequest("Error while creating user!");
                 }
             }
             catch (DbUpdateException /* ex */)
