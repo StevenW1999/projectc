@@ -74,7 +74,15 @@ namespace ProjectC.Controllers
         public async Task<IActionResult> PutUser(int id, User user)
         {
             //check if given id is equal to the id of the user to be edited
-            var curr = CurrUser();
+            var local = CurrUser();
+
+            // check if local is not null 
+            if (local != null)
+            {
+                // detach
+                _context.Entry(local).State = EntityState.Detached;
+            }
+
             if (id != user.Id)
             {
                 return BadRequest();
@@ -82,7 +90,7 @@ namespace ProjectC.Controllers
             //check if the updated username exists or not
             if (_userService.IsAnExistingUser(user.Username))
             {
-                if (curr.Username == user.Username)
+                if (local.Username == user.Username)
                 {
                     _context.Entry(user).State = EntityState.Modified;
                     await _context.SaveChangesAsync();
@@ -93,7 +101,7 @@ namespace ProjectC.Controllers
 
             if (_userService.IsAnExistingEmail(user.Email))
             {
-                if (curr.Email == user.Email)
+                if (local.Email == user.Email)
                 {
                     _context.Entry(user).State = EntityState.Modified;
                     await _context.SaveChangesAsync();
