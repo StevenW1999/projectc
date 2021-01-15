@@ -182,10 +182,6 @@ class Catalogue extends Component {
             )
         })
 
-      
-
-//        alert(this.getFilters());
-
         return (
             <>
                 <div class="row">
