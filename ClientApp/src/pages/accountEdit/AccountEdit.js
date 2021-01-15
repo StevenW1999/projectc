@@ -4,6 +4,16 @@ import './AccountEdit.css';
 import { Form, Button, Row, Col, Modal, Container } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 
+const fileTypes = [
+    "image/jpg",
+    "image/jpeg",
+    "image/png"
+];
+
+function validFileType(file) {
+    return fileTypes.includes(file.type);
+}
+
 class AccountEdit extends Component {
     constructor(props) {
         super(props);
@@ -64,18 +74,24 @@ class AccountEdit extends Component {
         if (e.target.files.length === 0) {
             return;
         }
-
-        reader.onloadend = (e) => {
-            let binaryString = e.target.result;
-            this.setState({
-                user: {
-                    ...this.state.user,
-                    profilePicture: btoa(binaryString)
+        else {
+            if (validFileType(pic)) {
+                reader.onloadend = (e) => {
+                    let binaryString = e.target.result;
+                    this.setState({
+                        user: {
+                            ...this.state.user,
+                            profilePicture: btoa(binaryString)
+                        }
+                    });
                 }
-            });
-        }
 
-        reader.readAsBinaryString(pic)
+                reader.readAsBinaryString(pic)
+            }
+            else {
+                alert("Bestand is ongeldig! Alleen foto's zijn toegestaan.")
+            }
+        }
     }
 
     handleInputChange(event) {
