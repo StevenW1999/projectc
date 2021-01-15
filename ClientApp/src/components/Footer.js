@@ -21,6 +21,7 @@ function Footer() {
             <Link to='/About'>Over ons</Link>
             <Link to='/Donate'>Donatie</Link>
             <Link to='/Voorwaarden'>Algemene Voorwaarden</Link>
+            <Link to='/adminlogin'>Administrator log-in</Link>
           </div>
           <div className='footer-link-items footerfix'>
             <h2>Neem contact op</h2>
