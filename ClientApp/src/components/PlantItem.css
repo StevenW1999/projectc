@@ -5,6 +5,10 @@
   display: flex;
 }
 
+.image-fit {
+    object-fit: cover;
+}
+
 .align-center {
   -webkit-box-align: center;
   -ms-flex-align: center;

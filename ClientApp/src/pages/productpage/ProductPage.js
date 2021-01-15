@@ -100,13 +100,16 @@ class ProductPage extends Component {
         if (sessionStorage.getItem('role') === 'User') {
             if (this.props.location.state.userid === this.props.location.state.activeuserid) {
                 sessionStorage.setItem('isActiveUser', "inline-block");
+                sessionStorage.setItem('isOtherUser', "none");
             }
             else {
                 sessionStorage.setItem('isActiveUser', "none")
+                sessionStorage.setItem('isOtherUser', "inline-block");
             }
         }
         else {
             sessionStorage.setItem('isActiveUser', "none")
+            sessionStorage.setItem('isOtherUser', "inline-block");
         }
     }
 
@@ -131,11 +134,11 @@ class ProductPage extends Component {
                             }}><h4>{this.state.User.username}</h4></Link>
                             <br/>
                             <p className="normal-text">Plant details:</p>
-                            <p className="normal-text font-weight-bold">Water: {this.state.Plant.amountOfWater}</p>
-                            <p className="normal-text font-weight-bold">Schaduw: {this.state.Plant.shadow}</p>
-                            <p className="normal-text font-weight-bold">Lengte: {this.state.Plant.growthHeigth}</p>
-                            <p className="normal-text font-weight-bold">Kleur: {this.state.Plant.color}</p>
-                            <p className="normal-text font-weight-bold">Speciale kenmerken: {this.state.Plant.specialFeatures}</p>
+                            <p className="normal-text font-weight-bold">Water: {this.state.Plant.amountOfWater ? this.state.Plant.amountOfWater : "Geen"}</p>
+                            <p className="normal-text font-weight-bold">Schaduw: {this.state.Plant.shadow ? this.state.Plant.shadow : "Geen"}</p>
+                            <p className="normal-text font-weight-bold">Lengte: {this.state.Plant.growthHeigth ? this.state.Plant.growthHeigth : "Geen"}</p>
+                            <p className="normal-text font-weight-bold">Kleur: {this.state.Plant.color ? this.state.Plant.color : "Geen"}</p>
+                            <p className="normal-text font-weight-bold">Speciale kenmerken: {this.state.Plant.specialFeatures ? this.state.Plant.specialFeatures : "Geen"}</p>
                             <Container className="text-center">
 
                                 <Link class="btn btn-warning" style={{ display: sessionStorage.getItem('isActiveUser') }} to={{
@@ -150,7 +153,7 @@ class ProductPage extends Component {
                                 
 
                                 <div class="divider"/>
-                                <a className="btn btn-primary" href={`mailto:${this.state.User.email}`}>Neem contact op</a>
+                                <a className="btn btn-primary" style={{ display: sessionStorage.getItem('isOtherUser') }} href={`mailto:${this.state.User.email}`}>Neem contact op</a>
                             </Container>
                             <br/>
                         </Container>
