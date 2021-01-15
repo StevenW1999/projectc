@@ -18,24 +18,19 @@ function Footer() {
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
             <h2>Algemeen</h2>
-            <Link to='/sign-up'>Hoe het werkt</Link>
             <Link to='/About'>Over ons</Link>
             <Link to='/Donate'>Donatie</Link>
             <Link to='/Voorwaarden'>Algemene Voorwaarden</Link>
           </div>
           <div className='footer-link-items footerfix'>
             <h2>Neem contact op</h2>
-            <Link to='/'>Contact</Link>
-            <Link to='/'>Ondersteuning</Link>
+            <Link to='/contact'>Contact</Link>
           </div>
         </div>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
             <h2>Volg ons</h2>
-            <Link to='/'>Instagram</Link>
             <a href='https://www.facebook.com/stadskwekerijdekas/'>Facebook</a>
-            <Link to='/'>Youtube</Link>
-            <Link to='/'>Twitter</Link>
           </div>
         </div>
       </div>

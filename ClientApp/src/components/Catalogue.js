@@ -75,8 +75,15 @@ class Catalogue extends Component {
             }
 
         }
+
         if (this.state.vasteplant != "") {
-            if (!(p.perennial === this.state.vasteplant)) {
+            let check = "";
+            if (this.state.vasteplant === "Ja") {
+                check = "on";
+            } else if (this.state.vasteplant === "Nee") {
+                check = "off";
+            }
+            if (!(p.perennial === check)) {
                 return false;
             }
 
