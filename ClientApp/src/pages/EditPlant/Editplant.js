@@ -181,7 +181,7 @@ class Editplant extends Component{
           <Form>
               <Form.Group controlId="TitleInput">
                   <Form.Label>Titel</Form.Label>
-                  <Form.Control type="Title" name="Name" placeholder="Titel" onChange={this.handleInputChange} defaultValue={this.state.Plant.name} />
+                  <Form.Control type="Title" name="Name" maxlength="500" placeholder="Titel" onChange={this.handleInputChange} defaultValue={this.state.Plant.name} />
               </Form.Group>
               <Form.Group controlId="omschInput">
                   <Form.Label>Omschrijving</Form.Label>
