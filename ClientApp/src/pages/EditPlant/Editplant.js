@@ -337,7 +337,7 @@ class Editplant extends Component{
               </Form.Group>
               <Form.Group controlId="ImageInput">
                   <Form.Label>Voeg een afbeelding toe</Form.Label><br></br>
-                  <input type="file" name="Image" onChange={this.handleImage} />
+                  <input type="file" name="Image" accept=".jpeg, .jpg, .png" onChange={this.handleImage} />
                   <p>Voorbeeld afbeelding:</p>
                   <Image className="Previmage" src={"data:file/png;base64," + this.state.Plant.image} />
               </Form.Group>
