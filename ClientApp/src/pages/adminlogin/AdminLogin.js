@@ -102,12 +102,6 @@ class Login extends Component{
                                 Inloggen
                             </Button>  
                         </Col>
-
-                        <Col>
-                            <Button variant="primary" type="submit" onClick={this.onAlternativeHandler}>
-                                Account aanmaken
-                            </Button> 
-                        </Col>
                     </Row>
                                              
                 </Form>
