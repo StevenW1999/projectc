@@ -173,25 +173,6 @@ class Catalogue extends Component {
         return filtered;
     }
 
-
-    onSubmitHandler = (e) => {
-        e.preventDefault();
-
-        if (isNaN(this.state.postcode.slice(0, 4))) {
-            alert("Ongeldige postcode")
-            alert(this.state.postcode.slice(0, 4))
-        }
-        else if (/[^a-zA-Z]/.test(this.state.postcode.slice(5, 6))) {
-            alert("Ongeldige postcode")
-        }
-        else if (this.state.postcode.length != 6) {
-            alert("Ongeldige postcode")
-        }
-
-    }
-
-    
-
     render() {
         this.preventDefaultFilters();
 
@@ -201,16 +182,12 @@ class Catalogue extends Component {
             )
         })
 
-      
-
-//        alert(this.getFilters());
-
         return (
             <>
                 <div class="row">
                     <div class="side">
                         <div className="filters">
-                            <Form onSubmit={this.onSubmitHandler}>
+                            <Form>
                                 <div class="input-group">
                                     <Form.Control type="text" name="zoek" onChange={this.handleInputChange} placeholder="Zoek..." />
                                 </div>

@@ -57,7 +57,7 @@ class PlantItem extends Component {
             <>
                 <div class="el-wrapper">
                     <div class="box-up">
-                        <img class="img" src={"data:file/png;base64," + this.props.plant.image} alt="" />
+                        <img class="img image-fit" src={"data:file/png;base64," + this.props.plant.image} alt="" />
                         <div class="img-info">
                             <div class="info-inner">
                                 <span class="p-name">{this.props.plant.name}</span>

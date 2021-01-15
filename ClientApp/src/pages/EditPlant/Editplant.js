@@ -169,7 +169,7 @@ class Editplant extends Component{
               </Form.Group>
               <Form.Group controlId="omschInput">
                   <Form.Label>Omschrijving</Form.Label>
-                  <Form.Control as="textarea" rows={3} name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} defaultValue={this.state.Plant.description} />
+                  <Form.Control as="textarea" rows={3} maxlength="500" name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} defaultValue={this.state.Plant.description} />
               </Form.Group>
               <Form.Group controlId="omschInput">
                   <Form.Label>Categorie</Form.Label>
