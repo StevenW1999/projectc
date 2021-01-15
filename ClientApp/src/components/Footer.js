@@ -34,6 +34,62 @@ function Footer() {
           </div>
         </div>
       </div>
+      <section className='social-media'>
+        <div className='social-media-wrap'>
+          <div className='footer-logo'>
+                      <Link to='/' className='social-logo' style={{ textDecoration: 'none' }}>
+              <RiPlantFill className='navbar-icon' />
+              Stekoverflow
+            </Link>
+          </div>
+          <small className='website-rights'>Stadskwekerij © 2020</small>
+          <div className='social-icons'>
+            <a
+              className='social-icon-link'
+                          href='
+https://www.facebook.com/stadskwekerijdekas/'
+              target='_blank'
+              aria-label='Facebook'
+            >
+              <FaFacebook />
+            </a>
+            <Link
+              className='social-icon-link'
+              to='/'
+              target='_blank'
+              aria-label='Instagram'
+            >
+              <FaInstagram />
+            </Link>
+            <Link
+              className='social-icon-link'
+              to={
+                '//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber'
+              }
+              target='_blank'
+              aria-label='Youtube'
+            >
+              <FaYoutube />
+            </Link>
+            <Link
+              className='social-icon-link'
+              to='/'
+              target='_blank'
+              aria-label='Twitter'
+            >
+              <FaTwitter />
+            </Link>
+            <Link
+              className='social-icon-link'
+              to='/'
+              target='_blank'
+              aria-label='LinkedIn'
+            >
+              <FaLinkedin />
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
