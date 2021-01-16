@@ -114,7 +114,7 @@ namespace Project
             app.UseCors("ClientPermission");
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<ChatHub>("/hubs/chat");
+                endpoints.MapHub<ChatHub>("/chathub");
             });
             app.UseSpa(spa =>
             {

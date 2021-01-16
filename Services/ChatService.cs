@@ -11,6 +11,7 @@ namespace Project.Services
     {
         Task<List<ChatRoom>> GetChatRoomsAsync();
         Task<bool> AddChatRoomAsync(ChatRoom newChatRoom);
+        public bool DoesChatRoomExist(string name);
     }
     public class ChatService : IChatService
     {
@@ -30,13 +31,26 @@ namespace Project.Services
 
         public async Task<bool> AddChatRoomAsync(ChatRoom chatRoom)
         {
-            chatRoom.Id = Guid.NewGuid();
+            if (!DoesChatRoomExist(chatRoom.Name))
+            {
+                chatRoom.Id = Guid.NewGuid();
 
-            _context.ChatRooms.Add(chatRoom);
+                _context.ChatRooms.Add(chatRoom);
 
-            var saveResults = await _context.SaveChangesAsync();
+                var saveResults = await _context.SaveChangesAsync();
 
-            return saveResults > 0;
+                return saveResults > 0;
+            }
+            return false;
+        }
+        public bool DoesChatRoomExist(string name)
+        {
+            var chatrooms = _context.ChatRooms.FirstOrDefault(c => c.Name == name);
+            if(chatrooms == null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
