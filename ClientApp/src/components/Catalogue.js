@@ -20,7 +20,8 @@ class Catalogue extends Component {
             afstand: "Afstand...",
             plantList: null,
             actualPlantList: [],
-            sorteren: "Sorteren op..."
+            sorteren: "Sorteren op...",
+            excludeFilters: true 
         }
         this.handleInputChange = this.handleInputChange.bind(this);
     }
@@ -59,6 +60,13 @@ class Catalogue extends Component {
         if (this.state.sorteren == "Sorteren op...") {
             this.state.sorteren = "";
         }
+        if (this.state.excludeFilters == "Inclusief filters?...") {
+            this.state.excludeFilters = true
+        } else if (this.state.excludeFilters == "Nee") {
+            this.state.excludeFilters = false
+        } else if (this.state.excludeFilters == "Ja") {
+            this.state.excludeFilters = true
+        }
     }
 
     plantFilter(p) {
@@ -66,9 +74,6 @@ class Catalogue extends Component {
             if (!(p.name.toLowerCase().includes(this.state.zoek.toLowerCase()))) {
                 return false;
             }
-        }
-        if (this.state.postcode != "") {
-            //Deel van user, coming soon  
         }
         if (this.state.typeplant != "") {
             if (!(p.type === this.state.typeplant)) {
@@ -87,8 +92,8 @@ class Catalogue extends Component {
             if (!(p.perennial === check)) {
                 return false;
             }
-
         }
+
         if (this.state.standplaats != "") {
             if (!(p.shadow === this.state.standplaats)) {
                 return false;
@@ -113,6 +118,7 @@ class Catalogue extends Component {
             }
 
         }
+
         if (this.state.sorteren != "") {
             //Coming soon
         }
@@ -168,10 +174,11 @@ class Catalogue extends Component {
         if (this.state.plantList === null) {
             return [];
         }
+        console.log(this.state.excludeFilters)
         var filtered = [];
         var i;
         for (i = 0; i < this.state.plantList.length; i++) {
-            if (this.plantFilter(this.state.plantList[i].props.plant)) {
+            if (this.plantFilter(this.state.plantList[i].props.plant) === this.state.excludeFilters) {
                 filtered.push(this.state.plantList[i]);
             }
         }
@@ -216,6 +223,12 @@ class Catalogue extends Component {
                                 <div class="input-group">
                                     <Form.Control type="text" name="zoek" onChange={this.handleInputChange} placeholder="Zoek..." />
                                 </div>
+                                <br />
+                                <Form.Control name="excludeFilters" onChange={this.handleInputChange} as="select">
+                                    <option>Inclusief filters?...</option>
+                                    <option>Ja</option>
+                                    <option>Nee</option>
+                                </Form.Control>
                                 <br />
                                 <Form.Control name="typeplant" onChange={this.handleInputChange} as="select">
                                     <option>Type plant...</option>
