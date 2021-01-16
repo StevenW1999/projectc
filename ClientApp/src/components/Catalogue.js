@@ -19,10 +19,12 @@ class Catalogue extends Component {
             kleur: "Kleur...",
             afstand: "Afstand...",
             plantList: null,
-            actualPlantList: []
+            actualPlantList: [],
+            sorteren: "Sorteren op..."
         }
         this.handleInputChange = this.handleInputChange.bind(this);
     }
+
 
 
     // Functie om de default filters op  leeg te zetten
@@ -54,13 +56,12 @@ class Catalogue extends Component {
         if (this.state.afstand == "Afstand...") {
             this.state.afstand= "";  
         }
+        if (this.state.sorteren == "Sorteren op...") {
+            this.state.sorteren = "";
+        }
     }
 
     plantFilter(p) {
-        console.log("");
-        console.log(p);
-        console.log(p.growthHeigth);
-        console.log(this.state.groeihoogte);
         if (this.state.zoek != "") {
             if (!(p.name.toLowerCase().includes(this.state.zoek.toLowerCase()))) {
                 return false;
@@ -112,14 +113,12 @@ class Catalogue extends Component {
             }
 
         }
-        if (this.state.afstand != "") {
-            if (!(p.afstand === this.state.zoek)) {
-                //coming soon
-            }
-
+        if (this.state.sorteren != "") {
+            //Coming soon
         }
         return true;
     }
+
 
     //Looks if actual plantlist is empty, otherwise gets first plantlist
     getPlantList() {
@@ -144,6 +143,13 @@ class Catalogue extends Component {
     }
 
 
+    nullString(value) {
+        if (value === null) {
+            return "";
+        } else {
+            return value;
+        }
+    }
 
     handleInputChange(event) {
         event.preventDefault();
@@ -155,7 +161,6 @@ class Catalogue extends Component {
             [name]: value
         });
         this.preventDefaultFilters();
-//        console.log(this.state.plantList[1].props.plant.name);
     }
 
     //Function returns a list of plantitems that pass filter
@@ -168,6 +173,26 @@ class Catalogue extends Component {
         for (i = 0; i < this.state.plantList.length; i++) {
             if (this.plantFilter(this.state.plantList[i].props.plant)) {
                 filtered.push(this.state.plantList[i]);
+            }
+        }
+        if (this.state.sorteren != "") {
+            console.log(filtered[1].props.plant)
+            if (this.state.sorteren === "Naam") {
+                filtered = filtered.sort((a, b) => (this.nullString(a.props.plant.name).toLowerCase() > this.nullString(b.props.plant.name).toLowerCase() ? 1 : -1))
+            } else if (this.state.sorteren === "Type") {
+                filtered = filtered.sort((a, b) => (this.nullString(a.props.plant.type).toLowerCase() > this.nullString(b.props.plant.type).toLowerCase() ? 1 : -1))
+            } else if (this.state.sorteren === "Vaste plant") {
+                filtered = filtered.sort((a, b) => (this.nullString(a.props.plant.perennial).toLowerCase() > this.nullString(b.props.plant.perennial).toLowerCase() ? 1 : -1))
+            } else if (this.state.sorteren === "Standplaats") {
+                filtered = filtered.sort((a, b) => (this.nullString(a.props.plant.shadow).toLowerCase() > this.nullString(b.props.plant.shadow).toLowerCase() ? 1 : -1))
+            } else if (this.state.sorteren === "Water") {
+                filtered = filtered.sort((a, b) => (this.nullString(a.props.plant.amountOfWater).toLowerCase() > this.nullString(b.props.plant.amountOfWater).toLowerCase() ? 1 : -1))
+            } else if (this.state.sorteren === "Groeihoogte") {
+                filtered = filtered.sort((a, b) => (this.nullString(a.props.plant.growthHeigth).toLowerCase() > this.nullString(b.props.plant.growthHeigth).toLowerCase() ? 1 : -1))
+            } else if (this.state.sorteren === "Kleur") {
+                filtered = filtered.sort((a, b) => (this.nullString(a.props.plant.color).toLowerCase() > this.nullString(b.props.plant.color).toLowerCase() ? 1 : -1))
+            } else if (this.state.sorteren === "Datum") {
+                filtered = filtered.sort((a, b) => (a.props.plant.timestamp < b.props.plant.timestamp ? 1 : -1))
             }
         }
         return filtered;
@@ -245,6 +270,18 @@ class Catalogue extends Component {
                                     <option>Wit</option>
                                     <option>Zwart</option>
                                     <option>anders</option>
+                                </Form.Control>
+                                <br />
+                                <Form.Control name="sorteren" onChange={this.handleInputChange} as="select">
+                                    <option>Sorteren op...</option>
+                                    <option>Naam</option>
+                                    <option>Type</option>
+                                    <option>Vaste plant</option>
+                                    <option>Standplaats</option>
+                                    <option>Water</option>
+                                    <option>Groeihoogte</option>
+                                    <option>Kleur</option>
+                                    <option>Datum</option>
                                 </Form.Control>
                                 <br />
                             </Form>

@@ -21,6 +21,7 @@ function Footer() {
             <Link to='/About'>Over ons</Link>
             <Link to='/Donate'>Donatie</Link>
             <Link to='/Voorwaarden'>Algemene Voorwaarden</Link>
+            <Link to='/adminlogin'>Administrator log-in</Link>
           </div>
           <div className='footer-link-items footerfix'>
             <h2>Neem contact op</h2>
@@ -34,62 +35,6 @@ function Footer() {
           </div>
         </div>
       </div>
-      <section className='social-media'>
-        <div className='social-media-wrap'>
-          <div className='footer-logo'>
-                      <Link to='/' className='social-logo' style={{ textDecoration: 'none' }}>
-              <RiPlantFill className='navbar-icon' />
-              Stekoverflow
-            </Link>
-          </div>
-          <small className='website-rights'>Stadskwekerij © 2020</small>
-          <div className='social-icons'>
-            <a
-              className='social-icon-link'
-                          href='
-https://www.facebook.com/stadskwekerijdekas/'
-              target='_blank'
-              aria-label='Facebook'
-            >
-              <FaFacebook />
-            </a>
-            <Link
-              className='social-icon-link'
-              to='/'
-              target='_blank'
-              aria-label='Instagram'
-            >
-              <FaInstagram />
-            </Link>
-            <Link
-              className='social-icon-link'
-              to={
-                '//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber'
-              }
-              target='_blank'
-              aria-label='Youtube'
-            >
-              <FaYoutube />
-            </Link>
-            <Link
-              className='social-icon-link'
-              to='/'
-              target='_blank'
-              aria-label='Twitter'
-            >
-              <FaTwitter />
-            </Link>
-            <Link
-              className='social-icon-link'
-              to='/'
-              target='_blank'
-              aria-label='LinkedIn'
-            >
-              <FaLinkedin />
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
