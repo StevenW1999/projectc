@@ -37,46 +37,6 @@ namespace ProjectC.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("Project.Models.ChatMessage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Contents")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("PostedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("RoomId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ChatMessages");
-                });
-
-            modelBuilder.Entity("Project.Models.ChatRoom", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ChatRooms");
-                });
-
             modelBuilder.Entity("Project.Models.FriendRequest", b =>
                 {
                     b.Property<int>("Friend1Id")

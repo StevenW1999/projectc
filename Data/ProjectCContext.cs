@@ -49,8 +49,6 @@ namespace Project
         public virtual DbSet<Plant> Plants { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<FriendRequest> FriendRequests { get; set; }
-        public DbSet<ChatRoom> ChatRooms { get; set; }
-        public DbSet<ChatMessage> ChatMessages { get; set; }
 
     }
 }
