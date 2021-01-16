@@ -137,11 +137,11 @@ render () {
           <Form>
               <Form.Group controlId="TitleInput">
                   <Form.Label>Titel</Form.Label>
-                  <Form.Control type="Title" name="Name" maxlength="500" placeholder="Titel" onChange={this.handleInputChange} />
+                  <Form.Control type="Title" name="Name" maxlength="200" placeholder="Titel" onChange={this.handleInputChange} />
               </Form.Group>
               <Form.Group controlId="omschInput">
                   <Form.Label>Omschrijving</Form.Label>
-                  <Form.Control as="textarea" rows={3} maxlength="500" name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} />
+                  <Form.Control as="textarea" rows={3} maxlength="200" name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} />
               </Form.Group>
               <Form.Group controlId="omschInput">
                   <Form.Label>Categorie</Form.Label>
