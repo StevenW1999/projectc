@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Project.Auth;
+using Project.Controllers;
+using Project.Models;
 using Project.Services;
 using ProjectC.Controllers;
 using System;
@@ -64,16 +66,15 @@ namespace Project.IntegrationTests
         }
 
         [Theory]
-        [InlineData(1)]
         [InlineData(2)]
         [InlineData(3)]
         public async Task GetExistingSpecificUser(int id)
         {
             // Act
             var response = await _client.GetAsync("/api/Users/"+id);
-            var result = response.Content;
+            var result = response.StatusCode;
             // Assert
-            Assert.IsType<User>(result);
+            Assert.Equal(HttpStatusCode.OK, result);
         }
 
 
@@ -169,6 +170,262 @@ namespace Project.IntegrationTests
 
             // Assert
             response.Should().BeOfType<BadRequestObjectResult>();
+        }
+
+        [Fact]
+        public async Task SearchUser()
+        {
+            var username = "test1";
+            // Arrange
+            var dbContext = MockContext.GetContext(nameof(SearchUser));
+            dbContext.Seed();
+            var _userService = new UserService(null, dbContext);
+
+            var controller = new UsersController(dbContext, _userService, _jwtAuthManager, _friendsService);
+
+            var response = await controller.Index(username);
+
+            dbContext.Dispose();
+            var result = response.Value;
+            // Assert
+            result.Should().BeOfType<List<User>>();
+        }
+
+        [Fact]
+        public async Task LoginValid()
+        {
+            var loginResult = new LoginRequest
+            {
+                UserName = "test1",
+                Password = "123456789"
+            };
+            // Arrange
+            var dbContext = MockContext.GetContext(nameof(LoginValid));
+            dbContext.Seed();
+            var _userService = new UserService(null, dbContext);
+
+            var controller = new UsersController(dbContext, _userService, _jwtAuthManager, _friendsService);
+
+            var response =  controller.Login(loginResult);
+
+            dbContext.Dispose();
+
+            // Assert
+            response.Should().BeOfType<OkObjectResult>();
+        }
+
+
+        [Fact]
+        public async Task LoginInValid()
+        {
+            var loginResult = new LoginRequest
+            {
+                UserName = "testaaaaaa",
+                Password = "123456789"
+            };
+            // Arrange
+            var dbContext = MockContext.GetContext(nameof(LoginInValid));
+            dbContext.Seed();
+            var _userService = new UserService(null, dbContext);
+
+            var controller = new UsersController(dbContext, _userService, _jwtAuthManager, _friendsService);
+
+            var response = controller.Login(loginResult);
+
+            dbContext.Dispose();
+
+            // Assert
+            response.Should().BeOfType<UnauthorizedResult>();
+        }
+
+        [Fact]
+        public async Task Logout()
+        {
+            var loginResult = new LoginRequest
+            {
+                UserName = "Test",
+                Password = "123456789"
+            };
+            // Arrange
+            var dbContext = MockContext.GetContext(nameof(Logout));
+            dbContext.Seed();
+            var _userService = new UserService(null, dbContext);
+
+            var controller = new UsersController(dbContext, _userService, _jwtAuthManager, _friendsService);
+
+            var response = controller.Logout();
+
+            dbContext.Dispose();
+
+            // Assert
+            response.Should().BeOfType<OkObjectResult>();
+        }
+
+        [Fact]
+        public async Task GetPlants()
+        {
+            // Act
+            var response = await _client.GetAsync("/api/Plants");
+            var result = response.StatusCode;
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, result);
+        }
+
+        [Fact]
+        public async Task GetChosenUserPlants()
+        {
+            int id = 1;
+            // Act
+            var response = await _client.GetAsync("/api/Plants/ChosenUserPlants" + id);
+            var result = response.StatusCode;
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, result);
+        }
+
+        [Fact]
+        public async Task GetUserPlants()
+        {
+            // Act
+            var response = await _client.GetAsync("/api/Plants/UserPlants");
+            var result = response.StatusCode;
+            // Assert
+            Assert.Equal(HttpStatusCode.Unauthorized, result);
+        }
+
+        [Fact]
+        public async Task GetSpecificPlant()
+        {
+            int id = 1;
+            // Act
+            var response = await _client.GetAsync("/api/Plants/" + id);
+            var result = response.StatusCode;
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, result);
+        }
+
+        [Fact]
+        public async Task UpdatePlantUnauthorized()
+        {
+            int id = 1;
+            var name = "test";
+            var description = "plant";
+            var content = new StringContent($"name={name}&description={description}",
+                Encoding.UTF8,
+                "application/json");
+
+            // Act
+            var response = await _client.PutAsync("/api/Plants/"+ id, content);
+            // Assert
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task UpdatePlantAvailabilityUnauthorized()
+        {
+            int id = 1;
+            var name = "test";
+            var description = "plant";
+            var content = new StringContent($"name={name}&description={description}",
+                Encoding.UTF8,
+                "application/json");
+
+            // Act
+            var response = await _client.PutAsync("/api/Plants/setAvailable", content);
+            // Assert
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task PostPlantUnauthorized()
+        {
+            var name = "test";
+            var description = "plant";
+            var content = new StringContent($"name={name}&description={description}",
+                Encoding.UTF8,
+                "application/json");
+
+            // Act
+            var response = await _client.PostAsync("/api/Plants", content);
+            // Assert
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task GetUnauthAdmins()
+        {
+            // Act
+            var response = await _client.GetAsync("/api/Admins/");
+            var result = response.StatusCode;
+            // Assert
+            Assert.Equal(HttpStatusCode.Unauthorized, result);
+        }
+
+        [Fact]
+        public async Task GetUnauthSpecificAdmin()
+        {
+            // Act
+            var response = await _client.GetAsync("/api/Admins/1");
+            var result = response.StatusCode;
+            // Assert
+            Assert.Equal(HttpStatusCode.Unauthorized, result);
+        }
+
+        [Fact]
+        public async Task UpdateAdminUnauthorized()
+        {
+            int id = 1;
+            var _username = "test";
+            var _password = "password";
+            var content = new StringContent($"username={_username}&password={_password}",
+                Encoding.UTF8,
+                "application/json");
+            // Act
+            var response = await _client.PutAsync("/api/Admin/" + id, content);
+            // Assert
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task PostAdminValid()
+        {
+            Admin admin = new Admin
+            {
+            Username = "testA",
+            Password = "password"
+            };
+            // Arrange
+            var dbContext = MockContext.GetContext(nameof(PostAdminValid));
+            dbContext.Seed();
+            var _userService = new UserService(null, dbContext);
+
+            var controller = new AdminsController(dbContext, _userService, _jwtAuthManager);
+
+            var response = await controller.PostAdmin(admin);
+
+            dbContext.Dispose();
+            var result = response.Result;
+
+            // Assert
+            result.Should().BeOfType<CreatedAtActionResult>();
+        }
+
+        [Fact]
+        public async Task DeleteAdminValid()
+        {
+            // Arrange
+            var dbContext = MockContext.GetContext(nameof(PostAdminValid));
+
+            var _userService = new UserService(null, dbContext);
+
+            var controller = new AdminsController(dbContext, _userService, _jwtAuthManager);
+
+            var response = await controller.DeleteAdmin(1);
+            var result = response.Result;
+
+            dbContext.Dispose();
+
+            // Assert
+            response.Should().BeOfType<UnauthorizedResult>();
         }
     }
 }
