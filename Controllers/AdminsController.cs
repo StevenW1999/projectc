@@ -34,6 +34,7 @@ namespace Project.Controllers
 
         // GET: api/Admins
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Admin>>> GetAdmins()
         {
             return await _context.Admins.ToListAsync();
@@ -41,6 +42,7 @@ namespace Project.Controllers
 
         // GET: api/Admins/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Admin>> GetAdmin(int id)
         {
             var admin = await _context.Admins.FindAsync(id);
@@ -57,6 +59,7 @@ namespace Project.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutAdmin(int id, Admin admin)
         {
             if (id != admin.Id)
@@ -100,6 +103,7 @@ namespace Project.Controllers
 
         // DELETE: api/Admins/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<Admin>> DeleteAdmin(int id)
         {
             var admin = await _context.Admins.FindAsync(id);
