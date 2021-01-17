@@ -90,6 +90,13 @@ class Editplant extends Component{
         this.setState({
             [name]: value
         });
+        console.log(this.state.Plant.specialFeatures);
+    }
+
+    handleOnChange = (selected) => {
+        const stringSelected = selected.join(", ");
+        this.setState({ Plant: { ...this.state.Plant, specialFeatures: stringSelected } });
+        
     }
 
     onSubmitHandler = (e) => {
@@ -349,7 +356,7 @@ class Editplant extends Component{
                   <Form.Label>Extra eigenschappen</Form.Label>
                   <DropdownMultiselect
                       options={["Geurend", "Eetbaar", "Giftig", "Trekt bijen aan", "Trekt hommels aan", "Trekt vlinders aan", "Trekt vogels aan"]}
-                      name="SpecialFeatures" defaultValue={this.state.Plant.specialFeatures} onChange={this.handleInputChange} />
+                      name="SpecialFeatures" defaultValue={this.state.Plant.specialFeatures} handleOnChange={this.handleOnChange} />
               </Form.Group>
               <Form.Group controlId="ImageInput">
                   <Form.Label>Voeg een afbeelding toe</Form.Label><br></br>
