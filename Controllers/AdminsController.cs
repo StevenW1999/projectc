@@ -215,6 +215,24 @@ namespace Project.Controllers
 
             return user;
         }
+
+        [Authorize]
+        [HttpDelete("remove-plant")]
+        public async Task<ActionResult<Plant>> DeletePlant(int id)
+        {
+            var local = _context.Plants.FirstOrDefault(p => p.Id == id);
+
+            // check if local is not null 
+            if (local != null)
+            {
+                // detach
+                _context.Entry(local).State = EntityState.Detached;
+            }
+
+            var plant =  _context.Plants.Remove(local);
+            await _context.SaveChangesAsync();
+            return Ok(plant);
+        }
         private bool AdminExists(int id)
         {
             return _context.Admins.Any(e => e.Id == id);
