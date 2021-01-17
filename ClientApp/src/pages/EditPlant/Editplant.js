@@ -25,23 +25,24 @@ class Editplant extends Component{
                 Id: "",
                 UserId: "",
                 Image: null,
-                Name: "",
-                Description: "",
-                Category: "",
-                Available: false,
-                Type: "",
-                Perennial: "",
-                Shadow: "",
-                AmountOfWater: "",
-                Soil: "",
-                GrowthHeigth: "",
-                Color: "",
-                SeasonFrom: null,
-                SeasonTo: null,
-                SpecialFeatures: "",
-                Timestamp: null,
+                name: "",
+                description: "",
+                category: "",
+                available: false,
+                type: "",
+                perennial: "",
+                shadow: "",
+                amountOfWater: "",
+                soil: "",
+                growthHeigth: "",
+                color: "",
+                seasonFrom: null,
+                seasonTo: null,
+                specialFeatures: "",
+                timestamp: null,
                 token: "",
                 isAuthenticated: false
+
             }
             
         }
@@ -105,20 +106,20 @@ class Editplant extends Component{
                 'userid': this.state.Plant.userId,
                 'image': this.state.Plant.image,
                 'name': this.state.Name ? this.state.Name : this.state.Plant.name,
-                'description': this.state.Description ? this.state.Description : this.state.Plant.description,
+                'description': this.state.description ? this.state.description : this.state.Plant.description,
                 'available': true,
-                'type': this.state.Type ? this.state.Type : this.state.Plant.type,
-                'perennial': this.state.Perennial,
-                'shadow': this.state.Shadow ? this.state.Shadow : this.state.Plant.shadow,
-                'amountofwater': this.state.AmountOfWater ? this.state.AmountOfWater : this.state.Plant.amountOfWater,
-                'soil': this.state.Soil,
-                'growthheigth': this.state.GrowthHeigth ? this.state.GrowthHeigth : this.state.Plant.growthHeigth,
-                'color': this.state.Color ? this.state.Color : this.state.Plant.color,
-                'seasonfrom': this.state.SeasonFrom ? this.state.SeasonFrom : this.state.Plant.seasonFrom,
-                'seasonto': this.state.SeasonTo ? this.state.SeasonTo : this.state.Plant.seasonTo,
-                'specialfeature': this.state.SpecialFeatures ? this.state.SpecialFeatures : this.state.Plant.specialFeatures,
-                'timestamp': this.state.Timestamp ? this.state.Timestamp : this.state.Plant.timestamp,
-                'category': this.state.Category ? this.state.Category : this.state.Plant.category,
+                'type': this.state.type ? this.state.type : this.state.Plant.type,
+                'perennial': this.state.perennial,
+                'shadow': this.state.shadow ? this.state.shadow : this.state.Plant.shadow,
+                'amountofwater': this.state.amountOfWater ? this.state.amountOfWater : this.state.Plant.amountOfWater,
+                'soil': this.state.soil,
+                'growthheigth': this.state.growthHeigth ? this.state.growthHeigth : this.state.Plant.growthHeigth,
+                'color': this.state.color ? this.state.color : this.state.Plant.color,
+                'seasonfrom': this.state.seasonFrom ? this.state.seasonFrom : this.state.Plant.seasonFrom,
+                'seasonto': this.state.seasonTo ? this.state.seasonTo : this.state.Plant.seasonTo,
+                'specialfeature': this.state.specialFeatures ? this.state.specialFeatures : this.state.Plant.specialFeatures,
+                'timestamp': this.state.timestamp ? this.state.timestamp : this.state.Plant.timestamp,
+                'category': this.state.category ? this.state.category : this.state.Plant.category,
             })
         })
             .then(response => {
@@ -181,15 +182,15 @@ class Editplant extends Component{
           <Form>
               <Form.Group controlId="TitleInput">
                   <Form.Label>Titel</Form.Label>
-                  <Form.Control type="Title" name="Name" maxlength="200" placeholder="Titel" onChange={this.handleInputChange} defaultValue={this.state.Plant.name} />
+                  <Form.Control type="title" name="name" maxlength="200" placeholder="titel" onChange={this.handleInputChange} defaultValue={this.state.Plant.name} />
               </Form.Group>
               <Form.Group controlId="omschInput">
                   <Form.Label>Omschrijving</Form.Label>
-                  <Form.Control as="textarea" rows={3} maxlength="200" name="Description" type="Description" placeholder="Omschrijving" onChange={this.handleInputChange} defaultValue={this.state.Plant.description} />
+                  <Form.Control as="textarea" rows={3} maxlength="200" name="description" type="description" placeholder="Omschrijving" onChange={this.handleInputChange} defaultValue={this.state.Plant.description} />
               </Form.Group>
               <Form.Group controlId="omschInput">
                   <Form.Label>Categorie</Form.Label>
-                  <Form.Control as="select" name="Category" defaultValue={this.state.Plant.Category} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="category" type="category" value={this.state.Plant.category} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >Zaadjes</option>
                       <option >Zaailing</option>
@@ -206,14 +207,14 @@ class Editplant extends Component{
                     <Form.Check
                         type="radio"
                         label="Ja"
-                        name="Perennial"
+                        name="perennial"
                         defaultChecked = {isvast}
                         onChange={this.handleInputChange}
                     />
                     <Form.Check
                         type="radio"
                         label="Nee"
-                        name="Perennial"
+                        name="perennial"
                         defaultChecked = {isnietvast}
                         onChange={this.handleInputChange}
                     />
@@ -222,7 +223,7 @@ class Editplant extends Component{
               </fieldset>
               <Form.Group controlId="TypeInput">
                   <Form.Label>Soort</Form.Label>
-                  <Form.Control as="select" name="Type" defaultValue={this.state.Plant.type} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="type" value={this.state.Plant.type} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option>Bomen</option>
                       <option>Struiken</option>
@@ -234,7 +235,7 @@ class Editplant extends Component{
               </Form.Group>
               <Form.Group controlId="Shadowinput">
                   <Form.Label>Standplaats</Form.Label>
-                  <Form.Control as="select" name="Shadow" defaultValue={this.state.Plant.shadow} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="shadow" value={this.state.Plant.shadow} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >Zon</option>
                       <option >Half schaduw</option>
@@ -245,7 +246,7 @@ class Editplant extends Component{
               </Form.Group>
               <Form.Group controlId="waterinput">
                   <Form.Label>Water</Form.Label>
-                  <Form.Control as="select" name="AmountOfWater" defaultValue={this.state.Plant.amountOfWater} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="amountOfWater" value={this.state.Plant.amountOfWater} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >Nat</option>
                       <option >Gemiddeld</option>
@@ -263,17 +264,17 @@ class Editplant extends Component{
                           <Form.Check
                               type="radio"
                               label="Ja"
-                              name="Soil"
+                              name="soil"
                               defaultChecked={grondja}
-                              defaultValue={this.state.Soil}
+                              defaultValue={this.state.soil}
                               onChange={this.handleInputChange}
                           />
                           <Form.Check
                               type="radio"
                               label="Nee"
-                              name="Soil"
+                              name="soil"
                               defaultChecked={grondnee}
-                              defaultValue={this.state.Soil}
+                              defaultValue={this.state.soil}
                               onChange={this.handleInputChange}
                           />
                       </Col>
@@ -281,7 +282,7 @@ class Editplant extends Component{
               </fieldset>
               <Form.Group controlId="HeightInput">
                   <Form.Label>Groeihoogte</Form.Label>
-                  <Form.Control as="select" name="GrowthHeigth" defaultValue={this.state.Plant.growthHeigth} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="growthHeigth" value={this.state.Plant.growthHeigth} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option defaultValue="0 - 20 cm">0 - 20 cm</option>
                       <option >20 - 40 cm</option>
@@ -295,7 +296,7 @@ class Editplant extends Component{
               </Form.Group>
               <Form.Group controlId="ColorInput">
                   <Form.Label>Bloeikleur</Form.Label>
-                  <Form.Control as="select" name="Color" value={this.state.Color} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="color" value={this.state.Plant.color} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option >Blauw</option>
                       <option >Geel</option>
@@ -311,7 +312,7 @@ class Editplant extends Component{
               </Form.Group>
               <Form.Group controlId="SeasonFromInput">
                   <Form.Label>Bloeimaand van:</Form.Label>
-                  <Form.Control as="select" name="SeasonFrom" defaultValue={dateFormat(this.state.Plant.seasonTo, "yyyy-mm-dd")} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="seasonFrom" value={dateFormat(this.state.Plant.seasonTo, "yyyy-mm-dd")} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option value="2020-01-01">Januari</option>
                       <option value="2020-02-01">Februari</option>
@@ -329,7 +330,7 @@ class Editplant extends Component{
               </Form.Group>
               <Form.Group controlId="SeasonToInput">
                   <Form.Label>Bloeimaand tot:</Form.Label>
-                  <Form.Control as="select" name="SeasonTo" defaultValue={dateFormat(this.state.Plant.seasonTo, "yyyy-mm-dd")} onChange={this.handleInputChange}>
+                  <Form.Control as="select" name="seasonTo" value={dateFormat(this.state.Plant.seasonTo, "yyyy-mm-dd")} onChange={this.handleInputChange}>
                       <option> -- Kies een categorie -- </option>
                       <option value="2020-01-01">Januari</option>
                       <option value="2020-02-01">Februari</option>
@@ -349,7 +350,7 @@ class Editplant extends Component{
                   <Form.Label>Extra eigenschappen</Form.Label>
                   <DropdownMultiselect
                       options={["Geurend", "Eetbaar", "Giftig", "Trekt bijen aan", "Trekt hommels aan", "Trekt vlinders aan", "Trekt vogels aan"]}
-                      name="SpecialFeatures" defaultValue={this.state.Plant.specialFeatures} onChange={this.handleInputChange} />
+                      name="SpecialFeatures" value={this.state.Plant.specialFeatures} onChange={this.handleInputChange} />
               </Form.Group>
               <Form.Group controlId="ImageInput">
                   <Form.Label>Voeg een afbeelding toe</Form.Label><br></br>
