@@ -129,6 +129,17 @@ class Create_trade extends Component{
         //.catch(error => { console.error('error: ', error) })
     }
 
+    removePic = (e) => {
+        e.preventDefault();
+        this.setState({
+            Image: null
+        });
+    }
+
+    addDefaultSrc(e) {
+        e.target.src = '../../images/Plant1.png'
+    }
+
 render () {
 
   return (
@@ -267,11 +278,14 @@ render () {
                       name="SpecialFeatures" onChange={this.handleInputChange} />
               </Form.Group>
               <Form.Group controlId="ImageInput">
-                  <Form.Label>Voeg een afbeelding toe</Form.Label><br></br>
-                  <input type="file" name="Image" accept='image/jpeg, image/png, image/jpg' onChange={this.handleImage} />
-                  <p>Voorbeeld afbeelding:</p>
-                  <Image className="Previmage" src={"data:file/png;base64," + this.state.Image} />
+                  <Form.Label>Foto van de plant:</Form.Label>
+                  <Form.File name="Image" type="file" accept=".jpeg, .jpg, .png" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleImage} />
+                  <br></br><p>Voorbeeld afbeelding:</p>
+                  <Image className="Previmage" src={"data:file/png;base64," + this.state.Image} onError={this.addDefaultSrc}/>
               </Form.Group>
+              <Button variant="primary" type="removepic" onClick={this.removePic}>
+                  Verwijder huidige foto
+                  </Button> 
               <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
                   Plant aanmaken
               </Button>   

@@ -40,6 +40,10 @@ class Account extends Component{
         });
     }
 
+    addDefaultSrc(e) {
+        e.target.src = '../../images/Default-User.jpg'
+    }
+
     render() {
         return (
             <div className="Account">  
@@ -47,7 +51,7 @@ class Account extends Component{
                 <Form>
                     <header>Mijn account</header>
 
-                    <Image className="ProfPic" src={"data:file/png;base64," + this.state.user.profilePicture} roundedCircle />
+                    <Image className="ProfPic" src={"data:file/png;base64," + this.state.user.profilePicture} onError={this.addDefaultSrc} roundedCircle />
                     
                     <h1>Naam:</h1>      
                     <h4>{this.state.user.username}</h4>
@@ -61,7 +65,7 @@ class Account extends Component{
                     <h1>Postcode:</h1>
                     <h4>{this.state.user.postalCode}</h4>
 
-                    <Container className="text-center" style={{ margin: 10 }}>
+                    <Container style={{ margin: 10 }}>
                         <Link class="btn btn-primary" style={{margin: 10}} to={{
                             pathname: '/AccountEdit',
                             state: {

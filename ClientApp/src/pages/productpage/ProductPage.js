@@ -113,6 +113,10 @@ class ProductPage extends Component {
         }
     }
 
+    addDefaultSrc(e) {
+        e.target.src = '../../images/Plant1.png'
+    }
+
     render() {
         console.log(this.props.location.state.userid);
         console.log(this.props.location.state.activeuserid);
@@ -120,7 +124,7 @@ class ProductPage extends Component {
             <Container className="container-padding">
                 <Row>
                     <Col md={6}>
-                        <img class="img" src={"data:file/png;base64," + this.state.Plant.image} alt="" />
+                        <img class="img" src={"data:file/png;base64," + this.state.Plant.image} onError={this.addDefaultSrc} />
                     </Col>
                     <Col md={6}>
                         <Container className="dbackground">
