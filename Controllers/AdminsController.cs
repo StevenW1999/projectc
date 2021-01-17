@@ -201,7 +201,7 @@ namespace Project.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("delete-user/{id}")]
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -217,7 +217,7 @@ namespace Project.Controllers
         }
 
         [Authorize]
-        [HttpDelete("remove-plant")]
+        [HttpDelete("remove-plant/{id}")]
         public async Task<ActionResult<Plant>> DeletePlant(int id)
         {
             var local = _context.Plants.FirstOrDefault(p => p.Id == id);
