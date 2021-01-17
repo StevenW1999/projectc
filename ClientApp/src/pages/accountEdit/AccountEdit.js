@@ -221,8 +221,16 @@ class AccountEdit extends Component {
                     console.log('Error: ', error)
                     return Promise.reject(error);
                 }
-                console.log('Succes!')
-                this.props.history.push('/');
+                alert('Account verwijderd');
+                fetch('/api/users/logout', {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'bearer ' + sessionStorage.getItem('bearer') }
+                }).then(response => { return response.json(); })
+                    .then(sessionStorage.removeItem('bearer'), sessionStorage.removeItem('role'))
+                    .catch(err => {
+                        console.log("fetch error" + err);
+                    });
+                window.location.href = "/";
             })
     }
 
