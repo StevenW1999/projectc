@@ -52,12 +52,17 @@ class PlantItem extends Component {
                 console.log("fetch error" + err);
             });
     }
+
+    addDefaultSrc(e) {
+        e.target.src = '../../images/Plant1.png'
+    }
+
     render() {
         return (
             <>
                 <div class="el-wrapper">
                     <div class="box-up">
-                        <img class="img image-fit" src={"data:file/png;base64," + this.props.plant.image} alt="" />
+                        <img class="img image-fit" src={"data:file/png;base64," + this.props.plant.image} onError={this.addDefaultSrc} />
                         <div class="img-info">
                             <div class="info-inner">
                                 <span class="p-name">{this.props.plant.name}</span>

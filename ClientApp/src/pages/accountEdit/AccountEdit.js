@@ -144,7 +144,7 @@ class AccountEdit extends Component {
     onSubmitHandler = (e) => {
         e.preventDefault();
 
-        if (this.state.user.username.length < 6) {
+        if (this.state.user.username.length <= 4) {
             alert("Gebruikernaam moet minimaal 5 karakters lang zijn!")
         }
         else if (this.state.user.postalCode.length != 6 || !parseInt(this.state.user.postalCode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.user.postalCode.slice(5, 6))) {
@@ -226,6 +226,16 @@ class AccountEdit extends Component {
             })
     }
 
+    removePic = (e) => {
+        this.setState({
+            file: null
+        });
+    }
+
+    addDefaultSrc(e) {
+        e.target.src = '../../images/Default-User.jpg'
+    }
+
     openModal = () => this.setState({ isOpen: true });
     closeModal = () => this.setState({ isOpen: false });
 
@@ -238,7 +248,7 @@ class AccountEdit extends Component {
                 <Form>
                     <Row>
                         <Col>
-                            <Image className="ProfPic" src={"data:file/png;base64," + this.state.user.profilePicture} roundedCircle />
+                            <Image className="ProfPic" src={"data:file/png;base64," + this.state.user.profilePicture} onError={this.addDefaultSrc} roundedCircle />
                         </Col>
                     </Row>
 
@@ -251,6 +261,21 @@ class AccountEdit extends Component {
                         </Col>
 
                         <Col>
+                            <Button variant="primary" type="removepic" onClick={this.removePic}>
+                                Verwijder huidige profielfoto
+                            </Button>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col>
+                            <Form.Group controlId="UserName">
+                                <Form.Label>Gebruikersnaam</Form.Label>
+                                <Form.Control name="username" type="username" defaultValue={this.state.user.username} placeholder="" onChange={this.handleInputChange} />
+                            </Form.Group>
+                        </Col>
+
+                        <Col>
                             <Form.Group controlId="PostalCode">
                                 <Form.Label>Postcode</Form.Label>
                                 <Form.Control name="postalCode" type="PostalCode" defaultValue={this.state.user.postalCode} placeholder="" onChange={this.handleInputChange} />
@@ -258,10 +283,6 @@ class AccountEdit extends Component {
                         </Col>
                     </Row>
 
-                    <Form.Group controlId="UserName">
-                        <Form.Label>Gebruikersnaam</Form.Label>
-                        <Form.Control name="username" type="username" defaultValue={this.state.user.username} placeholder="" onChange={this.handleInputChange} />
-                    </Form.Group>
 
                     <Row>
                         <Col>

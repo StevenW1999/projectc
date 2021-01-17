@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './AccountCreate.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
+import defPic from '../../images/Default-User.jpg';
 
 const fileTypes = [
     "image/jpg",
@@ -82,10 +83,16 @@ class AccountCreate extends Component {
         }
     }
 
+    removePic = (e) => {
+        this.setState({
+            file: null
+        });
+    }
+
     onSubmitHandler = (e) => {
         e.preventDefault();
 
-        if(this.state.username.length < 4){
+        if(this.state.username.length <= 4){
             alert("Gebruikersnaam moet minimaal 5 karakters lang zijn!")
         }
         else if (this.state.postalCode.length !== 6 || !parseInt(this.state.postalCode.substring(0, 4)) || /[^a-zA-Z]/.test(this.state.postalCode.slice(5, 6))) {
@@ -139,6 +146,10 @@ class AccountCreate extends Component {
             }
     }
 
+    addDefaultSrc(e) {
+        e.target.src = '../../images/Default-User.jpg'
+    }
+
 
     render() {
         return (
@@ -146,10 +157,10 @@ class AccountCreate extends Component {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
                 <header>Account aanmaken</header>
 
-                <Form onSubmit={this.onSubmitHandler}>
+                <Form>
                     <Row>
                         <Col>
-                            <Image className="ProfPic" src={"data:file/png;base64," + this.state.file} roundedCircle />
+                            <Image className="ProfPic" src={"data:file/png;base64," + this.state.file} onError={this.addDefaultSrc} roundedCircle />
                         </Col>  
                     </Row>
                     
@@ -162,18 +173,28 @@ class AccountCreate extends Component {
                         </Col>
 
                         <Col>
+                            <Button variant="primary" type="removepic" onClick={this.removePic}>
+                                Verwijder huidige profielfoto
+                            </Button>  
+                        </Col>
+                    </Row>
+                    
+                    <Row>
+                        <Col>
+                            <Form.Group controlId="UsernameInput">
+                                <Form.Label>Gebruikersnaam</Form.Label>
+                                <Form.Control name="username" type="Username" placeholder="" onChange={this.handleInputChange} />
+                            </Form.Group>
+                        </Col>
+
+                        <Col>
                             <Form.Group controlId="PostalCode">
                                 <Form.Label>Postcode</Form.Label>
                                 <Form.Control name="postalCode" type="PostalCode" placeholder="" onChange={this.handleInputChange} />
                             </Form.Group>
                         </Col>
                     </Row>
-                    
 
-                    <Form.Group controlId="UsernameInput">
-                        <Form.Label>Gebruikersnaam</Form.Label>
-                        <Form.Control name="username" type="Username" placeholder="" onChange={this.handleInputChange} />
-                    </Form.Group>
 
                     <Row>
                         <Col>
