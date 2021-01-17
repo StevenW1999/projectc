@@ -8,4 +8,8 @@
 .row {
     margin-left: 0px !important;
     margin-right: 0px !important;
-} 
+}
+
+.btn-group.btn-group-sm.btn-block {
+    display: none !important;
+}
