@@ -164,27 +164,9 @@ render () {
                       <option >Plant</option>
                   </Form.Control>
               </Form.Group>
-              <fieldset>
-                  <Form.Group as={Row}>
-                      <Form.Label as="legend" column sm={2}>
-                          Vaste plant?
-                      </Form.Label>
-                    <Col sm={10}>
-                    <Form.Check
-                        type="radio"
-                        label="Ja"
-                        name="Perennial"
-                        onChange={this.handleInputChange}
-                    />
-                    <Form.Check
-                        type="radio"
-                        label="Nee"
-                        name="Perennial"
-                        onChange={this.handleInputChange}
-                    />
-                    </Col>
-                  </Form.Group>
-              </fieldset>
+              <Form.Group controlId="Checkbox">
+                  <Form.Check type="checkbox" name= "Perennial" label="Is het een vaste plant?" onChange={this.handleInputChange} />
+              </Form.Group>
               <Form.Group controlId="TypeInput">
                   <Form.Label>Soort</Form.Label>
                   <Form.Control as="select" name="Type" onChange={this.handleInputChange}>
@@ -219,27 +201,10 @@ render () {
                       <option >Geen idee</option>
                   </Form.Control>
               </Form.Group>
-              <fieldset>
-                  <Form.Group as={Row}>
-                      <Form.Label as="legend" column sm={2}>
-                          Grond stelt eisen:
-                      </Form.Label>
-                      <Col sm={10}>
-                          <Form.Check
-                              type="radio"
-                              label="Ja"
-                              name="Soil"
-                              onChange={this.handleInputChange}
-                          />
-                          <Form.Check
-                              type="radio"
-                              label="Nee"
-                              name="Soil"
-                              onChange={this.handleInputChange}
-                          />
-                      </Col>
-                  </Form.Group>
-              </fieldset>
+              <Form.Group controlId="SoilInput">
+                  <Form.Label>Grond stelt eisen, namelijk:</Form.Label>
+                  <Form.Control type="Soil" name="Soil" maxlength="200" placeholder="Eisen grond" onChange={this.handleInputChange} />
+              </Form.Group>
               <Form.Group controlId="HeightInput">
                   <Form.Label>Groeihoogte</Form.Label>
                   <Form.Control as="select" name="GrowthHeigth" onChange={this.handleInputChange}>

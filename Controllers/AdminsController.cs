@@ -34,6 +34,7 @@ namespace Project.Controllers
 
         // GET: api/Admins
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Admin>>> GetAdmins()
         {
             return await _context.Admins.ToListAsync();
@@ -41,6 +42,7 @@ namespace Project.Controllers
 
         // GET: api/Admins/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Admin>> GetAdmin(int id)
         {
             var admin = await _context.Admins.FindAsync(id);
@@ -57,6 +59,7 @@ namespace Project.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutAdmin(int id, Admin admin)
         {
             if (id != admin.Id)
@@ -100,6 +103,7 @@ namespace Project.Controllers
 
         // DELETE: api/Admins/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<Admin>> DeleteAdmin(int id)
         {
             var admin = await _context.Admins.FindAsync(id);
@@ -197,7 +201,7 @@ namespace Project.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("delete-user/{id}")]
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -210,6 +214,24 @@ namespace Project.Controllers
             await _context.SaveChangesAsync();
 
             return user;
+        }
+
+        [Authorize]
+        [HttpDelete("remove-plant/{id}")]
+        public async Task<ActionResult<Plant>> DeletePlant(int id)
+        {
+            var local = _context.Plants.FirstOrDefault(p => p.Id == id);
+
+            // check if local is not null 
+            if (local != null)
+            {
+                // detach
+                _context.Entry(local).State = EntityState.Detached;
+            }
+
+            var plant =  _context.Plants.Remove(local);
+            await _context.SaveChangesAsync();
+            return Ok(plant);
         }
         private bool AdminExists(int id)
         {
