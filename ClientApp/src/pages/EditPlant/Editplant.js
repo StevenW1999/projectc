@@ -105,14 +105,14 @@ class Editplant extends Component{
                 'id': this.state.Plant.id,
                 'userid': this.state.Plant.userId,
                 'image': this.state.Plant.image,
-                'name': this.state.Name ? this.state.Name : this.state.Plant.name,
+                'name': this.state.name ? this.state.name : this.state.Plant.name,
                 'description': this.state.description ? this.state.description : this.state.Plant.description,
                 'available': true,
                 'type': this.state.type ? this.state.type : this.state.Plant.type,
                 'perennial': this.state.perennial,
                 'shadow': this.state.shadow ? this.state.shadow : this.state.Plant.shadow,
                 'amountofwater': this.state.amountOfWater ? this.state.amountOfWater : this.state.Plant.amountOfWater,
-                'soil': this.state.soil,
+                'soil': this.state.soil ? this.state.soil : this.state.Plant.soil,
                 'growthheigth': this.state.growthHeigth ? this.state.growthHeigth : this.state.Plant.growthHeigth,
                 'color': this.state.color ? this.state.color : this.state.Plant.color,
                 'seasonfrom': this.state.seasonFrom ? this.state.seasonFrom : this.state.Plant.seasonFrom,
@@ -131,11 +131,8 @@ class Editplant extends Component{
                     }
                     return Promise.reject(error);
                 }
-                //console.log('Plant gewijzigd')
             })
         alert('Plant gewijzigd');
-        //this.props.history.push('/');
-        //.catch(error => { console.error('error: ', error) })
         window.location.href = "/";
     }
 
@@ -158,24 +155,6 @@ class Editplant extends Component{
 
 
     render() {
-        //var isvast = false;
-        //var isnietvast = false;
-    if (this.state.Plant.perennial == "on") {
-        var isvast = true;
-    }
-    else {
-        var isnietvast = true;
-    }
-        //var grondja = false;
-        //var grondnee = false;
-
-    if (this.state.Plant.soil == "on") {
-        var grondja = true;
-    }
-    else {
-        var grondnee = true;
-    }
-
   return (
       <div className="Create">
           <h1>Maak een plantenruil aan</h1>
@@ -198,29 +177,9 @@ class Editplant extends Component{
                       <option >Plant</option>
                   </Form.Control>
               </Form.Group>
-              <fieldset>
-                  <Form.Group as={Row}>
-                      <Form.Label as="legend" column sm={2}>
-                          Vaste plant?
-                      </Form.Label>
-                    <Col sm={10}>
-                    <Form.Check
-                        type="radio"
-                        label="Ja"
-                        name="perennial"
-                        defaultChecked = {isvast}
-                        onChange={this.handleInputChange}
-                    />
-                    <Form.Check
-                        type="radio"
-                        label="Nee"
-                        name="perennial"
-                        defaultChecked = {isnietvast}
-                        onChange={this.handleInputChange}
-                    />
-                    </Col>
-                  </Form.Group>
-              </fieldset>
+              <Form.Group controlId="Checkbox">
+                  <Form.Check type="checkbox" name="Perennial" label="Is het een vaste plant?" checked={this.state.Plant.perennial} onChange={this.handleInputChange} />
+              </Form.Group>
               <Form.Group controlId="TypeInput">
                   <Form.Label>Soort</Form.Label>
                   <Form.Control as="select" name="type" value={this.state.Plant.type} onChange={this.handleInputChange}>
@@ -255,31 +214,10 @@ class Editplant extends Component{
                       <option >Geen idee</option>
                   </Form.Control>
               </Form.Group>
-              <fieldset>
-                  <Form.Group as={Row}>
-                      <Form.Label as="legend" column sm={2}>
-                          Grond stelt eisen:
-                      </Form.Label>
-                      <Col sm={10}>
-                          <Form.Check
-                              type="radio"
-                              label="Ja"
-                              name="soil"
-                              defaultChecked={grondja}
-                              defaultValue={this.state.soil}
-                              onChange={this.handleInputChange}
-                          />
-                          <Form.Check
-                              type="radio"
-                              label="Nee"
-                              name="soil"
-                              defaultChecked={grondnee}
-                              defaultValue={this.state.soil}
-                              onChange={this.handleInputChange}
-                          />
-                      </Col>
-                  </Form.Group>
-              </fieldset>
+              <Form.Group controlId="SoilInput">
+                  <Form.Label>Grond stelt eisen, namelijk:</Form.Label>
+                  <Form.Control type="soil" name="soil" maxlength="200" onChange={this.handleInputChange} value={this.state.Plant.soil}  />
+              </Form.Group>
               <Form.Group controlId="HeightInput">
                   <Form.Label>Groeihoogte</Form.Label>
                   <Form.Control as="select" name="growthHeigth" value={this.state.Plant.growthHeigth} onChange={this.handleInputChange}>
