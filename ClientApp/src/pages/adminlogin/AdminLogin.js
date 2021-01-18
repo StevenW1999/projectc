@@ -84,7 +84,7 @@ class Login extends Component{
         return (
             <div className="Login">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-                <header>Adminlogin</header>  
+                <header>Administrator login</header>  
                 <Form onSubmit={this.onSubmitHandler}>
                     <Form.Group controlId="UsernameInput">
                         <Form.Label>Gebruikersnaam</Form.Label>
