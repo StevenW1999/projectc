@@ -108,7 +108,16 @@ function Navigation() {
                                     Contact
                 </Link>
                             </li>
-                            <li className='nav-item2'>
+                            <li className='nav-item2' style={{ display: sessionStorage.getItem('isUser') }}>
+                                <Link
+                                    to='/search'
+                                    className='nav-links nodecoration2'
+                                    onClick={closeMobileMenu}
+                                >
+                                    Aanbod
+                </Link>
+                            </li>
+                            <li className='nav-item2' style={{ display: sessionStorage.getItem('isGuest') }}>
                                 <Link
                                     to='/search'
                                     className='nav-links nodecoration2'
