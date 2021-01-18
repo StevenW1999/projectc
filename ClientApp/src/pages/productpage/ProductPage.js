@@ -45,45 +45,51 @@ class ProductPage extends Component {
     }
 
     onSubmitHandler = (e) => {
-        fetch('/api/plants/' + this.props.location.state.id, {
-            method: 'delete',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
-            }
-        })
-            .then(response => {
-                const data = response.json();
-                if (!response.ok) {
-                    const error = (data && data.message) || response.status;
-                    console.log('Error: ', error)
-                    return Promise.reject(error);
+        var letThrough = window.confirm('Verwijder plant ' + this.state.Plant.name + '?');
+        if (letThrough) {
+            fetch('/api/plants/' + this.props.location.state.id, {
+                method: 'delete',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
                 }
-                //console.log('Succes!');
-                alert('Plant is verwijderd');
-                window.location.href = "/";
             })
+                .then(response => {
+                    const data = response.json();
+                    if (!response.ok) {
+                        const error = (data && data.message) || response.status;
+                        console.log('Error: ', error)
+                        return Promise.reject(error);
+                    }
+                    //console.log('Succes!');
+                    alert('Plant is verwijderd');
+                    window.location.href = "/";
+                })
+        }
     }
 
     deletePlantAdmin = (e) => {
-        fetch('/api/admins/remove-plant/' + this.props.location.state.id, {
-            method: 'delete',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
-            }
-        })
-            .then(response => {
-                const data = response.json();
-                if (!response.ok) {
-                    const error = (data && data.message) || response.status;
-                    console.log('Error: ', error)
-                    return Promise.reject(error);
+        var letThrough = window.confirm('Verwijder plant ' + this.state.Plant.name + '?');
+        if (letThrough) {
+            fetch('/api/admins/remove-plant/' + this.props.location.state.id, {
+                method: 'delete',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
                 }
-                //console.log('Succes!');
             })
-        alert('Plant is verwijderd');
-        window.location.href = "/search";
+                .then(response => {
+                    const data = response.json();
+                    if (!response.ok) {
+                        const error = (data && data.message) || response.status;
+                        console.log('Error: ', error)
+                        return Promise.reject(error);
+                    }
+                    //console.log('Succes!');
+                })
+            alert('Plant is verwijderd');
+            window.location.href = "/search";
+        }
     }
 
     componentDidMount() {
