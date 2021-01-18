@@ -9,6 +9,8 @@ Needed to open project:
 1. Open the Project.sln
 2. Go to appsettings.json and replace "Host=localhost;Port=5432;Database=Project C;Username=postgres;Password=postgres" with your own credentials for pgAdmin
 3. If appsettings.json is not included, right click on the project add -> add new item -> App Settings File and replace the content with the following :
+
+```
         {
           "Logging": {
             "LogLevel": {
@@ -29,6 +31,8 @@ Needed to open project:
             "refreshTokenExpiration": 60
           }
         }
+```
+
 NOTE: replace the connection string with your own credentials.
 4. Open Nugget Package manager console in visual studio (tools -> nugget package manager -> package manager console)
 5. Type the following command: "Dotnet ef database update"
