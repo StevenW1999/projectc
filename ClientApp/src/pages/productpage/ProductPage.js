@@ -211,7 +211,6 @@ class ProductPage extends Component {
                         </Container>
                     </Col>
                 </Row>
-                <br/>
             </Container>
         );
     }
