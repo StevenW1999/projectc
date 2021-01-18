@@ -65,6 +65,27 @@ class ProductPage extends Component {
             })
     }
 
+    deletePlantAdmin = (e) => {
+        fetch('/api/admins/remove-plant/' + this.props.location.state.id, {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
+            }
+        })
+            .then(response => {
+                const data = response.json();
+                if (!response.ok) {
+                    const error = (data && data.message) || response.status;
+                    console.log('Error: ', error)
+                    return Promise.reject(error);
+                }
+                //console.log('Succes!');
+            })
+        alert('Plant is verwijderd');
+        window.location.href = "/search";
+    }
+
     componentDidMount() {
         console.log("data:file/png;base64," + this.state.Plant.image);
         fetch('/api/plants/' + this.props.location.state.id, {
@@ -101,15 +122,23 @@ class ProductPage extends Component {
             if (this.props.location.state.userid === this.props.location.state.activeuserid) {
                 sessionStorage.setItem('isActiveUser', "inline-block");
                 sessionStorage.setItem('isOtherUser', "none");
+                sessionStorage.setItem('isAdmin', "none");
             }
             else {
                 sessionStorage.setItem('isActiveUser', "none")
                 sessionStorage.setItem('isOtherUser', "inline-block");
+                sessionStorage.setItem('isAdmin', "none");
             }
+        }
+        else if (sessionStorage.getItem('role') === 'Admin') {
+            sessionStorage.setItem('isActiveUser', "none")
+            sessionStorage.setItem('isOtherUser', "none");
+            sessionStorage.setItem('isAdmin', "inline-block");
         }
         else {
             sessionStorage.setItem('isActiveUser', "none")
             sessionStorage.setItem('isOtherUser', "inline-block");
+            sessionStorage.setItem('isAdmin', "none");
         }
     }
 
@@ -152,6 +181,10 @@ class ProductPage extends Component {
                                 }}>Plant wijzigen</Link>
                                 <div class="divider" />
                                 <Button variant="danger" onClick={this.onSubmitHandler} style={{ display: sessionStorage.getItem('isActiveUser') }}>
+                                    Plant verwijderen
+                                </Button>
+
+                                <Button variant="danger" onClick={this.deletePlantAdmin} style={{ display: sessionStorage.getItem('isAdmin') }}>
                                     Plant verwijderen
                                 </Button>
                                 
