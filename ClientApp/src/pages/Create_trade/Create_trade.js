@@ -289,7 +289,7 @@ render () {
                   <br></br><p>Voorbeeld afbeelding:</p>
                   <Image className="Previmage" src={"data:file/png;base64," + this.state.Image} onError={this.addDefaultSrc}/>
               </Form.Group>
-              <Button variant="primary" type="removepic" onClick={this.removePic}>
+              <Button className="deletepic" variant="primary" type="removepic" onClick={this.removePic}>
                   Verwijder huidige foto
                   </Button> 
               <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>

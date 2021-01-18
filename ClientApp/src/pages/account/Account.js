@@ -47,8 +47,8 @@ class Account extends Component{
     render() {
         return (
             <div className="Account">  
-          
-                <Form>
+
+                <Form className="marginacc">
                     <header>Mijn account</header>
 
                     <Image className="ProfPic" src={"data:file/png;base64," + this.state.user.profilePicture} onError={this.addDefaultSrc} roundedCircle />
