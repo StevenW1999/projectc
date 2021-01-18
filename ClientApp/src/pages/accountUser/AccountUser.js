@@ -73,14 +73,6 @@ class AccountUser extends Component {
                     <br></br>
                     <h1>Postcode:</h1>
                     <h4>{this.state.user.postalCode}</h4>
-                    <Link className="btn btn-primary" to={{
-                        pathname: '/productpage', state: {
-                            id: this.props.location.state.plantid,
-                            userid: this.props.location.state.userid
-                        }
-                    }}>
-                        Terug
-                    </Link>
                     <h1 className="text-center">Stekjes van {this.state.user.username}:</h1>
                     <div class="row">
                         <div class="main">

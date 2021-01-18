@@ -93,7 +93,6 @@ class ProductPage extends Component {
     }
 
     componentDidMount() {
-        console.log("data:file/png;base64," + this.state.Plant.image);
         fetch('/api/plants/' + this.props.location.state.id, {
             method: 'get',
             headers: {
