@@ -202,15 +202,15 @@ class ProductPage extends Component {
                         </Container>
 
                     </Col>
+
+                    <Col md={12} className="descmargin">
+                        <Container className="dbackground">
+                            <h2>Beschrijving</h2>
+                            <p className="normal-text">{this.state.Plant.description}</p>
+                            <br />
+                        </Container>
+                    </Col>
                 </Row>
-
-                <br/>
-
-                <Container className="dbackground">
-                    <h2>Beschrijving</h2>
-                    <p className="normal-text">{this.state.Plant.description}</p>
-                    <br/>
-                </Container>
                 <br/>
             </Container>
         );

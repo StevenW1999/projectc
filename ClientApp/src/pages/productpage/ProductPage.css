@@ -82,3 +82,7 @@
     height:auto;
     display:inline-block;
 }
+
+.descmargin {
+    margin-top: 10px;
+}
