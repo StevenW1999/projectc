@@ -126,6 +126,15 @@ function Navigation() {
                                     Gebruikerspaneel
                 </Link>
                             </li>
+                            <li className='nav-item2' style={{ display: sessionStorage.getItem('isAdmin') }}>
+                                <Link
+                                    to='/search'
+                                    className='nav-links nodecoration2'
+                                    onClick={closeMobileMenu}
+                                >
+                                    Plantenpaneel
+                </Link>
+                            </li>
                             <li className='nav-item2' style={{ display: sessionStorage.getItem('isUser') }}>
                                 <Link
                                     to='/Create_trade'
