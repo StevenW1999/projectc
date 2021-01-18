@@ -71,7 +71,7 @@ class Catalogue extends Component {
 
     plantFilter(p) {
         if (this.state.zoek != "") {
-            if (!(p.name.toLowerCase().includes(this.state.zoek.toLowerCase()))) {
+            if (!(this.nullString(p.name).toLowerCase().includes(this.state.zoek.toLowerCase()))) {
                 return false;
             }
         }
