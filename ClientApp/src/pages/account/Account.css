@@ -22,3 +22,7 @@ header {
 .ProfPic {
     width: 200px;
 }
+
+.bordernone {
+    border: none !important;
+}

@@ -96,6 +96,10 @@ class Editplant extends Component{
     handleOnChange = (selected) => {
         const stringSelected = selected.join(", ");
         this.setState({ Plant: { ...this.state.Plant, specialFeatures: stringSelected } });
+
+        if (this.state.Plant.specialFeatures == "") {
+            this.setState({ Plant: { ...this.state.Plant, specialFeatures: "Geen" } });
+        }
     }
 
     onSubmitHandler = (e) => {
