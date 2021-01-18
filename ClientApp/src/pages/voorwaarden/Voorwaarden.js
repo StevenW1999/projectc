@@ -6,7 +6,7 @@ class Voorwaarden extends Component{
         return (
             <div className="voorwaarden">
                 <h1>Algemene Bepalingen</h1>
-                <h3>Welkom bij Stekoverflow</h3>
+                <h3>Welkom bij Stekhub</h3>
                 <p>
                     Deze voorwaarden moeten ingevuld worden door de website administrator.
                     <br></br><br></br>
