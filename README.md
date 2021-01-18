@@ -9,7 +9,7 @@ Needed to open project:
 1. Open the Project.sln
 2. Go to appsettings.json and replace "Host=localhost;Port=5432;Database=Project C;Username=postgres;Password=postgres" with your own credentials for pgAdmin
 3. If appsettings.json is not included, right click on the project add -> add new item -> App Settings File and replace the content with the following :
-
+NOTE: replace the connection string with your own credentials.
 ```
         {
           "Logging": {
@@ -32,10 +32,8 @@ Needed to open project:
           }
         }
 ```
-
-NOTE: replace the connection string with your own credentials.
-4. Open Nugget Package manager console in visual studio (tools -> nugget package manager -> package manager console)
-5. Type the following command: "Dotnet ef database update"
+4. Open Nugget Package manager console in visual studio (tools -> nugget package manager -> package manager console).
+5. Type the following command: "Dotnet ef database update".
 6. After success message, click on run.
 7. NPM should be installing the packages and the project should be runnning, Note that it might take a while because there are a lot of dependencies.
 8. For the Unit Tests and Integration Tests, press ctrl + r + t to get the test explorer and to run the tests.
