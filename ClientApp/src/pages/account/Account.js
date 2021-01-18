@@ -65,20 +65,18 @@ class Account extends Component{
                     <h1>Postcode:</h1>
                     <h4>{this.state.user.postalCode}</h4>
 
-                    <Container style={{ margin: 10 }}>
-                        <Link class="btn btn-primary" style={{margin: 10}} to={{
-                            pathname: '/AccountEdit',
-                            state: {
-                                id: this.state.user.id,
-                                username: this.state.user.username,
-                                password: this.state.user.password,
-                                email: this.state.user.email,
-                                postalCode: this.state.user.postalCode,
-                                profilePicture: this.state.user.profilePicture,
-                                active: false
-                            }
-                        }}>Account Aanpassen</Link>
-                    </Container>
+                    <Link class="btn btn-primary marginaccup" to={{
+                        pathname: '/AccountEdit',
+                        state: {
+                            id: this.state.user.id,
+                            username: this.state.user.username,
+                            password: this.state.user.password,
+                            email: this.state.user.email,
+                            postalCode: this.state.user.postalCode,
+                            profilePicture: this.state.user.profilePicture,
+                            active: false
+                        }
+                    }}>Account Aanpassen</Link>
                     
                     <UserPlantsCatalogue></UserPlantsCatalogue>
 
