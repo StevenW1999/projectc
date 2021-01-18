@@ -97,11 +97,9 @@ class Login extends Component{
                     </Form.Group>
 
                     <Row>
-                        <Col>
-                            <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
-                                Inloggen
-                            </Button>  
-                        </Col>
+                        <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
+                            Inloggen
+                        </Button>  
                     </Row>
                                              
                 </Form>
