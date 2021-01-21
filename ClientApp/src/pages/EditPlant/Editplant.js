@@ -24,7 +24,7 @@ class Editplant extends Component{
                 imagePreviewUrl: '',
                 Id: "",
                 UserId: "",
-                Image: null,
+                image: null,
                 name: "",
                 description: "",
                 category: "",
@@ -54,7 +54,7 @@ class Editplant extends Component{
     _handleReaderLoaded = (readerEvt) => {
         let binaryString = readerEvt.target.result
         this.setState({
-            file: btoa(binaryString)
+            image: btoa(binaryString)
         })
     }
 
@@ -163,6 +163,19 @@ class Editplant extends Component{
         
     }
 
+    removePic = (e) => {
+        e.preventDefault();
+        this.setState({
+            Plant: {
+                ...this.state.Plant,
+                image: null
+            }
+        });
+    }
+
+    addDefaultSrc(e) {
+        e.target.src = '../../images/Plant1.png'
+    }
 
     render() {
         //const sfStr = this.state.Plant.specialFeatures;
@@ -305,11 +318,14 @@ class Editplant extends Component{
                       name="SpecialFeatures" value={this.state.Plant.specialFeatures} handleOnChange={this.handleOnChange} />
               </Form.Group>
               <Form.Group controlId="ImageInput">
-                  <Form.Label>Voeg een afbeelding toe</Form.Label><br></br>
-                  <input type="file" name="Image" accept=".jpeg, .jpg, .png" onChange={this.handleImage} />
-                  <p>Voorbeeld afbeelding:</p>
-                  <Image className="Previmage" src={"data:file/png;base64," + this.state.Plant.image} />
+                  <Form.Label>Foto van de plant:</Form.Label>
+                  <Form.File name="file" type="file" accept=".jpeg, .jpg, .png" label="Voeg je document toe" data-browse="Bestand kiezen" custom onChange={this.handleImage} />
+                  <br></br><p>Voorbeeld afbeelding:</p>
+                  <Image className="Previmage" src={"data:file/png;base64," + this.state.Plant.image} onError={this.addDefaultSrc} />
               </Form.Group>
+              <Button className="deletepic" variant="primary" type="removepic" onClick={this.removePic}>
+                  Verwijder huidige foto
+                  </Button> 
               <Button variant="primary" onClick={this.onSubmitHandler}>
                   Pas aan
               </Button>   

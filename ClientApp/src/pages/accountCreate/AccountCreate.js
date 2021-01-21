@@ -84,6 +84,7 @@ class AccountCreate extends Component {
     }
 
     removePic = (e) => {
+        e.preventDefault();
         this.setState({
             file: null
         });
