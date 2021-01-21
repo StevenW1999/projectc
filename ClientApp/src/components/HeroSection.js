@@ -53,20 +53,12 @@ function HeroSection({
                                   <br></br>
                                   <br></br>
                                   {description3}
-                                  <br></br>
-                                  <br></br>
                                   {description4}
-                                  <br></br>
-                                  <br></br>
                                   {description5}
-                                  <br></br>
-                                  <br></br>
                                   {description6}
                 </p>
                 <Link to='/AccountCreate'>
-                  <Button buttonSize='btn--wide' buttonColor='blue'>
                     {buttonLabel}
-                  </Button>
                 </Link>
               </div>
             </div>

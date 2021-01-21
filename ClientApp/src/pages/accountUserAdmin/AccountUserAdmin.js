@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "./AccountUser.css";
+import "./AccountUserAdmin.css";
 import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
@@ -7,7 +7,7 @@ import "../../components/UserPlantsCatalogue";
 import UserPlantsCatalogue from '../../components/UserPlantsCatalogue';
 import PlantItem from '../../components/PlantItem';
 
-class AccountUser extends Component {
+class AccountUserAdmin extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -73,6 +73,14 @@ class AccountUser extends Component {
                     <br></br>
                     <h1>Postcode:</h1>
                     <h4>{this.state.user.postalCode}</h4>
+                    <Link className="btn btn-primary" to={{
+                        pathname: '/adminpanel', state: {
+                            id: this.props.location.state.plantid,
+                            userid: this.props.location.state.userid
+                        }
+                    }}>
+                        Terug
+                    </Link>
                     <h1 className="text-center">Stekjes van {this.state.user.username}:</h1>
                     <div class="row">
                         <div class="main">
@@ -88,4 +96,4 @@ class AccountUser extends Component {
     }
 }
 
-export default AccountUser;
+export default AccountUserAdmin;

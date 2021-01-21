@@ -82,3 +82,8 @@
     height:auto;
     display:inline-block;
 }
+
+.descmargin {
+    margin-top: 25px;
+    margin-bottom: 40px;
+}

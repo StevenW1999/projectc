@@ -157,7 +157,7 @@ class AccountCreate extends Component {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
                 <header>Account aanmaken</header>
 
-                <Form>
+                <Form className="marginreg">
                     <Row>
                         <Col>
                             <Image className="ProfPic" src={"data:file/png;base64," + this.state.file} onError={this.addDefaultSrc} roundedCircle />
@@ -173,7 +173,7 @@ class AccountCreate extends Component {
                         </Col>
 
                         <Col>
-                            <Button variant="primary" type="removepic" onClick={this.removePic}>
+                            <Button className="profdel" variant="primary" type="removepic" onClick={this.removePic}>
                                 Verwijder huidige profielfoto
                             </Button>  
                         </Col>

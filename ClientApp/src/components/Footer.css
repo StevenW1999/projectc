@@ -7,6 +7,11 @@
   align-items: center;
 }
 
+.footer-link-items {
+    margin-right: 50px !important;
+    margin-left: 50px !important;
+}
+
 .footerfix {
 width: 100% !important;    
 }

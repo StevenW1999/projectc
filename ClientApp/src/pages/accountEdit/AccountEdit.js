@@ -269,7 +269,7 @@ class AccountEdit extends Component {
                         </Col>
 
                         <Col>
-                            <Button variant="primary" type="removepic" onClick={this.removePic}>
+                            <Button className="profdel" variant="primary" type="removepic" onClick={this.removePic}>
                                 Verwijder huidige profielfoto
                             </Button>
                         </Col>
@@ -328,7 +328,7 @@ class AccountEdit extends Component {
                 </Form>
 
                 <Container>
-                    <Button variant="primary" type="submit" style={{ margin: 10}} onClick={this.onSubmitHandler}>
+                    <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
                         Account aanpassen
                     </Button>
 

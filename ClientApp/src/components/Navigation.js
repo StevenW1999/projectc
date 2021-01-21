@@ -79,7 +79,7 @@ function Navigation() {
             <IconContext.Provider value={{ color: '#fff' }}>
                 <nav className='navbar'>
                     <div className='navbar-container'>
-                        <Link to='/' className='navbar-logo logotext' style={{ textDecoration: 'none' }} onClick={closeMobileMenu}><RiPlantFill className='navbar-icon' />Stekoverflow</Link>
+                        <Link to='/' className='navbar-logo logotext' style={{ textDecoration: 'none' }} onClick={closeMobileMenu}><RiPlantFill className='navbar-icon' />Stekhub</Link>
                         <div className='menu-icon' onClick={handleClick}>
                             {click ? <FaTimes /> : <FaBars />}
                         </div>
@@ -108,7 +108,16 @@ function Navigation() {
                                     Contact
                 </Link>
                             </li>
-                            <li className='nav-item2'>
+                            <li className='nav-item2' style={{ display: sessionStorage.getItem('isUser') }}>
+                                <Link
+                                    to='/search'
+                                    className='nav-links nodecoration2'
+                                    onClick={closeMobileMenu}
+                                >
+                                    Aanbod
+                </Link>
+                            </li>
+                            <li className='nav-item2' style={{ display: sessionStorage.getItem('isGuest') }}>
                                 <Link
                                     to='/search'
                                     className='nav-links nodecoration2'
@@ -124,6 +133,15 @@ function Navigation() {
                                     onClick={closeMobileMenu}
                                 >
                                     Gebruikerspaneel
+                </Link>
+                            </li>
+                            <li className='nav-item2' style={{ display: sessionStorage.getItem('isAdmin') }}>
+                                <Link
+                                    to='/search'
+                                    className='nav-links nodecoration2'
+                                    onClick={closeMobileMenu}
+                                >
+                                    Plantenpaneel
                 </Link>
                             </li>
                             <li className='nav-item2' style={{ display: sessionStorage.getItem('isUser') }}>

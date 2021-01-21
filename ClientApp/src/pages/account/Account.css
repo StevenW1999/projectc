@@ -22,3 +22,16 @@ header {
 .ProfPic {
     width: 200px;
 }
+
+.bordernone {
+    border: none !important;
+}
+
+.marginacc {
+    margin-bottom: 20px;
+}
+
+.marginaccup {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

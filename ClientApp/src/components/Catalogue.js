@@ -71,7 +71,7 @@ class Catalogue extends Component {
 
     plantFilter(p) {
         if (this.state.zoek != "") {
-            if (!(p.name.toLowerCase().includes(this.state.zoek.toLowerCase()))) {
+            if (!(this.nullString(p.name).toLowerCase().includes(this.state.zoek.toLowerCase()))) {
                 return false;
             }
         }
@@ -174,7 +174,6 @@ class Catalogue extends Component {
         if (this.state.plantList === null) {
             return [];
         }
-        console.log(this.state.excludeFilters)
         var filtered = [];
         var i;
         for (i = 0; i < this.state.plantList.length; i++) {
@@ -183,7 +182,6 @@ class Catalogue extends Component {
             }
         }
         if (this.state.sorteren != "") {
-            console.log(filtered[1].props.plant)
             if (this.state.sorteren === "Naam") {
                 filtered = filtered.sort((a, b) => (this.nullString(a.props.plant.name).toLowerCase() > this.nullString(b.props.plant.name).toLowerCase() ? 1 : -1))
             } else if (this.state.sorteren === "Type") {

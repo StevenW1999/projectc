@@ -32,7 +32,7 @@ class Create_trade extends Component{
             Color: "",
             SeasonFrom: Date,
             SeasonTo: Date,
-            SpecialFeatures: "",
+            specialFeatures: "",
             token: "",
             isAuthenticated: false
         }
@@ -46,6 +46,12 @@ class Create_trade extends Component{
         this.setState({
             file: btoa(binaryString)
         })
+    }
+
+    handleOnChange = (selected) => {
+        const stringSelected = selected.join(", ");
+        this.setState({ specialFeatures: stringSelected });
+        console.log(this.state.specialFeatures);
     }
 
     handleImage = (e) => {
@@ -110,7 +116,7 @@ class Create_trade extends Component{
                 "Color": this.state.Color,
                 "SeasonFrom": this.state.SeasonFrom,
                 "SeasonTo": this.state.SeasonTo,
-                "SpecialFeatures": this.state.SpecialFeatures
+                "SpecialFeatures": this.state.specialFeatures
             })
         })
             .then(response => {
@@ -275,7 +281,7 @@ render () {
                   <Form.Label>Extra eigenschappen</Form.Label>
                   <DropdownMultiselect
                       options={["Geurend", "Eetbaar", "Giftig", "Trekt bijen aan", "Trekt hommels aan", "Trekt vlinders aan", "Trekt vogels aan"]}
-                      name="SpecialFeatures" onChange={this.handleInputChange} />
+                      name="SpecialFeatures" handleOnChange={this.handleOnChange} />
               </Form.Group>
               <Form.Group controlId="ImageInput">
                   <Form.Label>Foto van de plant:</Form.Label>
@@ -283,7 +289,7 @@ render () {
                   <br></br><p>Voorbeeld afbeelding:</p>
                   <Image className="Previmage" src={"data:file/png;base64," + this.state.Image} onError={this.addDefaultSrc}/>
               </Form.Group>
-              <Button variant="primary" type="removepic" onClick={this.removePic}>
+              <Button className="deletepic" variant="primary" type="removepic" onClick={this.removePic}>
                   Verwijder huidige foto
                   </Button> 
               <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>

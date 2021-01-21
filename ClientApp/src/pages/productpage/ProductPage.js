@@ -45,28 +45,54 @@ class ProductPage extends Component {
     }
 
     onSubmitHandler = (e) => {
-        fetch('/api/plants/' + this.props.location.state.id, {
-            method: 'delete',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
-            }
-        })
-            .then(response => {
-                const data = response.json();
-                if (!response.ok) {
-                    const error = (data && data.message) || response.status;
-                    console.log('Error: ', error)
-                    return Promise.reject(error);
+        var letThrough = window.confirm('Verwijder plant ' + this.state.Plant.name + '?');
+        if (letThrough) {
+            fetch('/api/plants/' + this.props.location.state.id, {
+                method: 'delete',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
                 }
-                //console.log('Succes!');
-                alert('Plant is verwijderd');
-                window.location.href = "/";
             })
+                .then(response => {
+                    const data = response.json();
+                    if (!response.ok) {
+                        const error = (data && data.message) || response.status;
+                        console.log('Error: ', error)
+                        return Promise.reject(error);
+                    }
+                    //console.log('Succes!');
+                    alert('Plant is verwijderd');
+                    window.location.href = "/";
+                })
+        }
+    }
+
+    deletePlantAdmin = (e) => {
+        var letThrough = window.confirm('Verwijder plant ' + this.state.Plant.name + '?');
+        if (letThrough) {
+            fetch('/api/admins/remove-plant/' + this.props.location.state.id, {
+                method: 'delete',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
+                }
+            })
+                .then(response => {
+                    const data = response.json();
+                    if (!response.ok) {
+                        const error = (data && data.message) || response.status;
+                        console.log('Error: ', error)
+                        return Promise.reject(error);
+                    }
+                    //console.log('Succes!');
+                })
+            alert('Plant is verwijderd');
+            window.location.href = "/search";
+        }
     }
 
     componentDidMount() {
-        console.log("data:file/png;base64," + this.state.Plant.image);
         fetch('/api/plants/' + this.props.location.state.id, {
             method: 'get',
             headers: {
@@ -101,15 +127,23 @@ class ProductPage extends Component {
             if (this.props.location.state.userid === this.props.location.state.activeuserid) {
                 sessionStorage.setItem('isActiveUser', "inline-block");
                 sessionStorage.setItem('isOtherUser', "none");
+                sessionStorage.setItem('isAdmin', "none");
             }
             else {
                 sessionStorage.setItem('isActiveUser', "none")
                 sessionStorage.setItem('isOtherUser', "inline-block");
+                sessionStorage.setItem('isAdmin', "none");
             }
+        }
+        else if (sessionStorage.getItem('role') === 'Admin') {
+            sessionStorage.setItem('isActiveUser', "none")
+            sessionStorage.setItem('isOtherUser', "none");
+            sessionStorage.setItem('isAdmin', "inline-block");
         }
         else {
             sessionStorage.setItem('isActiveUser', "none")
             sessionStorage.setItem('isOtherUser', "inline-block");
+            sessionStorage.setItem('isAdmin', "none");
         }
     }
 
@@ -154,6 +188,10 @@ class ProductPage extends Component {
                                 <Button variant="danger" onClick={this.onSubmitHandler} style={{ display: sessionStorage.getItem('isActiveUser') }}>
                                     Plant verwijderen
                                 </Button>
+
+                                <Button variant="danger" onClick={this.deletePlantAdmin} style={{ display: sessionStorage.getItem('isAdmin') }}>
+                                    Plant verwijderen
+                                </Button>
                                 
 
                                 <div class="divider"/>
@@ -163,16 +201,15 @@ class ProductPage extends Component {
                         </Container>
 
                     </Col>
+
+                    <Col md={12} className="descmargin">
+                        <Container className="dbackground">
+                            <h2>Beschrijving</h2>
+                            <p className="normal-text">{this.state.Plant.description}</p>
+                            <br />
+                        </Container>
+                    </Col>
                 </Row>
-
-                <br/>
-
-                <Container className="dbackground">
-                    <h2>Beschrijving</h2>
-                    <p className="normal-text">{this.state.Plant.description}</p>
-                    <br/>
-                </Container>
-                <br/>
             </Container>
         );
     }

@@ -93,6 +93,15 @@ class Editplant extends Component{
         });
     }
 
+    handleOnChange = (selected) => {
+        const stringSelected = selected.join(", ");
+        this.setState({ Plant: { ...this.state.Plant, specialFeatures: stringSelected } });
+
+        if (this.state.Plant.specialFeatures == "") {
+            this.setState({ Plant: { ...this.state.Plant, specialFeatures: "Geen" } });
+        }
+    }
+
     onSubmitHandler = (e) => {
         e.preventDefault();
         fetch('/api/plants/' + this.props.location.state.id, {
@@ -117,7 +126,7 @@ class Editplant extends Component{
                 'color': this.state.color ? this.state.color : this.state.Plant.color,
                 'seasonfrom': this.state.seasonFrom ? this.state.seasonFrom : this.state.Plant.seasonFrom,
                 'seasonto': this.state.seasonTo ? this.state.seasonTo : this.state.Plant.seasonTo,
-                'specialfeature': this.state.specialFeatures ? this.state.specialFeatures : this.state.Plant.specialFeatures,
+                'specialfeatures': this.state.Plant.specialFeatures ? this.state.Plant.specialFeatures : this.state.specialFeatures,
                 'timestamp': this.state.timestamp ? this.state.timestamp : this.state.Plant.timestamp,
                 'category': this.state.category ? this.state.category : this.state.Plant.category,
             })
@@ -151,10 +160,13 @@ class Editplant extends Component{
             .catch(err => {
                 console.log("fetch error" + err);
             });
+        
     }
 
 
     render() {
+        //const sfStr = this.state.Plant.specialFeatures;
+        //const sfArr = sfStr.split(", ");
   return (
       <div className="Create">
           <h1>Maak een plantenruil aan</h1>
@@ -288,7 +300,9 @@ class Editplant extends Component{
                   <Form.Label>Extra eigenschappen</Form.Label>
                   <DropdownMultiselect
                       options={["Geurend", "Eetbaar", "Giftig", "Trekt bijen aan", "Trekt hommels aan", "Trekt vlinders aan", "Trekt vogels aan"]}
-                      name="SpecialFeatures" value={this.state.Plant.specialFeatures} onChange={this.handleInputChange} />
+                      placeholder={this.state.Plant.specialFeatures}
+                      //selected={this.state.Plant.specialFeatures}
+                      name="SpecialFeatures" value={this.state.Plant.specialFeatures} handleOnChange={this.handleOnChange} />
               </Form.Group>
               <Form.Group controlId="ImageInput">
                   <Form.Label>Voeg een afbeelding toe</Form.Label><br></br>

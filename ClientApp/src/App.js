@@ -11,6 +11,7 @@ import AccountCreate from './pages/accountCreate/AccountCreate';
 import Account from './pages/account/Account';
 import AccountEdit from './pages/accountEdit/AccountEdit';
 import AccountUser from './pages/accountUser/AccountUser';
+import AccountUserAdmin from './pages/accountUserAdmin/AccountUserAdmin';
 import Login from './pages/login/Login';
 import AdminLogin from './pages/adminlogin/AdminLogin';
 import AdminPanel from './pages/adminpanel/AdminPanel';
@@ -41,6 +42,7 @@ function App() {
         <Route exact path="/AccountCreate" component ={AccountCreate}/>
         <Route exact path="/AccountEdit" component ={AccountEdit}/>
         <Route exact path="/AccountUser" component ={AccountUser}/>
+        <Route exact path="/AccountUserAdmin" component ={AccountUserAdmin}/>
         <Route exact path="/Create_trade" component={Create_trade} />
         <Route exact path="/Editplant" component={Editplant} />
         <Route exact path="/AdminPanel" component={AdminPanel} />

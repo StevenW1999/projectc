@@ -98,17 +98,13 @@ class Login extends Component{
                     </Form.Group>
 
                     <Row>
-                        <Col>
-                            <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
-                                Inloggen
-                            </Button>  
-                        </Col>
+                        <Button className="paddinglogin" variant="primary" type="submit" onClick={this.onSubmitHandler}>
+                            Inloggen
+                        </Button>
 
-                        <Col>
-                            <Button variant="primary" type="submit" onClick={this.onAlternativeHandler}>
-                                Account aanmaken
-                            </Button> 
-                        </Col>
+                        <Button variant="primary" type="submit" onClick={this.onAlternativeHandler}>
+                            Account aanmaken
+                        </Button> 
                     </Row>
                                              
                 </Form>
