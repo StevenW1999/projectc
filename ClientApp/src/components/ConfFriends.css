@@ -1,0 +1,11 @@
+﻿#confirmedFriends-container {
+    display: flex;
+    margin: auto;
+    min-width: 400px;
+    max-width: 500px;
+    max-height: 250px;
+    height: 95vh;
+    font-family: Arial;
+    font-size: 10px;
+    border-radius: 10px 10px 10px 10px;
+}

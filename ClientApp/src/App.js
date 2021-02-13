@@ -19,40 +19,44 @@ import Donatie from './pages/Donatie/Donate'
 import Contact from './pages/contact/Contact'
 import Editplant from './pages/EditPlant/Editplant';
 import Voorwaarden from './pages/voorwaarden/Voorwaarden';
+import Chat from './pages/chat/Chat';
+import Friends from './pages/friends/Friends';
 
 import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
+    BrowserRouter as Router,
+    Route,
+    Switch,
 } from "react-router-dom";
 
 
 function App() {
-  return (
-    <Router>
-      <Navigation />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/About" component={About} />
-        <Route exact path="/ProductPage" component={ProductPage} />
-        <Route exact path="/Search" component={Searchresults} />
-        <Route exact path="/Login" component ={Login}/>
-        <Route exact path="/AdminLogin" component ={AdminLogin}/>
-        <Route exact path="/Account" component ={Account}/>
-        <Route exact path="/AccountCreate" component ={AccountCreate}/>
-        <Route exact path="/AccountEdit" component ={AccountEdit}/>
-        <Route exact path="/AccountUser" component ={AccountUser}/>
-        <Route exact path="/AccountUserAdmin" component ={AccountUserAdmin}/>
-        <Route exact path="/Create_trade" component={Create_trade} />
-        <Route exact path="/Editplant" component={Editplant} />
-        <Route exact path="/AdminPanel" component={AdminPanel} />
-        <Route exact path="/Donate" component={Donatie} />
-        <Route exact path="/Contact" component={Contact} />
-        <Route exact path="/Voorwaarden" component={Voorwaarden} />
-      </Switch>
-      <Footer />
-    </Router>
-  );
+    return (
+        <Router>
+            <Navigation />
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/About" component={About} />
+                    <Route exact path="/ProductPage" component={ProductPage} />
+                    <Route exact path="/Search" component={Searchresults} />
+                    <Route exact path="/Login" component ={Login}/>
+                    <Route exact path="/AdminLogin" component ={AdminLogin}/>
+                    <Route exact path="/Account" component ={Account}/>
+                    <Route exact path="/AccountCreate" component ={AccountCreate}/>
+                    <Route exact path="/AccountEdit" component ={AccountEdit}/>
+                    <Route exact path="/AccountUser" component ={AccountUser}/>
+                    <Route exact path="/AccountUserAdmin" component ={AccountUserAdmin}/>
+                    <Route exact path="/Create_trade" component={Create_trade} />
+                    <Route exact path="/Editplant" component={Editplant} />
+                    <Route exact path="/AdminPanel" component={AdminPanel} />
+                    <Route exact path="/Donate" component={Donatie} />
+                    <Route exact path="/Contact" component={Contact} />
+                    <Route exact path="/Voorwaarden" component={Voorwaarden} />
+                    <Route exact path="/Chat" component={Chat} />
+                    <Route exact path="/Friends" component={Friends} />
+                </Switch>
+            <Footer />
+        </Router>
+    );
 }
 
 export default App;

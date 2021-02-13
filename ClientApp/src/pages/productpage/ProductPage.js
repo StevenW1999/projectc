@@ -92,6 +92,29 @@ class ProductPage extends Component {
         }
     }
 
+    addFriend = (e) => {
+        fetch('/api/users/FriendAdd', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
+            },
+            body: JSON.stringify({
+                'username': this.state.User.Username
+            })
+        })
+            .then(response => {
+                const data = response.json();
+                if (!response.ok) {
+                    const error = (data && data.message) || response.status;
+                    console.log('error: ', error)
+                    return Promise.reject(error);
+                }
+                alert('Vriendschapsverzoek verstuurd!');
+            })
+    }
+    
+
     componentDidMount() {
         fetch('/api/plants/' + this.props.location.state.id, {
             method: 'get',
@@ -128,22 +151,26 @@ class ProductPage extends Component {
                 sessionStorage.setItem('isActiveUser', "inline-block");
                 sessionStorage.setItem('isOtherUser', "none");
                 sessionStorage.setItem('isAdmin', "none");
+                sessionStorage.setItem('isGuest', "none");
             }
             else {
                 sessionStorage.setItem('isActiveUser', "none")
                 sessionStorage.setItem('isOtherUser', "inline-block");
                 sessionStorage.setItem('isAdmin', "none");
+                sessionStorage.setItem('isGuest', "none");
             }
         }
         else if (sessionStorage.getItem('role') === 'Admin') {
             sessionStorage.setItem('isActiveUser', "none")
             sessionStorage.setItem('isOtherUser', "none");
             sessionStorage.setItem('isAdmin', "inline-block");
+            sessionStorage.setItem('isGuest', "none");
         }
         else {
             sessionStorage.setItem('isActiveUser', "none")
-            sessionStorage.setItem('isOtherUser', "inline-block");
+            sessionStorage.setItem('isOtherUser', "none");
             sessionStorage.setItem('isAdmin', "none");
+            sessionStorage.setItem('isGuest', "inline-block");
         }
     }
 
@@ -196,6 +223,11 @@ class ProductPage extends Component {
 
                                 <div class="divider"/>
                                 <a className="btn btn-primary" style={{ display: sessionStorage.getItem('isOtherUser') }} href={`mailto:${this.state.User.email}`}>Neem contact op</a>
+
+                                <div class="divider" />
+                                <Button variant="btn btn-primary" onClick={this.addFriend} style={{ display: sessionStorage.getItem('isOtherUser') }}>
+                                    Vriend toevoegen
+                                </Button>
                             </Container>
                             <br/>
                         </Container>

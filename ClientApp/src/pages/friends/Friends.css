@@ -1,0 +1,27 @@
+﻿#friends-container {
+    display: flex;
+    margin: auto;
+    min-width: 800px;
+    max-width: 1000px;
+    max-height: 800px;
+    height: 95vh;
+    font-family: Arial;
+    font-size: 10px;
+    border-radius: 10px 10px 10px 10px;
+    background: #0c3eff;
+}
+
+#col-left {
+    width: 50%;
+}
+
+#col-right {
+    flex: 1;
+}
+
+#col-title {
+    font-family: Arial;
+    font-size: 20px;
+    border-radius: 10px 0 0 0;
+    border-bottom: 1px solid #000000;
+}
