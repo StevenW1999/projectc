@@ -20,6 +20,7 @@ using Project.Services;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Project.IntegrationTests;
+using Project.Hubs;
 
 namespace Project
 {
@@ -80,6 +81,17 @@ namespace Project
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFriendsService, FriendService>();
             services.AddScoped<IPlantsService, PlantsService>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("ClientPermission", policy =>
+                {
+                    policy.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins("https://localhost:44338")
+                        .AllowCredentials();
+                });
+            });
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -108,7 +120,11 @@ namespace Project
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
-
+            app.UseCors("ClientPermission");
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<ChatHub>("/chathub");
+            });
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";

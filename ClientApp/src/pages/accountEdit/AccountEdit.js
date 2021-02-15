@@ -207,7 +207,7 @@ class AccountEdit extends Component {
     onDeleteHandler = (e) => {
         e.preventDefault();
 
-        fetch('/api/users/' + this.props.location.state.id.toString(), {
+        fetch('/api/users/' + this.state.user.id.toString(), {
             method: 'delete',
             headers: {
                 'Content-Type': 'application/json',

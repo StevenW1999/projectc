@@ -47,3 +47,4 @@ class ChatMsg extends Component {
 }
 
 export default ChatMsg
+
