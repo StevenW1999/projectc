@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import './Chat.css';
+import ChatMsg from '../../components/ChatMsg';
 import Image from 'react-bootstrap/Image';
 
 class Chat extends Component{

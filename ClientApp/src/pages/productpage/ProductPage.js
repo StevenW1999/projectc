@@ -93,15 +93,12 @@ class ProductPage extends Component {
     }
 
     addFriend = (e) => {
-        fetch('/api/users/FriendAdd', {
+        fetch('/api/users/FriendAdd' + this.state.User.Username, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'bearer ' + sessionStorage.getItem('bearer')
-            },
-            body: JSON.stringify({
-                'username': this.state.User.Username
-            })
+            }
         })
             .then(response => {
                 const data = response.json();
